@@ -20,6 +20,7 @@ export const IconButton: React.FunctionComponent<IconButtonProps> = ({
         alignItems: "center",
         px: 1,
         py: 1,
+        lineHeight: 0,
         ...sx,
       }}
     >  

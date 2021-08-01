@@ -1,8 +1,8 @@
 import buttons from "./buttons";
 import colors from "./colors";
 import forms from "./forms";
-import sizes from "./sizes";
 import { background, breakpoints, space } from "./others";
+import sizes from "./sizes";
 import text from "./text";
 
 export const theme = {

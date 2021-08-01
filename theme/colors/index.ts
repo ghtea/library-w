@@ -3,12 +3,14 @@ import commonColors from "./commonColors";
 export enum ColorKey {
   "BACKGROUND" = "background",
   "TEXT" = "text",
+  "@#6B7280" = "@#6B7280"
 }
 
 const colors = {
   [ColorKey.BACKGROUND] : "#ffffff",
   [ColorKey.TEXT]: "#18181B",
 
+  [ColorKey["@#6B7280"]]: "#6B7280",
   // "primary": commonColors["blue-500"],
   // "secondary": commonColors["green-500"],
   // "disabled": commonColors["gray-100"],

@@ -44,7 +44,9 @@ export default function Music({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex>
+      <Flex
+        sx={{p: 2}}
+      >
 
         <Flex sx={{flexDirection: "row", flexWrap: "wrap"}}>
           {albumList?.map((item, index)=>{
