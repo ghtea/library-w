@@ -1,0 +1,121 @@
+const buttons = {
+  default: {
+    padding: "8px 16px",
+    color: "text-primary",
+    fontFamily: "paragraph",
+    fontSize: "p1",
+    fontWeight: "medium",
+    backgroundImage: "linear-gradient(to top, #f6f7f9, #ffffff)",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#d8dce6",
+    boxShadow: "button",
+    borderRadius: 4,
+    cursor: "pointer",
+    "&:hover": {
+      border: "buttonHover",
+      boxShadow: "buttonHover",
+    },
+    "&:focus": {
+      border: "buttonHover",
+      boxShadow: "buttonHover",
+    },
+  },
+  primary: {
+    variant: "buttons.default",
+    color: "white",
+    borderColor: "#1461d2",
+    backgroundImage: "linear-gradient(to top, #1665D8, #1f6fe5)",
+  },
+  secondary: {
+    variant: "buttons.default",
+    color: "white",
+    borderColor: "#2d9c3c",
+    backgroundImage: "linear-gradient(to top, #34aa44, #38b249)",
+  },
+  error: {
+    variant: "buttons.default",
+    color: "white",
+    borderColor: "#ba0b15",
+    backgroundImage: "linear-gradient(to bottom, #e73c1e, #cf3014)",
+  },
+  disabled: {
+    variant: "buttons.default",
+    color: "text-tertiary",
+    borderColor: "disabled",
+    backgroundColor: "disabled",
+    backgroundImage: "none",
+    "&:hover": {
+      borderColor: "none",
+      boxShadow: "none",
+    },
+  },
+  "disabled-dark": {
+    variant: "buttons.default",
+    color: "text-tertiary",
+    borderColor: "slate-500",
+    backgroundColor: "charcoal-500",
+    backgroundImage: "none",
+    "&:hover": {
+      borderColor: "none",
+      boxShadow: "none",
+    },
+  },
+  "default-flat": {
+    padding: "8px 16px",
+    color: "text-primary",
+    fontFamily: "paragraph",
+    fontSize: "p1",
+    fontWeight: "medium",
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#d8dce6",
+    borderRadius: 4,
+    cursor: "pointer",
+    "&:hover": {
+      border: "buttonFlatHover",
+      boxShadow: "buttonFlatHover",
+    },
+    "&:focus": {
+      border: "buttonFlatHover",
+      boxShadow: "buttonFlatHover",
+    },
+  },
+  "primary-flat": {
+    variant: "buttons.default-flat",
+    color: "white",
+    borderColor: "primary",
+    backgroundColor: "primary",
+  },
+  "secondary-flat": {
+    variant: "buttons.default-flat",
+    color: "white",
+    borderColor: "secondary",
+    backgroundColor: "secondary",
+  },
+  "disabled-flat": {
+    variant: "buttons.default",
+    color: "text-tertiary",
+    borderColor: "disabled",
+    backgroundColor: "disabled",
+    backgroundImage: "none",
+    "&:hover": {
+      borderColor: "none",
+      boxShadow: "none",
+    },
+  },
+  "disabled-dark-flat": {
+    variant: "buttons.default",
+    color: "text-tertiary",
+    borderColor: "charcoal-500",
+    backgroundColor: "charcoal-500",
+    backgroundImage: "none",
+    "&:hover": {
+      borderColor: "none",
+      boxShadow: "none",
+    },
+  },
+}
+
+export default buttons;

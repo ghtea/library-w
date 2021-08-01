@@ -1,0 +1,1 @@
+export { TemplateA } from "./TemplateA"
