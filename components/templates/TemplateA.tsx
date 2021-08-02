@@ -3,7 +3,9 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { Box, Button,Flex } from "components/atoms"
 import { Responsive } from "components/atoms/Box"
 import { IconButton } from "components/molecules"
+import { Sx } from "libraries/theme-ui"
 import {ColorKey} from "theme/colors"
+import {zIndex} from "theme/others"
 import sizes from "theme/sizes"
 
 export type TemplateAProps = {
@@ -14,18 +16,25 @@ export type TemplateAProps = {
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   children
 }) => {
+
+  const navBarSx: Sx = useMemo(()=>({
+    zIndex: zIndex.navBar,
+    position: "fixed", 
+    backgroundColor: ColorKey["gray-50"],
+    borderColor: ColorKey["gray-200"],
+  }),[]);
+
   return ( 
-    <Flex sx={{backgroundColor: ColorKey.BACKGROUND, color: ColorKey.TEXT}}>
+    <Flex sx={{backgroundColor: ColorKey.background, color: ColorKey.text}}>
 
       <Box responsive={Responsive.SMALL} 
         sx={{
-          position: "fixed", 
+          ...navBarSx,
           top: "0", 
           width: "100%",
           height: sizes["templateA.topNav.height"],
           borderBottomStyle: "solid", 
           borderBottomWidth: "1px", 
-          borderColor: ColorKey["@#6B7280"]
         }}
       >
         <Flex 
@@ -56,19 +65,19 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
       
       <Box responsive={Responsive.BIG} 
         sx={{
-          position: "fixed", left: "0", 
+          ...navBarSx,
+          left: "0", 
           width: sizes["templateA.leftNav.width"],
           height: "100vh",
           borderRightStyle: "solid", 
           borderRightWidth: "1px", 
-          borderColor: ColorKey["@#6B7280"]
         }} 
       >
         <Flex 
           sx={{
             height: "100%",
             flexDirection: "column", 
-            justifyContent: "flex-start",
+            justifyContent: "space-between",
             alignItems: "center",
           }} 
         >
@@ -77,7 +86,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
               <IconButton src={"svgs/bao-house.svg"}></IconButton>
             </Flex> 
           </Box>
-          <Box>
+          <Box sx={{flex: 1}}>
             <Flex sx={{size: sizes["templateA.leftNav.width"], justifyContent: "center", alignItems: "center"}}>
               <IconButton src={"svgs/bao-arrow-simple-double-right.svg"}></IconButton>
             </Flex>

@@ -46,3 +46,13 @@ export const space = [
   248, // 31
   256, // 32
 ];
+
+
+// zIndex
+/*
+NavBar
+*/
+
+export const zIndex = {
+  navBar: 300,
+}

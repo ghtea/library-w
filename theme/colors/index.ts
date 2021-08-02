@@ -1,16 +1,27 @@
-import commonColors from "./commonColors";
+import palette, {PaletteKey} from "./palette";
 
-export enum ColorKey {
-  "BACKGROUND" = "background",
-  "TEXT" = "text",
-  "@#6B7280" = "@#6B7280"
+
+enum MapKey {
+
+  "background" = "background",
+  "text" = "text",
+  
+  // "@#F3F4F6" = "F3F4F6",
 }
 
-const colors = {
-  [ColorKey.BACKGROUND] : "#ffffff",
-  [ColorKey.TEXT]: "#18181B",
+export const ColorKey = { ...PaletteKey, ...MapKey };
+export type ColorKey = typeof ColorKey;
 
-  [ColorKey["@#6B7280"]]: "#6B7280",
+
+const colors = {
+
+  ...palette,
+
+  [ColorKey.background] : palette["white"],
+  [ColorKey.text]: palette["gray-900"],
+
+  // [ColorKey["#F3F4F6"]]:  "#F3F4F6", 
+
   // "primary": commonColors["blue-500"],
   // "secondary": commonColors["green-500"],
   // "disabled": commonColors["gray-100"],
