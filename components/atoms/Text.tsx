@@ -1,5 +1,5 @@
-import {Sx,useSx} from "libraries/theme-ui"
 import { Text as ThemeUiText, TextProps as ThemeUiTextProps } from "theme-ui"
+import {Sx,useSx} from "tools/theme-ui"
 
 export type TextProps = ThemeUiTextProps & {
     sx?: Sx

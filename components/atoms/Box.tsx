@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import {Sx,useSx} from "libraries/theme-ui"
 import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps } from "theme-ui"
+import {Sx,useSx} from "tools/theme-ui"
 
 export type BoxProps = Omit<ThemeUiBoxProps, "sx"> & {
     sx?: Sx

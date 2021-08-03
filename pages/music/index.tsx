@@ -4,10 +4,10 @@ import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints
 import { Page } from "@notionhq/client/build/src/api-types"
 import { TemplateA } from "components/templates"
 import { Box,Flex } from "components-old/atoms"
-import { notion } from "libraries/notion"
-import { MusicAlbumPropertyValueMap } from "libraries/notion/types"
 import Head from "next/head"
 import Image from "next/image"
+import { notion } from "tools/notion"
+import { MusicAlbumPropertyValueMap } from "tools/notion/types"
 
 
 export type MusicProps = {

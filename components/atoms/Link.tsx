@@ -1,12 +1,14 @@
-import { Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps } from "theme-ui"
+import { Link as ThemeUiLink, LinkProps as ThemeUiLinkProps } from "theme-ui"
 import {Sx,useSx} from "tools/theme-ui"
 
-export type ButtonProps = Omit<ThemeUiButtonProps, "sx"> & {
+
+export type LinkProps = Omit<ThemeUiLinkProps, "sx"> & {
     sx?: Sx
 };
 
-export const Button: React.FunctionComponent<ButtonProps> = ({
+export const Link: React.FunctionComponent<LinkProps> = ({
   sx,
+  href,
   ...rest
 }) => {
 
@@ -22,6 +24,6 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   })
 
   return ( 
-    <ThemeUiButton {...rest} sx={realSx} />
+    <ThemeUiLink {...rest} href={href} sx={realSx} />
   );
 }

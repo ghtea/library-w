@@ -1,3 +1,5 @@
+import { useMemo } from "react"
+
 import { Button, ButtonProps, } from "components/atoms";
 import { Icon } from "components/molecules";
 
@@ -10,6 +12,14 @@ export const IconButton: React.FunctionComponent<IconButtonProps> = ({
   sx, 
   ...rest
 }) => {
+
+  const iconSx = useMemo(()=>
+    (
+      {
+        height: "100%",
+        ...(sx?.color && {color: sx?.color})
+      }
+    ),[sx])
     
   return (
     <Button
@@ -24,6 +34,6 @@ export const IconButton: React.FunctionComponent<IconButtonProps> = ({
         ...sx,
       }}
     > 
-      <Icon src={src} sx={{height: "100%", color: sx?.color ? sx.color : undefined }}/>  
+      <Icon src={src} sx={iconSx}/>  
     </Button>
   )};
