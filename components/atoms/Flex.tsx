@@ -11,6 +11,8 @@ export const Flex: React.FunctionComponent<FlexProps> = ({
 }) => {
 
   const realSx = useSx({
+    height: "auto",
+    width: "100%",
     flexDirection: "column",
     alignItems: "center",
     ...sx,

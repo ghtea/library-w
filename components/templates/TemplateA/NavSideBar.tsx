@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { Dispatch, SetStateAction,useCallback } from "react"
 
 import { Box, Flex, Link } from "components/atoms"
 import { IconButton } from "components/molecules"
@@ -9,10 +9,12 @@ import { useAdvancedRouter } from "tools/router"
 
 export type NavSideBarProps = {
   nav: NavItem[];
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
-  nav
+  nav, isOpen, setIsOpen
 }) => {
 
   const {pathSeries} = useAdvancedRouter()
@@ -23,28 +25,27 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
     <Flex 
       sx={{
         height: "100%",
+        width: !isOpen ? sizes["templateA.leftNav.width"] : sizes["templateA.leftNav.width"] + 100,
         flexDirection: "column", 
         justifyContent: "space-between",
-        alignItems: "center",
+        alignItems: !isOpen ? "center" : "flex-start",
       }} 
     >
       <Box>
         <Flex sx={{size: sizes["templateA.leftNav.width"], justifyContent: "center", alignItems: "center"}}>
-          <IconButton src={"svgs/bao-house.svg"}></IconButton>
+          <Link href={"/"}>
+            <IconButton src={"svgs/bao-house.svg"}></IconButton>
+          </Link>
         </Flex> 
       </Box>
 
       <Box sx={{flex: 1}}>
         <Flex>
 
-          <Flex sx={{
-            size: sizes["templateA.leftNav.width"], 
-            justifyContent: "center", 
-            alignItems: "center",
-          }}
-          >
+          <Flex>
             <IconButton 
-              src={"svgs/bao-arrow-simple-double-right.svg"}
+              src={ !isOpen ? "svgs/bao-arrow-simple-double-right.svg" : "svgs/bao-arrow-simple-double-left.svg"} 
+              onClick={()=>setIsOpen(!isOpen)}
             >
             </IconButton>
           </Flex>
@@ -52,14 +53,20 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
           <Flex >
             {nav.map(item=>(
               <Link href={`/${item.id}`}  key={`nav-item-${item.id}`} >
-                <IconButton
-                  sx={{
-                    color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,
-                    backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : null
-                  }}
-                  src={`svgs/${item.svg}`}
-                >
-                </IconButton>
+                <Flex sx={{flexDirection: "row"}}>
+                  <IconButton
+                    sx={{
+                      color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,
+                      backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : null
+                    }}
+                    src={`svgs/${item.svg}`}
+                  ></IconButton>
+                  {isOpen && (
+                    <Box>
+                      {item.text}
+                    </Box>
+                  )}
+                </Flex>
               </Link>
             ))}
           </Flex>

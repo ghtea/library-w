@@ -19,24 +19,29 @@ export type TemplateAProps = {
 export type NavItem = {
   id: string;
   svg: string;
+  text: string;
 }
 
 export const nav: NavItem[] = [
   {
     id: "music",
     svg: "bao-music.svg",
+    text: "Music"
   },
   {
     id: "movie",
     svg: "bao-movie.svg",
+    text: "Movie"
   },
   {
     id: "thought",
     svg: "bao-speech-bubble-circle.svg",
+    text: "Thought"
   },
   {
     id: "knowledge",
     svg: "bao-book-open.svg",
+    text: "Knowledge"
   },
 ]
 
@@ -44,6 +49,8 @@ export const nav: NavItem[] = [
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   children
 }) => {
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const navBarSx: Sx = useMemo(()=>({
     zIndex: zIndex.navBar,
@@ -63,12 +70,11 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
           ...navBarSx,
           top: "0", 
           width: "100%",
-          height: sizes["templateA.topNav.height"],
           borderBottomStyle: "solid", 
           borderBottomWidth: "1px", 
         }}
       >
-        <NavTopBar nav={nav} ></NavTopBar>
+        <NavTopBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen} ></NavTopBar>
       </Box>
       
       {/* side bar in lg, xl */}
@@ -76,13 +82,12 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
         sx={{
           ...navBarSx,
           left: "0", 
-          width: sizes["templateA.leftNav.width"],
           height: "100vh",
           borderRightStyle: "solid", 
           borderRightWidth: "1px", 
         }} 
       >
-        <NavSideBar nav={nav} ></NavSideBar>
+        <NavSideBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen} ></NavSideBar>
       </Box>
         
       <Box
