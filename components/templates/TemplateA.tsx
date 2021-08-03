@@ -20,8 +20,8 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   const navBarSx: Sx = useMemo(()=>({
     zIndex: zIndex.navBar,
     position: "fixed", 
-    backgroundColor: ColorKey["gray-50"],
-    borderColor: ColorKey["gray-200"],
+    backgroundColor: ColorKey["nav.bg"],
+    borderColor: ColorKey["nav.border"],
   }),[]);
 
   return ( 
@@ -87,8 +87,18 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             </Flex> 
           </Box>
           <Box sx={{flex: 1}}>
-            <Flex sx={{size: sizes["templateA.leftNav.width"], justifyContent: "center", alignItems: "center"}}>
-              <IconButton src={"svgs/bao-arrow-simple-double-right.svg"}></IconButton>
+            <Flex sx={{
+              size: sizes["templateA.leftNav.width"], 
+              justifyContent: "center", 
+              alignItems: "center",
+              backgroundColor: ColorKey.primary, 
+            }}
+            >
+              <IconButton 
+                src={"svgs/bao-arrow-simple-double-right.svg"}
+                sx={{color: ColorKey["primary-partner"]}}
+              >
+              </IconButton>
             </Flex>
           </Box>
           <Box> 

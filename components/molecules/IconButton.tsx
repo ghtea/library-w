@@ -23,7 +23,7 @@ export const IconButton: React.FunctionComponent<IconButtonProps> = ({
         lineHeight: 0,
         ...sx,
       }}
-    >  
-      <Icon src={src} sx={{height: "100%"}}/>  
+    > 
+      <Icon src={src} sx={{height: "100%", color: sx?.color ? sx.color : undefined }}/>  
     </Button>
   )};

@@ -20,19 +20,19 @@ export enum PaletteKey {
 
 const palette = {
 
-  [PaletteKey.white]: "#ffffff",
-  [PaletteKey.black]: "#000000",
+  [PaletteKey.white]: "#ffffff" as const,
+  [PaletteKey.black]: "#000000" as const,
 
-  [PaletteKey["gray-50"]]: "#FAFAFA",
-  [PaletteKey["gray-100"]]: "#F4F4F5",
-  [PaletteKey["gray-200"]]: "#E4E4E7",
-  [PaletteKey["gray-300"]]: "#D4D4D8",
-  [PaletteKey["gray-400"]]: "#A1A1AA",
-  [PaletteKey["gray-500"]]: "#71717A",
-  [PaletteKey["gray-600"]]: "#52525B",
-  [PaletteKey["gray-700"]]: "#3F3F46",
-  [PaletteKey["gray-800"]]: "#27272A",
-  [PaletteKey["gray-900"]]: "#18181B",
+  [PaletteKey["gray-50"]]: "#FAFAFA" as const,
+  [PaletteKey["gray-100"]]: "#F4F4F5" as const,
+  [PaletteKey["gray-200"]]: "#E4E4E7" as const,
+  [PaletteKey["gray-300"]]: "#D4D4D8" as const,
+  [PaletteKey["gray-400"]]: "#A1A1AA" as const,
+  [PaletteKey["gray-500"]]: "#71717A" as const,
+  [PaletteKey["gray-600"]]: "#52525B" as const,
+  [PaletteKey["gray-700"]]: "#3F3F46" as const,
+  [PaletteKey["gray-800"]]: "#27272A" as const,
+  [PaletteKey["gray-900"]]: "#18181B" as const,
 
 };
 
