@@ -1,7 +1,7 @@
 
 const sizes = {
   "templateA.topNav.height": 48 as const,
-  "templateA.leftNav.width": 60 as const,
+  "templateA.sideNav.width": 120 as const,
 }
 
 export default sizes;

@@ -94,7 +94,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
         sx={{
           position: "relative",
           top: [sizes["templateA.topNav.height"], null, 0, null],
-          left: [0, null, sizes["templateA.leftNav.width"], null ],
+          left: [0, null, sizes["templateA.sideNav.width"], null ],
         }}
       >
         {children}

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps } from "theme-ui"
 import {Sx,useSx} from "tools/theme-ui"
@@ -18,11 +18,12 @@ export enum Responsive {
   XL = "xl",
 }
 
-export const Box: React.FunctionComponent<BoxProps> = ({
-  sx,
-  responsive,
-  ...rest
-}) => {
+export const Box = React.forwardRef<HTMLElement, BoxProps>((props, ref) => {
+  const {
+    sx,
+    responsive,
+    ...rest
+  } = props;
 
   const display = useMemo(()=>{
     // display: ["unset", null, "none", null]
@@ -48,6 +49,9 @@ export const Box: React.FunctionComponent<BoxProps> = ({
   },[responsive])
   
   const realSx = useSx({
+    flexShrink: 0,
+    flexGrow: 0,
+    flexBasis: "auto",
     height: "auto",
     width: "auto",
     ...sx,
@@ -57,4 +61,4 @@ export const Box: React.FunctionComponent<BoxProps> = ({
   return (
     <ThemeUiBox {...rest} sx={realSx} />
   )
-};
+});
