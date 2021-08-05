@@ -1,11 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useImperativeHandle,useMemo, useRef } from "react";
 
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps } from "theme-ui"
-import {Sx,useSx} from "tools/theme-ui"
+import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject } from "theme-ui"
 
-export type BoxProps = Omit<ThemeUiBoxProps, "sx"> & {
-    sx?: Sx
-    responsive?: Responsive
+export type BoxProps = ThemeUiBoxProps & {
+  responsive?: Responsive
 };
 
 export enum Responsive {
@@ -18,7 +16,8 @@ export enum Responsive {
   XL = "xl",
 }
 
-export const Box = React.forwardRef<HTMLElement, BoxProps>((props, ref) => {
+export const Box = React.forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
+
   const {
     sx,
     responsive,
@@ -48,17 +47,19 @@ export const Box = React.forwardRef<HTMLElement, BoxProps>((props, ref) => {
     }
   },[responsive])
   
-  const realSx = useSx({
+  const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",
     height: "auto",
     width: "auto",
     ...sx,
-    display
-  })
+    display,
+  }),[display, sx])
 
   return (
-    <ThemeUiBox {...rest} sx={realSx} />
-  )
+    <ThemeUiBox ref={ref} sx={primitiveSx} {...rest} />
+  );
 });
+
+Box.displayName = "Box";

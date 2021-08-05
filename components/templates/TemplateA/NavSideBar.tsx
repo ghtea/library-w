@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction,useCallback } from "react"
 
-import { Box, Flex,Link, Text } from "components/atoms"
-import { Icon,IconButton } from "components/molecules"
+import { Box, Flex,Link } from "components/atoms"
+import { Icon,IconButton, Text } from "components/molecules"
 import {NavItem} from "components/templates/TemplateA"
 import { ColorKey } from "theme/colors"
 import sizes from "theme/sizes"
@@ -55,7 +55,7 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
                     src={`svgs/${item.svg}`}
                     sx={{color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,}}
                   ></Icon>
-                  <Box sx={{ml: 1, flexGrow: 1}} ref={}>
+                  <Box sx={{ml: 1, flexGrow: 1}}>
                     <Text >
                       {item.text}
                     </Text>

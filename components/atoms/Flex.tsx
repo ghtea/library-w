@@ -1,19 +1,19 @@
-import React from "react";
+import React, {useMemo} from "react";
 
-import { Flex as ThemeUiFlex, FlexProps as ThemeUiFlexProps } from "theme-ui"
-import {Sx,useSx} from "tools/theme-ui"
+import { Flex as ThemeUiFlex, FlexProps as ThemeUiFlexProps, ThemeUIStyleObject } from "theme-ui"
 
 export type FlexProps = ThemeUiFlexProps & {
-  sx?: Sx
+  
 };
 
-export const Flex = React.forwardRef<HTMLElement, FlexProps>((props, ref) => {
+export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
+  
   const {
     sx,
     ...rest
   } = props;
 
-  const realSx = useSx({
+  const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
     height: "auto",
     width: "100%",
     flexDirection: "column",
@@ -22,9 +22,11 @@ export const Flex = React.forwardRef<HTMLElement, FlexProps>((props, ref) => {
     flexGrow: 0,
     flexBasis: "auto",
     ...sx,
-  })
+  }),[sx])
 
   return ( 
-    <ThemeUiFlex {...rest} sx={realSx} />
+    <ThemeUiFlex ref={ref} sx={primitiveSx} {...rest} />
   );
 });
+
+Flex.displayName = "Flex";

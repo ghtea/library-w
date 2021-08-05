@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useMemo } from "react";
 
-import { Link as ThemeUiLink, LinkProps as ThemeUiLinkProps } from "theme-ui"
-import {Sx,useSx} from "tools/theme-ui"
+import { Link as ThemeUiLink, LinkProps as ThemeUiLinkProps, ThemeUIStyleObject } from "theme-ui"
 
 
-export type LinkProps = Omit<ThemeUiLinkProps, "sx"> & {
-    sx?: Sx
+export type LinkProps = ThemeUiLinkProps & {
+  
 };
 
-
-export const Link = React.forwardRef<HTMLElement, LinkProps>((props, ref) => {
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   const {
     sx,
     href,
     ...rest
   } = props;
 
-  const realSx = useSx({
+  const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
     "&:visited": {
       color: "unset",
     },
@@ -30,9 +28,11 @@ export const Link = React.forwardRef<HTMLElement, LinkProps>((props, ref) => {
     cursor: "pointer",
     textDecoration: "none",
     ...sx,
-  })
+  }),[sx])
 
   return ( 
-    <ThemeUiLink {...rest} href={href} sx={realSx} />
+    <ThemeUiLink ref={ref} sx={primitiveSx} href={href} {...rest} />
   );
 })
+
+Link.displayName = "Link";

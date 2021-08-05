@@ -1,25 +1,30 @@
-import { useMemo } from "react"
+import React, { useMemo } from "react"
 
 import { Button, ButtonProps, } from "components/atoms";
 import { Icon } from "components/molecules";
+import { ThemeUIStyleObject } from "theme-ui";
 
 export type IconButtonProps = ButtonProps & {
     src: string;
 };
 
-export const IconButton: React.FunctionComponent<IconButtonProps> = ({
-  src,
-  sx, 
-  ...rest
-}) => {
+export const IconButton = React.forwardRef<HTMLDivElement, IconButtonProps>((props, ref) => {
 
-  const iconSx = useMemo(()=>
-    (
-      {
-        height: "100%",
-        ...(sx?.color && {color: sx?.color})
-      }
-    ),[sx])
+  const {
+    src,
+    sx, 
+    ...rest
+  } = props;
+  
+  const iconSx = useMemo(()=>{
+
+    const {color} = sx;
+
+    return ({
+      height: "100%",
+      ...( color && {color: color})
+    })
+  },[sx])
     
   return (
     <Button
@@ -36,4 +41,6 @@ export const IconButton: React.FunctionComponent<IconButtonProps> = ({
     > 
       <Icon src={src} sx={iconSx}/>  
     </Button>
-  )};
+  )});
+
+IconButton.displayName = "IconButton";

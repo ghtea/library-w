@@ -1,20 +1,19 @@
-import React from "react";
+import React, {useMemo} from "react";
 
-import { Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps } from "theme-ui"
-import {Sx,useSx} from "tools/theme-ui"
+import { Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps, ThemeUIStyleObject } from "theme-ui"
 
-export type ButtonProps = Omit<ThemeUiButtonProps, "sx"> & {
-    sx?: Sx
+export type ButtonProps = ThemeUiButtonProps & {
+  
 };
 
 
-export const Button = React.forwardRef<HTMLElement, ButtonProps>((props, ref) => {
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const {
     sx,
     ...rest
   } = props;
 
-  const realSx = useSx({
+  const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
     display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
@@ -26,9 +25,11 @@ export const Button = React.forwardRef<HTMLElement, ButtonProps>((props, ref) =>
     px: 1,
     py: 1,
     ...sx,
-  })
+  }),[sx])
 
   return ( 
-    <ThemeUiButton {...rest} sx={realSx} />
+    <ThemeUiButton ref={ref} sx={primitiveSx} {...rest} />
   );
 });
+
+Button.displayName = "Button";
