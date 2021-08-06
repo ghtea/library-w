@@ -87,7 +87,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
           borderRightWidth: "1px", 
         }} 
       >
-        <NavSideBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen} ></NavSideBar>
+        <NavSideBar nav={nav}></NavSideBar>
       </Box>
         
       <Box

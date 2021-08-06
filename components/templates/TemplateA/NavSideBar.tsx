@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction,useCallback } from "react"
 
-import { Box, Flex,Link } from "components/atoms"
-import { Icon,IconButton, Text } from "components/molecules"
+import { Box, Flex, Link, Text } from "components/atoms"
+import { LocalLink } from "components/atoms/LocalLink"
+import { Icon,IconButton } from "components/molecules"
 import {NavItem} from "components/templates/TemplateA"
 import { ColorKey } from "theme/colors"
 import sizes from "theme/sizes"
@@ -42,7 +43,7 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
 
           <Flex sx={{alignItems: "flex-start"}}>
             {nav.map(item=>(
-              <Link href={`/${item.id}`}  key={`nav-item-${item.id}`} sx={{width: "100%"}}>
+              <LocalLink key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
                 <Flex sx={{
                   flexDirection: "row", 
                   justifyContent: "flex-start",
@@ -55,13 +56,13 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
                     src={`svgs/${item.svg}`}
                     sx={{color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,}}
                   ></Icon>
-                  <Box sx={{ml: 1, flexGrow: 1}}>
-                    <Text >
+                  <Box sx={{ml: 1, flexGrow: 1, flexShrink: 1}}>
+                    <Text sx={{fontSize: "0.9rem"}}>
                       {item.text}
                     </Text>
                   </Box>
                 </Flex>
-              </Link>
+              </LocalLink>
             ))}
           </Flex>
             

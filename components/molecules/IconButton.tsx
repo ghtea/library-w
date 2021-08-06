@@ -8,17 +8,20 @@ export type IconButtonProps = ButtonProps & {
     src: string;
 };
 
-export const IconButton = React.forwardRef<HTMLDivElement, IconButtonProps>((props, ref) => {
+export const IconButton = React.forwardRef<HTMLDivElement, IconButtonProps>(({
+  src,
+  sx, 
+  ...rest
+}, ref) => {
 
-  const {
-    src,
-    sx, 
-    ...rest
-  } = props;
+  // const {
+    
+  // } = props;
   
   const iconSx = useMemo(()=>{
 
-    const {color} = sx;
+    const typedSx: ThemeUIStyleObject = {...sx}; 
+    const {color} = typedSx; // TODO: remember this tech!
 
     return ({
       height: "100%",

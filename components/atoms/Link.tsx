@@ -15,6 +15,9 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) 
   } = props;
 
   const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
+    "&:link":{
+      color: "unset",
+    },
     "&:visited": {
       color: "unset",
     },

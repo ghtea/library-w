@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { ReactSVG } from 'react-svg'
 
 import { Box, BoxProps } from "components/atoms"
-import {ColorKey} from "theme/colors";
+import { ColorKey } from "theme/colors";
 
 export type IconProps = BoxProps & {
   src: string;
@@ -20,7 +20,8 @@ export const Icon = React.forwardRef<HTMLDivElement, IconProps>((props, ref) => 
     <Box 
       ref={ref}
       sx={{
-        size: "24px",
+        width: "24px",
+        height: "24px",
         color: ColorKey.text,
         lineHeight: 0,
         ...sx
