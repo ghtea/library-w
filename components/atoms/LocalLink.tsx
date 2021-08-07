@@ -22,13 +22,13 @@ export const LocalLink = React.forwardRef<HTMLDivElement, LocalLinkProps>((props
     router.push(to)
   },[router, to])
   
-  const finalSx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: ThemeUIStyleObject = useMemo(()=>({
     cursor: "pointer",
     ...sx,
   }),[sx])
 
   return (
-    <ThemeUiBox ref={ref} sx={finalSx} onClick={onClick} {...rest} />
+    <ThemeUiBox as={"a"} ref={ref} sx={_sx} onClick={onClick} {...rest} />
   );
 });
 

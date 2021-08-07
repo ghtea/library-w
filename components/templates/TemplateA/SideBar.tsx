@@ -1,18 +1,20 @@
-import { Dispatch, SetStateAction,useCallback } from "react"
+import { useCallback } from "react"
 
-import { Box, Flex, Link, Text } from "components/atoms"
+import { Box } from "components/atoms/Box"
+import { Flex } from "components/atoms/Flex"
+import { Icon, Size } from "components/atoms/Icon"
 import { LocalLink } from "components/atoms/LocalLink"
-import { Icon,IconButton } from "components/molecules"
-import {NavItem} from "components/templates/TemplateA"
-import { ColorKey } from "theme/colors"
-import sizes from "theme/sizes"
+import { Text } from "components/atoms/Text"
+import { IconButton } from "components/molecules/IconButton"
+import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
+import { ColorKey, sizes } from "theme"
 import { useAdvancedRouter } from "tools/router"
 
-export type NavSideBarProps = {
+export type SideBarProps = {
   nav: NavItem[];
 }
 
-export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
+export const SideBar: React.FunctionComponent<SideBarProps> = ({
   nav
 }) => {
 
@@ -24,17 +26,19 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
     <Flex 
       sx={{
         height: "100%",
-        width: sizes["templateA.sideNav.width"],
+        width: ["unset", null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH],
         flexDirection: "column", 
         justifyContent: "space-between",
         alignItems: "stretch"
       }} 
     >
       <Box>
-        <Flex sx={{size: sizes["templateA.sideNav.width"], justifyContent: "center", alignItems: "center"}}>
-          <Link href={"/"}>
-            <IconButton src={"svgs/bao-house.svg"}></IconButton>
-          </Link>
+        <Flex sx={{justifyContent: "center", alignItems: "center"}}>
+          <Box sx={{py: 4}}>
+            <LocalLink to={"/"}>
+              <IconButton src={"svgs/bao-house.svg"}></IconButton>
+            </LocalLink>
+          </Box>
         </Flex> 
       </Box>
 
@@ -47,8 +51,8 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
                 <Flex sx={{
                   flexDirection: "row", 
                   justifyContent: "flex-start",
-                  px: 2,
-                  py: 2,
+                  px: 4,
+                  py: 4,
                   color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,
                   backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : null
                 }}>
@@ -56,7 +60,7 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
                     src={`svgs/${item.svg}`}
                     sx={{color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,}}
                   ></Icon>
-                  <Box sx={{ml: 1, flexGrow: 1, flexShrink: 1}}>
+                  <Box sx={{ml: 3, flexGrow: 1, flexShrink: 1}}>
                     <Text sx={{fontSize: "0.9rem"}}>
                       {item.text}
                     </Text>
@@ -69,8 +73,8 @@ export const NavSideBar: React.FunctionComponent<NavSideBarProps> = ({
         </Flex>
       </Box>
 
-      <Box> 
-        <Flex sx={{size: sizes["templateA.sideNav.width"], justifyContent: "center", alignItems: "center"}}>
+      <Box sx={{py: 4}}>
+        <Flex sx={{justifyContent: "center", alignItems: "center"}}>
           <IconButton src={"svgs/bao-circle-i.svg"}></IconButton>
         </Flex> 
       </Box>

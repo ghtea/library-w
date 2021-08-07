@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 
-import { Box,Flex } from "components/atoms"
-import { Responsive } from "components/atoms/Box"
-import {ColorKey} from "theme/colors"
-import {zIndex} from "theme/others"
-import sizes from "theme/sizes"
-import { useAdvancedRouter } from "tools/router"
+import { Box } from "components/atoms/Box"
+import { Flex } from "components/atoms/Flex"
+import { Responsive } from "components/atoms/Responsive"
+import {ColorKey,sizes,zIndex} from "theme"
 import { Sx } from "tools/theme-ui"
 
-import {NavSideBar} from "./NavSideBar"
-import {NavTopBar} from "./NavTopBar"
+import {SideBar} from "./SideBar"
+import {TopBar} from "./TopBar"
+
+export const TEMPLATE_A_SIDE_BAR_MD_WIDTH = 140;
+export const TEMPLATE_A_SIDE_BAR_LG_WIDTH = 140;
 
 
 export type TemplateAProps = {
@@ -53,8 +54,8 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const navBarSx: Sx = useMemo(()=>({
-    zIndex: zIndex.navBar,
     position: "fixed", 
+    zIndex: zIndex.navBar,
     backgroundColor: ColorKey["nav.bg"],
     borderColor: ColorKey["nav.border"],
   }),[]);
@@ -65,36 +66,46 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
     <Flex sx={{backgroundColor: ColorKey.background, color: ColorKey.text}}>
 
       {/* top bar in sm, md */}
-      <Box responsive={Responsive.SMALL} 
-        sx={{
-          ...navBarSx,
-          top: "0", 
-          width: "100%",
-          borderBottomStyle: "solid", 
-          borderBottomWidth: "1px", 
-        }}
-      >
-        <NavTopBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen} ></NavTopBar>
-      </Box>
+      <Responsive range={"sm-md"}>
+        <Box 
+          sx={{
+            ...navBarSx,
+            top: "0", 
+            width: "100%",
+            borderBottomStyle: "solid", 
+            borderBottomWidth: "1px", 
+          }}
+        >
+          <TopBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen} ></TopBar>
+        </Box>
+      </Responsive>
       
       {/* side bar in lg, xl */}
-      <Box responsive={Responsive.BIG} 
-        sx={{
-          ...navBarSx,
-          left: "0", 
-          height: "100vh",
-          borderRightStyle: "solid", 
-          borderRightWidth: "1px", 
-        }} 
-      >
-        <NavSideBar nav={nav}></NavSideBar>
-      </Box>
+      <Responsive range={"lg-xl"}>
+        <Box
+          sx={{
+            ...navBarSx,
+            left: "0", 
+            height: "100vh",
+            borderRightStyle: "solid", 
+            borderRightWidth: "1px", 
+          }} 
+        >
+          <SideBar nav={nav}></SideBar>
+        </Box>
+      </Responsive>
         
       <Box
         sx={{
-          position: "relative",
+          position: "absolute",
+          width: [
+            "100%", 
+            null, 
+            `calc(100vw - ${TEMPLATE_A_SIDE_BAR_MD_WIDTH}px)`, 
+            `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`
+          ],
           top: [sizes["templateA.topNav.height"], null, 0, null],
-          left: [0, null, sizes["templateA.sideNav.width"], null ],
+          left: [0, null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH ],
         }}
       >
         {children}

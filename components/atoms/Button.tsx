@@ -13,7 +13,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, r
     ...rest
   } = props;
 
-  const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: ThemeUIStyleObject = useMemo(()=>({
     display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
@@ -22,13 +22,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, r
     flexBasis: "auto",
     background: "none",
     cursor: "pointer",
-    px: 1,
-    py: 1,
+    color: "unset",
+    px: 3,
+    py: 3,
     ...sx,
   }),[sx])
 
   return ( 
-    <ThemeUiButton ref={ref} sx={primitiveSx} {...rest} />
+    <ThemeUiButton ref={ref} sx={_sx} {...rest} />
   );
 });
 

@@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints"
 import { Page } from "@notionhq/client/build/src/api-types"
-import { TemplateA } from "components/templates"
-import { Box,Flex } from "components-old/atoms"
+import { Box } from "components/atoms/Box"
+import { Flex } from "components/atoms/Flex"
+import { Album } from "components/organisms/Album"
+import { TemplateA } from "components/templates/TemplateA"
 import Head from "next/head"
-import Image from "next/image"
 import { notion } from "tools/notion"
 import { MusicAlbumPropertyValueMap } from "tools/notion/types"
 
@@ -15,17 +16,18 @@ export type MusicProps = {
   notionFileUrlPrefix?: string;
 }
 
-export type MusicAlbum = Page & {
+export type AlbumData = Page & {
   properties: MusicAlbumPropertyValueMap; // PropertyValueMap
 }
+
 
 export default function Music({
   database,
   notionFileUrlPrefix
 }:MusicProps) {
   
-  const albumList: MusicAlbum[] = useMemo(()=>{ 
-    const newAlbumList = database?.results.filter((item: MusicAlbum) => {
+  const albumList: AlbumData[] = useMemo(()=>{ 
+    const newAlbumList = database?.results.filter((item: AlbumData) => {
       const name = item.properties.Name?.title[0]?.plain_text;
       return name ? true : false
     })
@@ -44,31 +46,29 @@ export default function Music({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex
-        sx={{p: 2}}
-      >
+      <Flex>
 
-        <Flex sx={{flexDirection: "row", flexWrap: "wrap"}}>
-          {albumList?.map((item, index)=>{
-
-            const name = item.properties.Name?.title[0]
-            const key = item.properties.Key?.rich_text[0]?.plain_text
-
-            const src = key ? `${notionFileUrlPrefix}/music-album-covers/${key}.jpg` : undefined;
-            
-            return(
-              <Box key={`album-${item.id}`} sx={{lineHeight: 0, margin: "4px"}}>
-                {src &&
-                  <Image width={"300px"} height={"300px"} alt={`album cover of ${name}`} src={src}/>
-                }
-              </Box>
-            )
-          })}
+        <Flex sx={{ p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap"}}>
+          {albumList?.map((item, index)=>(
+            <Box
+              key={`album-${item.id}`} 
+              sx={{
+                lineHeight: 0, 
+                p: 4,
+                width: ["50%", "33%", "20%", "240px"],
+              }}
+            >
+              <Album
+                data={item}
+                notionFileUrlPrefix={notionFileUrlPrefix}
+              ></Album>
+            </Box>
+          )
+          )}
         </Flex>
         
       </Flex>
     </TemplateA>
-    
   )
 }
 

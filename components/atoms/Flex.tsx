@@ -13,7 +13,7 @@ export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => 
     ...rest
   } = props;
 
-  const primitiveSx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: ThemeUIStyleObject = useMemo(()=>({
     height: "auto",
     width: "100%",
     flexDirection: "column",
@@ -25,7 +25,7 @@ export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => 
   }),[sx])
 
   return ( 
-    <ThemeUiFlex ref={ref} sx={primitiveSx} {...rest} />
+    <ThemeUiFlex ref={ref} sx={_sx} {...rest} />
   );
 });
 

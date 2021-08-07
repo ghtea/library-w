@@ -14,6 +14,9 @@ export enum ColorKey {
   
   "text-strong" = "text-strong",
 
+  "card.strong.bg" = "card-strong-bg",
+  "card.strong.text" = "card-strong-text",
+
   "nav.bg" = "nav-bg",
   "nav.border" = "nav-border",
 
@@ -21,7 +24,7 @@ export enum ColorKey {
 }
 
 
-const colors = {
+export const colors = {
 
   [ColorKey.background] : palette["white"],
   [ColorKey.text]: palette["gray-700"],
@@ -31,6 +34,9 @@ const colors = {
   // [ColorKey.secondary]: "#1997F0",
 
   [ColorKey["text-strong"]]: palette["gray-900"],
+
+  [ColorKey["card.strong.bg"]] : palette["gray-900"],
+  [ColorKey["card.strong.text"]] : palette["white"],
 
 
   [ColorKey["nav.bg"]]: palette["gray-50"],

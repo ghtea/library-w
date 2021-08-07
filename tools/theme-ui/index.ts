@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { ColorKey } from "theme/colors";
+import { ColorKey } from "theme";
 import { ResponsiveStyleValue, ThemeUIStyleObject } from 'theme-ui';
 
 export type Sx = ThemeUIStyleObject & {

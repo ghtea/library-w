@@ -1,4 +1,4 @@
-const text = {
+export const text = {
   // h1: {
   //   fontFamily: "headline",
   //   fontSize: "h1",
@@ -90,5 +90,3 @@ const text = {
   //   color: "text-tertiary",
   // },
 }
-
-export default text;

@@ -1,22 +1,23 @@
 import { Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState } from "react"
 
-import { Box, Button,Flex, Link } from "components/atoms"
-import { Responsive } from "components/atoms/Box"
-import { IconButton } from "components/molecules"
+import { Box } from "components/atoms/Box"
+import { Flex } from "components/atoms/Flex"
+import { Icon, Size } from "components/atoms/Icon"
+import { LocalLink } from "components/atoms/LocalLink"
+import { Responsive } from "components/atoms/Responsive"
+import { Text } from "components/atoms/Text"
+import { IconButton } from "components/molecules/IconButton"
 import {NavItem} from "components/templates/TemplateA"
-import {ColorKey} from "theme/colors"
-import {zIndex} from "theme/others"
-import sizes from "theme/sizes"
+import {ColorKey, sizes, zIndex} from "theme"
 import { useAdvancedRouter } from "tools/router"
-import { Sx } from "tools/theme-ui"
 
-export type NavTopBarProps = {
+export type TopBarProps = {
   nav: NavItem[];
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const NavTopBar: React.FunctionComponent<NavTopBarProps> = ({
+export const TopBar: React.FunctionComponent<TopBarProps> = ({
   nav, isOpen, setIsOpen
 }) => {
 
@@ -38,9 +39,9 @@ export const NavTopBar: React.FunctionComponent<NavTopBarProps> = ({
       >
         <Box>
           <Flex>
-            <Link href={"/"}>
+            <LocalLink to={"/"}>
               <IconButton src={"svgs/bao-house.svg"}></IconButton>
-            </Link>
+            </LocalLink>
           </Flex> 
         </Box>
 
@@ -49,36 +50,40 @@ export const NavTopBar: React.FunctionComponent<NavTopBarProps> = ({
 
             <Box>
               <Flex>
-                <IconButton
-                  src={ isOpen ? "svgs/bao-arrow-simple-double-down.svg" : "svgs/bao-arrow-simple-double-up.svg"} 
-                  onClick={()=>setIsOpen(!isOpen)}
-                ></IconButton>
+                <Box>
+                  <IconButton
+                    src={ isOpen ? "svgs/bao-arrow-simple-double-down.svg" : "svgs/bao-arrow-simple-double-up.svg"} 
+                    onClick={()=>setIsOpen(!isOpen)}
+                  ></IconButton>
+                </Box>
               </Flex>
             </Box>
 
-            <Box responsive={Responsive.MD}>
+            <Responsive range={"mdOnly"}>
               <Flex sx={{flexDirection: "row"}}>
                 {nav.map(item=>(
-                  <Link href={`/${item.id}`}  key={`nav-item-${item.id}`} >
+                  <LocalLink key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
                     <IconButton
                       sx={{
-                        color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,
-                        backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : null
+                        color: getIsActive(item.id) ? ColorKey["primary-partner"] : "unset",
+                        backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : "unset"
                       }}
                       src={`svgs/${item.svg}`}
                     >
                     </IconButton>
-                  </Link>
+                  </LocalLink>
                 ))}
               </Flex>
-            </Box>
-
+            </Responsive>
+            
           </Flex>
         </Box>
 
         <Box> 
           <Flex>
-            <IconButton src={"svgs/bao-circle-i.svg"}></IconButton>
+            <Box>
+              <IconButton src={"svgs/bao-circle-i.svg"}></IconButton>
+            </Box>
           </Flex> 
         </Box>
 

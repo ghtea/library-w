@@ -1,13 +1,18 @@
-import buttons from "./buttons";
-import colors from "./colors";
-import forms from "./forms";
-import { background, breakpoints, space } from "./others";
-import sizes from "./sizes";
-import text from "./text";
+import {breakpoints, BreakpointsSize} from "./breakpoints";
+import {buttons} from "./buttons";
+import {ColorKey,colors} from "./colors";
+import {forms} from "./forms";
+import {sizes} from "./sizes";
+import {space} from "./space";
+import {text} from "./text";
+import {zIndex} from "./z-index";
+
+export {breakpoints, buttons, colors, forms, sizes, space, text, zIndex};
+export {BreakpointsSize, ColorKey};
 
 export const theme = {
   breakpoints: breakpoints,
-  background: background,
+  background: {},
   colors: colors,
 
   space: space,

@@ -13,7 +13,7 @@ export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => 
     ...rest
   } = props;
 
-  const finalSx: ThemeUIStyleObject = useMemo(()=>{
+  const _sx: ThemeUIStyleObject = useMemo(()=>{
     return ({
       flexShrink: 1,
       flexGrow: 1,
@@ -23,12 +23,13 @@ export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => 
       lineHeight: 1.6,
       wordBreak: "break-all",
       display: "inline-block",
+      maxWidth: "100%",
       ...sx,
     });
   },[sx])
 
   return (
-    <ThemeUiText ref={ref} sx={finalSx} {...rest} />
+    <ThemeUiText ref={ref} sx={_sx} {...rest} />
   );
 })
 

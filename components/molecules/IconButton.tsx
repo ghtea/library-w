@@ -1,34 +1,19 @@
 import React, { useMemo } from "react"
 
-import { Button, ButtonProps, } from "components/atoms";
-import { Icon } from "components/molecules";
+import { Button, ButtonProps, } from "components/atoms/Button";
+import { Icon, IconProps } from "components/atoms/Icon";
 import { ThemeUIStyleObject } from "theme-ui";
 
-export type IconButtonProps = ButtonProps & {
-    src: string;
+export type IconButtonProps = ButtonProps & Pick<IconProps, "src" | "size"> & {
 };
 
 export const IconButton = React.forwardRef<HTMLDivElement, IconButtonProps>(({
   src,
+  size,
   sx, 
   ...rest
 }, ref) => {
-
-  // const {
-    
-  // } = props;
   
-  const iconSx = useMemo(()=>{
-
-    const typedSx: ThemeUIStyleObject = {...sx}; 
-    const {color} = typedSx; // TODO: remember this tech!
-
-    return ({
-      height: "100%",
-      ...( color && {color: color})
-    })
-  },[sx])
-    
   return (
     <Button
       {...rest}
@@ -36,13 +21,15 @@ export const IconButton = React.forwardRef<HTMLDivElement, IconButtonProps>(({
         display: "inline-flex",
         justifyContent: "center",
         alignItems: "center",
-        px: 1,
-        py: 1,
+        width: "auto",
+        height: "auto",
+        px: 3,
+        py: 3,
         lineHeight: 0,
         ...sx,
       }}
     > 
-      <Icon src={src} sx={iconSx}/>  
+      <Icon src={src} size={size} sx={{color: "inherit"}}/>  
     </Button>
   )});
 

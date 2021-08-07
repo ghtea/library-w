@@ -1,4 +1,4 @@
-const forms = {
+export const forms = {
   // input: {
   //   p: 1,
   //   fontFamily: "paragraph",
@@ -62,5 +62,3 @@ const forms = {
   //   color: "text-primary",
   // },
 }
-
-export default forms;

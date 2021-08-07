@@ -1,4 +1,4 @@
-const buttons = {
+export const buttons = {
   // default: {
   //   padding: "8px 16px",
   //   color: "text-primary",
@@ -28,5 +28,3 @@ const buttons = {
   //   backgroundImage: "linear-gradient(to top, #1665D8, #1f6fe5)",
   // },
 }
-
-export default buttons;
