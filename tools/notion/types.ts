@@ -1,23 +1,23 @@
 import { PropertyValueMap } from "@notionhq/client/build/src/api-endpoints";
 import { 
-    TitlePropertyValue,
-    RichTextPropertyValue,
-    NumberPropertyValue,
-    SelectPropertyValue,
-    MultiSelectPropertyValue,
-    DatePropertyValue,
-    FormulaPropertyValue,
-    RollupPropertyValue,
-    PeoplePropertyValue,
-    FilesPropertyValue,
-    CheckboxPropertyValue,
-    URLPropertyValue,
-    EmailPropertyValue,
-    PhoneNumberPropertyValue,
-    CreatedTimePropertyValue,
-    CreatedByPropertyValue,
-    LastEditedTimePropertyValue,
-    LastEditedByPropertyValue,
+  CheckboxPropertyValue,
+  CreatedByPropertyValue,
+  CreatedTimePropertyValue,
+  DatePropertyValue,
+  EmailPropertyValue,
+  FilesPropertyValue,
+  FormulaPropertyValue,
+  LastEditedByPropertyValue,
+  LastEditedTimePropertyValue,
+  MultiSelectPropertyValue,
+  NumberPropertyValue,
+  PeoplePropertyValue,
+  PhoneNumberPropertyValue,
+  RichTextPropertyValue,
+  RollupPropertyValue,
+  SelectPropertyValue,
+  TitlePropertyValue,
+  URLPropertyValue,
 } from "@notionhq/client/build/src/api-types";
 
 
@@ -32,5 +32,6 @@ export type MusicAlbumPropertyValueMap = PropertyValueMap & {
     Fullness?: SelectPropertyValue;
     Unity?: SelectPropertyValue;
     Dee?: SelectPropertyValue;
+    //
     Score?: FormulaPropertyValue;
 }

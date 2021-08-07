@@ -13,29 +13,13 @@ import { zIndex } from "theme/space"
 
 export type AlbumProps = {
     data: AlbumData
-    notionFileUrlPrefix?: string
   }
 
 export const Album: React.FunctionComponent<AlbumProps> = ({
-  data, 
-  notionFileUrlPrefix
+  data
 }) => {
 
-  const { title, artist, key, src } = useMemo(()=>{
-    const title = data.properties.Name?.title[0].plain_text;
-    const artist = data.properties.Artist?.rich_text[0]?.plain_text;
-
-    const key = data.properties.Key?.rich_text[0]?.plain_text;
-    const src = key ? `${notionFileUrlPrefix}/music-album-covers/${key}.jpg` : undefined;
-    
-    return ({
-      title,
-      artist,
-      key,
-      src
-    })
-  },[data, notionFileUrlPrefix])
-
+  const {title, artist, key, src, score, rank} = data.essence || {};
 
   return (
     <Flex >
@@ -62,7 +46,7 @@ export const Album: React.FunctionComponent<AlbumProps> = ({
               fontSize: "1.2rem",
               fontWeight: "bold",
             }}>
-              {"10"}
+              {rank}
             </Text>
             <Text sx={{
               ml: 2,
