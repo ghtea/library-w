@@ -26,7 +26,7 @@ export type MusicAlbumPropertyValueMap = PropertyValueMap & {
     Artist?: RichTextPropertyValue;
     Key?: RichTextPropertyValue;
     RYM?: URLPropertyValue;
-    Year?: NumberPropertyValue;
+    Released?: DatePropertyValue;
     // rating
     Often?: SelectPropertyValue;
     Fullness?: SelectPropertyValue;

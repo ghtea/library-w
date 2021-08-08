@@ -11,11 +11,11 @@ import { ColorKey } from "theme"
 import { zIndex } from "theme/space"
 
 
-export type AlbumProps = {
+export type AlbumCardProps = {
     data: AlbumData
   }
 
-export const Album: React.FunctionComponent<AlbumProps> = ({
+export const AlbumCard: React.FunctionComponent<AlbumCardProps> = ({
   data
 }) => {
 

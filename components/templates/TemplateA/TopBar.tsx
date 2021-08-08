@@ -40,7 +40,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
         <Box>
           <Flex>
             <LocalLink to={"/"}>
-              <IconButton src={"svgs/bao-house.svg"}></IconButton>
+              <IconButton src={"/svgs/bao-house.svg"}></IconButton>
             </LocalLink>
           </Flex> 
         </Box>
@@ -52,7 +52,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
               <Flex>
                 <Box>
                   <IconButton
-                    src={ isOpen ? "svgs/bao-arrow-simple-double-down.svg" : "svgs/bao-arrow-simple-double-up.svg"} 
+                    src={ isOpen ? "/svgs/bao-arrow-simple-double-down.svg" : "/svgs/bao-arrow-simple-double-up.svg"} 
                     onClick={()=>setIsOpen(!isOpen)}
                   ></IconButton>
                 </Box>
@@ -68,7 +68,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
                         color: getIsActive(item.id) ? ColorKey["primary-partner"] : "unset",
                         backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : "unset"
                       }}
-                      src={`svgs/${item.svg}`}
+                      src={`/svgs/${item.svg}`}
                     >
                     </IconButton>
                   </LocalLink>
@@ -82,7 +82,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
         <Box> 
           <Flex>
             <Box>
-              <IconButton src={"svgs/bao-circle-i.svg"}></IconButton>
+              <IconButton src={"/svgs/bao-circle-i.svg"}></IconButton>
             </Box>
           </Flex> 
         </Box>

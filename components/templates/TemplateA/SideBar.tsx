@@ -36,7 +36,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
         <Flex sx={{justifyContent: "center", alignItems: "center"}}>
           <Box sx={{py: 4}}>
             <LocalLink to={"/"}>
-              <IconButton src={"svgs/bao-house.svg"}></IconButton>
+              <IconButton src={"/svgs/bao-house.svg"}></IconButton>
             </LocalLink>
           </Box>
         </Flex> 
@@ -57,7 +57,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
                   backgroundColor: getIsActive(item.id) ? ColorKey["primary"] : null
                 }}>
                   <Icon 
-                    src={`svgs/${item.svg}`}
+                    src={`/svgs/${item.svg}`}
                     sx={{color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,}}
                   ></Icon>
                   <Box sx={{ml: 3, flexGrow: 1, flexShrink: 1}}>
@@ -75,7 +75,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
 
       <Box sx={{py: 4}}>
         <Flex sx={{justifyContent: "center", alignItems: "center"}}>
-          <IconButton src={"svgs/bao-circle-i.svg"}></IconButton>
+          <IconButton src={"/svgs/bao-circle-i.svg"}></IconButton>
         </Flex> 
       </Box>
     </Flex>

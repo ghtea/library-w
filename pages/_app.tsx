@@ -10,9 +10,6 @@ import './fonts.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-  useEffect(()=>{console.log("hello")},[])
-  
-
   return (
     <ThemeProvider theme={theme}>
       <ResponsiveProvider>

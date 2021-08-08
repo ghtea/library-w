@@ -38,8 +38,6 @@ const ResponsiveProvider: FunctionComponent = (props) => {
 
   const hasWindow = typeof window !== "undefined";
 
-  useEffect(()=>{console.log(value)},[value])
-
   useEffect(() => {
     if (hasWindow !== true) return;
 

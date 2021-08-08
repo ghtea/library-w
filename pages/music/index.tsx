@@ -4,7 +4,7 @@ import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints
 import { NumberFormulaValue, Page } from "@notionhq/client/build/src/api-types"
 import { Box } from "components/atoms/Box"
 import { Flex } from "components/atoms/Flex"
-import { Album } from "components/organisms/Album"
+import { AlbumCard } from "components/organisms/music/AlbumCard"
 import { TemplateA } from "components/templates/TemplateA"
 import Head from "next/head"
 import { notion } from "tools/notion"
@@ -28,6 +28,8 @@ export type AlbumEssence = {
   src?: string;
   score?: number;
   rank?: number;
+  rym?: string;
+  released?: number;
 }
 
 
@@ -51,7 +53,11 @@ export default function Music({
 
       const key = item.properties.Key?.rich_text[0]?.plain_text;
       const src = key ? `${notionFileUrlPrefix}/music-album-covers/${key}.jpg` : undefined;
-    
+      const rym = item.properties.RYM?.url;
+
+      const releasedString = item.properties.Released?.date.start; // "1990-7-10"
+      const released = releasedString ? Date.parse(releasedString) : undefined
+
       const score = ((item.properties.Score?.formula as NumberFormulaValue) || {}).number;
 
       return ({
@@ -59,9 +65,11 @@ export default function Music({
         essence: {
           title,
           artist,
+          released,
           key,
           src,
           score,
+          rym,
         }
       })
     })
@@ -103,9 +111,9 @@ export default function Music({
                 width: ["50%", "33%", "20%", "240px"],
               }}
             >
-              <Album
+              <AlbumCard
                 data={item}
-              ></Album>
+              ></AlbumCard>
             </Box>
           )
           )}
