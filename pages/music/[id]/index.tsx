@@ -1,92 +1,39 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 
 import { PagesRetrieveResponse } from "@notionhq/client/build/src/api-endpoints"
 import { NumberFormulaValue, Page } from "@notionhq/client/build/src/api-types"
 import { Box } from "components/atoms/Box"
 import { Flex } from "components/atoms/Flex"
+import { Ratio } from "components/atoms/Ratio"
+import { Text } from "components/atoms/Text"
 import { AlbumCard } from "components/organisms/music/AlbumCard"
 import { TemplateA } from "components/templates/TemplateA"
 import { GetServerSideProps } from "next"
 import Head from "next/head"
+import Image from "next/image"
+import { AlbumData, refineAlbumData } from "pages/music"
 import { notion } from "tools/notion"
 import { MusicAlbumPropertyValueMap } from "tools/notion/types"
 
 
 export type MusicAlbumProps = {
   page: PagesRetrieveResponse | null;
-  notionFileUrlPrefix?: string;
-}
-
-export type AlbumData = Page & {
-  properties: MusicAlbumPropertyValueMap; // PropertyValueMap
-  essence?: AlbumEssence
-}
-
-export type AlbumEssence = {
-  title?: string;
-  artist?: string;
-  key?: string;
-  src?: string;
-  score?: number;
-  rank?: number;
-  rym?: string;
 }
 
 
 export default function MusicAlbum({
   page,
-  notionFileUrlPrefix
 }:MusicAlbumProps) {
   
-  // const albumDataList: AlbumData[] = useMemo(()=>{ 
-  //   const filteredAlbumDataList = database?.results.filter((item: AlbumData) => {
-  //     const name = item.properties.Name?.title[0]?.plain_text;
-  //     return name ? true : false
-  //   })
+  const albumData: AlbumData | null = useMemo(
+    ()=> page ?  refineAlbumData(page) : null, 
+    [page] 
+  );
 
-  //   console.log("raw album-list: ", filteredAlbumDataList)
-
-  //   const refinedAlbumDataList = (filteredAlbumDataList || []).map((item: AlbumData)=>{
-      
-  //     const title = item.properties.Name?.title[0].plain_text;
-  //     const artist = item.properties.Artist?.rich_text[0]?.plain_text;
-
-  //     const key = item.properties.Key?.rich_text[0]?.plain_text;
-  //     const src = key ? `${notionFileUrlPrefix}/music-album-covers/${key}.jpg` : undefined;
-    
-  //     const score = ((item.properties.Score?.formula as NumberFormulaValue) || {}).number;
-  //     const rym = item.properties.RYM?.url;
-
-  //     return ({
-  //       ...item,
-  //       essence: {
-  //         title,
-  //         artist,
-  //         key,
-  //         src,
-  //         score,
-  //         rym,
-  //       }
-  //     })
-  //   })
-
-  //   const sortedAlbumDataList = refinedAlbumDataList.sort((a, b)=>{
-  //     return ((b.essence.score || 0) - (a.essence.score || 0))
-  //   });
-
-  //   const addedAlbumDataList = sortedAlbumDataList.map((item, index)=>{
-  //     return ({
-  //       ...item,
-  //       essence: {
-  //         ...item.essence,
-  //         rank: index + 1,
-  //       }
-  //     })
-  //   });
-
-  //   return addedAlbumDataList
-  // }, [database?.results, notionFileUrlPrefix]);
-
+  const {title, artist, key, src, score, rank} = useMemo(
+    ()=> albumData ? (albumData.essence || {}) : {},[albumData]
+  )
+  
   return (
     <TemplateA>
       <Head>
@@ -96,11 +43,18 @@ export default function MusicAlbum({
       </Head>
 
       <Flex>
-
-        <Flex>
-          
-        </Flex>
         
+        { !page && <Text> no album</Text> }
+        {page && (
+          <Flex>
+            <Ratio>
+              {src &&
+              <Image layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
+              }
+            </Ratio>
+          </Flex>
+        )}
+    
       </Flex>
     </TemplateA>
   )
@@ -119,13 +73,12 @@ export  const getServerSideProps: GetServerSideProps = async (context) => {
 
     return { props: { 
       page,
-      notionFileUrlPrefix: process.env.NOTION_FILE_URL_PREFIX,
     } }
   }
   catch {
     return { props: { 
       page: null, 
-      notionFileUrlPrefix: process.env.NOTION_FILE_URL_PREFIX } }
+    }}
   }
 }
 
