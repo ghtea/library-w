@@ -3,7 +3,9 @@ import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { PagesRetrieveResponse } from "@notionhq/client/build/src/api-endpoints"
 import { NumberFormulaValue, Page } from "@notionhq/client/build/src/api-types"
 import { Box } from "components/atoms/Box"
+import { Divider } from "components/atoms/Divider"
 import { Flex } from "components/atoms/Flex"
+import { Heading } from "components/atoms/Heading"
 import { Ratio } from "components/atoms/Ratio"
 import { Text } from "components/atoms/Text"
 import { AlbumCard } from "components/organisms/music/AlbumCard"
@@ -12,6 +14,7 @@ import { GetServerSideProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
 import { AlbumData, refineAlbumData } from "pages/music"
+import { ColorKey } from "theme"
 import { notion } from "tools/notion"
 import { MusicAlbumPropertyValueMap } from "tools/notion/types"
 
@@ -30,9 +33,18 @@ export default function MusicAlbum({
     [page] 
   );
 
-  const {title, artist, key, src, score, rank} = useMemo(
+  const {title, artist, key, src, score, rank, released} = useMemo(
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
+
+  const dateText = useMemo(()=>{
+    if (!released) return "";
+    const releasedDate = new Date(released);
+    const year = releasedDate.getFullYear();
+    const month = releasedDate.getMonth();
+    const dayOfMonth = releasedDate.getDate();
+    return `${year}.${month}.${dayOfMonth}`
+  },[released])
   
   return (
     <TemplateA>
@@ -42,18 +54,44 @@ export default function MusicAlbum({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex>
+      <Flex sx={{width: ["100%", null, null, "90%"], p: 4}}>
         
-        { !page && <Text> no album</Text> }
-        {page && (
-          <Flex>
-            <Ratio>
-              {src &&
-              <Image layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
-              }
-            </Ratio>
+        { !page ? <Text> no album</Text> : (
+          <Flex 
+            sx={{
+              flexDirection: "row", 
+              justifyContent: "center", 
+              alignItems: "center", // TODO: not stretch as I want...
+              width: "100%", 
+              maxWidth: "900px"
+            }}
+          >
+            <Box sx={{width: "33%"}}>
+              <Ratio>
+                {/* TODO: add border-radius to image */}
+                {src &&
+                  <Image 
+                    layout={"responsive"} width={"100%"} height={"100%"} 
+                    alt={`album cover of ${title}`} 
+                    src={src}
+                  />
+                }
+              </Ratio>
+            </Box>
+          
+            <Box sx={{width: "66%", height: "100%"}}>
+              <Flex sx={{height: "100%"}}>
+                <Heading as={"h1"}>{title}</Heading>
+                <Text sx={{fontSize: "1.3rem"}}>{artist}</Text>
+                <Text sx={{fontSize: "1.2rem"}}>{dateText}</Text>
+                {/* TODO: score, rank */}
+              </Flex>
+            </Box>
+
           </Flex>
         )}
+
+        <Divider sx={{width: "100%"}}/>
     
       </Flex>
     </TemplateA>

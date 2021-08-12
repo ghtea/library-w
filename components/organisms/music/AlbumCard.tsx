@@ -22,7 +22,7 @@ export const AlbumCard: React.FunctionComponent<AlbumCardProps> = ({
   const {title, artist, key, src, score, rank} = data.essence || {};
 
   return (
-    <Flex >
+    <Flex>
 
       <Box sx={{width: "100%"}} >
         <Box

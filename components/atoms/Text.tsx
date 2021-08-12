@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { ResponsiveStyleValue, Text as ThemeUiText, TextProps as ThemeUiTextProps, ThemeUIStyleObject } from "theme-ui"
 
 export type TextProps = ThemeUiTextProps & {
-
+  
 };
 
 export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => {
