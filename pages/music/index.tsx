@@ -8,7 +8,7 @@ import { TemplateA } from "components/templates/TemplateA"
 import Head from "next/head"
 import { notion, notionFileUrlPrefix } from "tools/notion"
 
-import { MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "./types"
+import { getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "./types"
 
 
 export type MusicProps = {
@@ -83,8 +83,7 @@ export default function Music({
     const refinedAlbumDataList = (filteredAlbumDataList || []).map(refineAlbumData)
 
     const sortedAlbumDataList = refinedAlbumDataList.sort((a, b)=>{
-      //return ((b.essence.score || 0) - (a.essence.score || 0))
-      return 0;
+      return (getMusicAlbumRatingOrder(b.essence.rating) - getMusicAlbumRatingOrder(a.essence.rating))
     });
 
     const addedAlbumDataList = sortedAlbumDataList.map((item, index)=>{

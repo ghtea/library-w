@@ -80,6 +80,16 @@ export enum MusicAlbumRating {
   TOP_500 = "Top 500",
 }
 
+export const getMusicAlbumRatingOrder = (rating: string) => {
+  if (rating === MusicAlbumRating.THE_BEST ) return 100;
+  else if (rating === MusicAlbumRating.TOP_10 ) return 99;
+  else if (rating === MusicAlbumRating.TOP_50 ) return 98;
+  else if (rating === MusicAlbumRating.TOP_100 ) return 97;
+  else if (rating === MusicAlbumRating.TOP_200 ) return 96;
+  else if (rating === MusicAlbumRating.TOP_500 ) return 95;
+  else return 0;
+}
+
 export enum MusicAlbumTag {
   BLOCKED_COVER = "blocked-cover",
   CLASSICAL = "classical",
