@@ -6,6 +6,7 @@ import { Box } from "components/atoms/Box"
 import { Divider } from "components/atoms/Divider"
 import { Flex } from "components/atoms/Flex"
 import { Heading } from "components/atoms/Heading"
+import { Paragraph } from "components/atoms/Paragraph"
 import { Ratio } from "components/atoms/Ratio"
 import { Text } from "components/atoms/Text"
 import { AlbumCard } from "components/organisms/music/AlbumCard"
@@ -93,6 +94,12 @@ export default function MusicAlbum({
         )}
 
         <Divider sx={{width: "100%"}}/>
+
+        <Box>
+          <Flex>
+            <Paragraph>{reviewKor}</Paragraph>
+          </Flex>
+        </Box>
     
       </Flex>
     </TemplateA>

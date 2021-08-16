@@ -40,12 +40,12 @@ export const colors = {
   [ColorKey.background] : palette["white"],
   [ColorKey.text]: palette["gray-700"],
 
-  [ColorKey.primary]: "#1997F0",
+  [ColorKey.primary]: palette.primary,
   [ColorKey["primary-partner"]]: palette["white"],
   // [ColorKey.secondary]: "#1997F0",
 
-  [ColorKey["background-weak"]]: palette["gray-100"],
-  [ColorKey["text-strong"]]: palette["gray-900"],
+  [ColorKey["background-weak"]]: palette["cool-gray-100"],
+  [ColorKey["text-strong"]]: palette["cool-gray-900"],
 
 
   [ColorKey["badge.rating.the-best.bg"]]: palette["rose-700"],
@@ -53,15 +53,15 @@ export const colors = {
   [ColorKey["badge.rating.top-50.bg"]]: palette["violet-700"],
   [ColorKey["badge.rating.top-100.bg"]]: palette["blue-700"],
   [ColorKey["badge.rating.top-200.bg"]]: palette["green-700"],
-  [ColorKey["badge.rating.top-500.bg"]]: palette["gray-700"],
+  [ColorKey["badge.rating.top-500.bg"]]: palette["cool-gray-700"],
 
-  [ColorKey["badge.rating.text"]]: palette["gray-50"],
+  [ColorKey["badge.rating.text"]]: palette["cool-gray-50"],
 
-  [ColorKey["card.strong.bg"]] : palette["gray-900"],
+  [ColorKey["card.strong.bg"]] : palette["cool-gray-900"],
   [ColorKey["card.strong.text"]] : palette["white"],
 
-  [ColorKey["nav.bg"]]: palette["gray-50"],
-  [ColorKey["nav.border"]]: palette["gray-200"],
+  [ColorKey["nav.bg"]]: palette["cool-gray-50"],
+  [ColorKey["nav.border"]]: palette["cool-gray-200"],
   
 
 

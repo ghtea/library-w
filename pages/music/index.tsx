@@ -35,6 +35,10 @@ export const refineAlbumData = (item: MusicAlbumData) => {
 
   const rym = item.properties.RYM?.url;
 
+  const reviewKor = item.properties["Review KOR"]?.rich_text[0]?.plain_text;
+  const reviewEng = item.properties["Review ENG"]?.rich_text[0]?.plain_text;
+  const reviewJpn = item.properties["Review JPN"]?.rich_text[0]?.plain_text;
+
   const tags = (item.properties.Tags?.multi_select || []).map(item=>item.name) as MusicAlbumTag[]; 
   const title = item.properties.Title?.title[0].plain_text;
 
@@ -56,6 +60,9 @@ export const refineAlbumData = (item: MusicAlbumData) => {
       key,
       src,
       performer,
+      reviewKor,
+      reviewEng,
+      reviewJpn,
     }
   })
 }
@@ -110,7 +117,7 @@ export default function Music({
               sx={{
                 lineHeight: 0, 
                 p: 4,
-                width: ["50%", "33%", "20%", "240px"],
+                width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
               }}
             >
               <AlbumCard

@@ -36,8 +36,9 @@ export type MusicAlbumPropertyValueMap = PropertyValueMap & {
     
     Rating?: SelectPropertyValue;
 
-    "Review ENG"?: RichTextPropertyValue;
     "Review KOR"?: RichTextPropertyValue;
+    "Review ENG"?: RichTextPropertyValue;
+    "Review JPN"?: RichTextPropertyValue;
 
     Tags?: MultiSelectPropertyValue;
     Title?: TitlePropertyValue;
@@ -58,8 +59,10 @@ export type MusicAlbumEssence = {
   rating?: MusicAlbumRating;
 
   released?: number;
+
   reviewKor?: string;
   reviewEng?: string;
+  reviewJpn?: string;
 
   tags?: MusicAlbumTag[];
   title?: string;
