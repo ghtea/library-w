@@ -1,59 +1,61 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints"
-import { NumberFormulaValue, Page } from "@notionhq/client/build/src/api-types"
 import { Box } from "components/atoms/Box"
 import { Flex } from "components/atoms/Flex"
 import { AlbumCard } from "components/organisms/music/AlbumCard"
 import { TemplateA } from "components/templates/TemplateA"
 import Head from "next/head"
 import { notion, notionFileUrlPrefix } from "tools/notion"
-import { MusicAlbumPropertyValueMap } from "tools/notion/types"
+
+import { MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "./types"
 
 
 export type MusicProps = {
   database: DatabasesQueryResponse | null;
 }
 
-export type AlbumData = Page & {
-  properties: MusicAlbumPropertyValueMap; // PropertyValueMap
-  essence?: AlbumEssence
+const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: MusicAlbumTag[]) => {
+  if (tags?.includes(MusicAlbumTag.BLOCKED_COVER)){
+    return `${notionFileUrlPrefix}/music-album-covers/blocked.jpg` 
+  }
+  else {
+    return key ? `${notionFileUrlPrefix}/music-album-covers/${key}.jpg` : undefined
+  }
 }
 
-export type AlbumEssence = {
-  title?: string;
-  artist?: string;
-  key?: string;
-  src?: string;
-  score?: number;
-  rank?: number;
-  rym?: string;
-  released?: number;
-}
+export const refineAlbumData = (item: MusicAlbumData) => {
 
-export const refineAlbumData = (item: AlbumData) => {
-  const title = item.properties.Name?.title[0].plain_text;
   const artist = item.properties.Artist?.rich_text[0]?.plain_text;
-
-  const key = item.properties.Key?.rich_text[0]?.plain_text;
-  const src = key ? `${notionFileUrlPrefix}/music-album-covers/${key}.jpg` : undefined;
-  const rym = item.properties.RYM?.url;
+  
+  const rating = item.properties.Rating?.select.name as MusicAlbumRating;
 
   const releasedString = item.properties.Released?.date.start; // "1990-7-10"
   const released = releasedString ? Date.parse(releasedString) : undefined
 
-  const score = ((item.properties.Score?.formula as NumberFormulaValue) || {}).number;
+  const rym = item.properties.RYM?.url;
+
+  const tags = (item.properties.Tags?.multi_select || []).map(item=>item.name) as MusicAlbumTag[]; 
+  const title = item.properties.Title?.title[0].plain_text;
+
+  const key = item.properties.Key?.rich_text[0]?.plain_text;
+
+  const src = getSrc(key, notionFileUrlPrefix, tags);
+
+  const performer = item.properties.Key?.rich_text[0]?.plain_text;
 
   return ({
     ...item,
     essence: {
-      title,
       artist,
+      rating,
       released,
+      rym,
+      tags,
+      title,
       key,
       src,
-      score,
-      rym,
+      performer,
     }
   })
 }
@@ -63,10 +65,10 @@ export default function Music({
   database,
 }:MusicProps) {
   
-  const albumDataList: AlbumData[] = useMemo(()=>{ 
-    const filteredAlbumDataList = database?.results.filter((item: AlbumData) => {
-      const name = item.properties.Name?.title[0]?.plain_text;
-      return name ? true : false
+  const albumDataList: MusicAlbumData[] = useMemo(()=>{ 
+    const filteredAlbumDataList = database?.results.filter((item: MusicAlbumData) => {
+      const title = item.properties.Title?.title[0]?.plain_text;
+      return title ? true : false
     })
 
     console.log("raw album-list: ", filteredAlbumDataList)
@@ -74,7 +76,8 @@ export default function Music({
     const refinedAlbumDataList = (filteredAlbumDataList || []).map(refineAlbumData)
 
     const sortedAlbumDataList = refinedAlbumDataList.sort((a, b)=>{
-      return ((b.essence.score || 0) - (a.essence.score || 0))
+      //return ((b.essence.score || 0) - (a.essence.score || 0))
+      return 0;
     });
 
     const addedAlbumDataList = sortedAlbumDataList.map((item, index)=>{

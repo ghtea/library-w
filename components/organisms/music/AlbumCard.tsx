@@ -7,20 +7,30 @@ import { LocalLink } from "components/atoms/LocalLink"
 import { Ratio } from "components/atoms/Ratio"
 import { Text } from "components/atoms/Text"
 import Image from "next/image"
-import { AlbumData } from "pages/music"
+import { MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "pages/music/types"
 import { ColorKey } from "theme"
 import { zIndex } from "theme/space"
 
 
-export type AlbumCardProps = {
-    data: AlbumData
+export type MusicAlbumCardProps = {
+    data: MusicAlbumData
   }
 
-export const AlbumCard: React.FunctionComponent<AlbumCardProps> = ({
+export const AlbumCard: React.FunctionComponent<MusicAlbumCardProps> = ({
   data
 }) => {
 
-  const {title, artist, key, src, score, rank} = data.essence || {};
+  const {title, artist, key, src, rating, released, tags, reviewKor, reviewEng} = data.essence || {};
+
+  const badgeBgColorKey = useMemo(()=>{
+    if (rating === MusicAlbumRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]
+    else if (rating === MusicAlbumRating.TOP_10) return ColorKey["badge.rating.top-10.bg"]
+    else if (rating === MusicAlbumRating.TOP_50) return ColorKey["badge.rating.top-50.bg"]
+    else if (rating === MusicAlbumRating.TOP_100) return ColorKey["badge.rating.top-100.bg"]
+    else if (rating === MusicAlbumRating.TOP_200) return ColorKey["badge.rating.top-200.bg"]
+    else if (rating === MusicAlbumRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
+    else return ColorKey["card.strong.bg"]
+  },[rating])
 
   return (
     <Flex>
@@ -34,9 +44,10 @@ export const AlbumCard: React.FunctionComponent<AlbumCardProps> = ({
               height: "40px", 
               px: 3,
               py: 2,
-              backgroundColor: ColorKey["card.strong.bg"], 
+              backgroundColor: badgeBgColorKey, 
               color: ColorKey["card.strong.text"],
               zIndex: 2,
+              opacity: 0.8,
             }}
           >
             <Flex sx={{
@@ -47,13 +58,7 @@ export const AlbumCard: React.FunctionComponent<AlbumCardProps> = ({
                 fontSize: "1.2rem",
                 fontWeight: "bold",
               }}>
-                {rank}
-              </Text>
-              <Text sx={{
-                ml: 2,
-                fontSize: "1.2rem",
-              }}>
-                {"th"}
+                {rating}
               </Text>
             </Flex>
           </Box>

@@ -13,10 +13,11 @@ import { TemplateA } from "components/templates/TemplateA"
 import { GetServerSideProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
-import { AlbumData, refineAlbumData } from "pages/music"
+import { refineAlbumData } from "pages/music"
 import { ColorKey } from "theme"
 import { notion } from "tools/notion"
-import { MusicAlbumPropertyValueMap } from "tools/notion/types"
+
+import { MusicAlbumData } from "../types"
 
 
 export type MusicAlbumProps = {
@@ -28,12 +29,12 @@ export default function MusicAlbum({
   page,
 }:MusicAlbumProps) {
   
-  const albumData: AlbumData | null = useMemo(
+  const albumData: MusicAlbumData | null = useMemo(
     ()=> page ?  refineAlbumData(page) : null, 
     [page] 
   );
 
-  const {title, artist, key, src, score, rank, released} = useMemo(
+  const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor} = useMemo(
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
@@ -81,7 +82,7 @@ export default function MusicAlbum({
           
             <Box sx={{width: "66%", height: "100%"}}>
               <Flex sx={{height: "100%"}}>
-                <Heading as={"h1"}>{title}</Heading>
+                <Heading as={"h1"} sx={{fontSize: ["1.4rem", "1.6rem", "2rem", null]}} >{title}</Heading>
                 <Text sx={{fontSize: "1.3rem"}}>{artist}</Text>
                 <Text sx={{fontSize: "1.2rem"}}>{dateText}</Text>
                 {/* TODO: score, rank */}
