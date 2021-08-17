@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints"
 import { Box } from "components/atoms/Box"
 import { Flex } from "components/atoms/Flex"
-import { AlbumCard } from "components/organisms/music/AlbumCard"
+import { MusicAlbumCard } from "components/organisms/music/MusicAlbumCard"
 import { TemplateA } from "components/templates/TemplateA"
 import Head from "next/head"
 import { notion, notionFileUrlPrefix } from "tools/notion"
@@ -86,17 +86,7 @@ export default function Music({
       return (getMusicAlbumRatingOrder(b.essence.rating) - getMusicAlbumRatingOrder(a.essence.rating))
     });
 
-    const addedAlbumDataList = sortedAlbumDataList.map((item, index)=>{
-      return ({
-        ...item,
-        essence: {
-          ...item.essence,
-          rank: index + 1,
-        }
-      })
-    });
-
-    return addedAlbumDataList
+    return sortedAlbumDataList
   }, [database?.results]);
 
   return (
@@ -119,9 +109,9 @@ export default function Music({
                 width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
               }}
             >
-              <AlbumCard
+              <MusicAlbumCard
                 data={item}
-              ></AlbumCard>
+              ></MusicAlbumCard>
             </Box>
           )
           )}

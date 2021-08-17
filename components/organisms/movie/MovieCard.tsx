@@ -7,34 +7,34 @@ import { LocalLink } from "components/atoms/LocalLink"
 import { Ratio } from "components/atoms/Ratio"
 import { Text } from "components/atoms/Text"
 import Image from "next/image"
-import { MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "pages/music/types"
+import { MovieData, MovieRating } from "pages/movie/types"
 import { ColorKey } from "theme"
 import { zIndex } from "theme/space"
 
 
-export type MusicAlbumCardProps = {
-    data: MusicAlbumData
+export type MovieCardProps = {
+    data: MovieData
   }
 
-export const AlbumCard: React.FunctionComponent<MusicAlbumCardProps> = ({
+export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
   data
 }) => {
 
-  const {title, artist, key, src, rating, released, tags, reviewKor, reviewEng} = data.essence || {};
+  const {title, director, key, src, rating, year, tags, reviewKor, reviewEng, reviewJpn} = data.essence || {};
 
   const badgeBgColorKey = useMemo(()=>{
-    if (rating === MusicAlbumRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]
-    else if (rating === MusicAlbumRating.TOP_10) return ColorKey["badge.rating.top-10.bg"]
-    else if (rating === MusicAlbumRating.TOP_50) return ColorKey["badge.rating.top-50.bg"]
-    else if (rating === MusicAlbumRating.TOP_100) return ColorKey["badge.rating.top-100.bg"]
-    else if (rating === MusicAlbumRating.TOP_200) return ColorKey["badge.rating.top-200.bg"]
-    else if (rating === MusicAlbumRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
+    if (rating === MovieRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]
+    else if (rating === MovieRating.TOP_10) return ColorKey["badge.rating.top-10.bg"]
+    else if (rating === MovieRating.TOP_50) return ColorKey["badge.rating.top-50.bg"]
+    else if (rating === MovieRating.TOP_100) return ColorKey["badge.rating.top-100.bg"]
+    else if (rating === MovieRating.TOP_200) return ColorKey["badge.rating.top-200.bg"]
+    else if (rating === MovieRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
     else return ColorKey["card.strong.bg"]
   },[rating])
 
   return (
     <Flex>
-      <LocalLink to={`/music/${data.id}`} sx={{width: "100%"}}>
+      <LocalLink to={`/movie/${data.id}`} sx={{width: "100%"}}>
         <Box sx={{width: "100%"}} >
           <Box
             sx={{
@@ -62,12 +62,12 @@ export const AlbumCard: React.FunctionComponent<MusicAlbumCardProps> = ({
               </Text>
             </Flex>
           </Box>
-
-          <Ratio>
+          <Box sx={{width: "100%"}}>
             {src &&
-            <Image layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={src} alt={`movie poster of ${title}`} style={{width: "100%"}}/>
             }
-          </Ratio>
+          </Box>
         </Box >
 
         <Box sx={{ py:4, width: "100%", color: ColorKey["card.strong.text"], backgroundColor: ColorKey["card.strong.bg"]}}>
@@ -76,7 +76,7 @@ export const AlbumCard: React.FunctionComponent<MusicAlbumCardProps> = ({
               {title}
             </Text>
             <Text sx={{ px: 3, py: 1}}>
-              {artist}
+              {director}
             </Text>
           </Flex>
         </Box>
