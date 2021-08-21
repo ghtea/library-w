@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
-import {Box, Flex, LocalLink, NextImage,Ratio, Text} from "components/atoms"
+import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
 import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "pages/music/types"
 import {ColorKey} from "theme"
 import {zIndex} from "theme/space"
@@ -28,7 +28,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
 
   return (
     <Flex>
-      <LocalLink to={`/music/${data.id}`} sx={{width: "100%"}}>
+      <Link to={`/music/${data.id}`} sx={{width: "100%"}}>
         <Box sx={{width: "100%"}} >
           <Box
             sx={{
@@ -76,7 +76,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
             </Text>
           </Flex>
         </Box>
-      </LocalLink>
+      </Link>
     </Flex>   
   )
 }

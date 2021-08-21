@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react"
 
 import {PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
-import {Box, Divider, Flex, Heading, Link, LocalLink, Paragraph, Ratio, Text} from "components/atoms"
+import {Box, Button, Divider, Flex, Heading, Link, Paragraph, Ratio, Text} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import {GetServerSideProps} from "next"
 import Head from "next/head"
@@ -11,8 +11,7 @@ import {ColorKey} from "theme"
 import {notion} from "tools/notion"
 import {Sx} from "tools/theme-ui"
 
-import {MusicAlbumData} from "../types"
-
+import {MusicAlbumData, MusicAlbumReviewLanguage, returnReviewDict} from "../types"
 
 export type MusicAlbumProps = {
   page: PagesRetrieveResponse | null;
@@ -22,12 +21,15 @@ export default function MusicAlbum({
   page,
 }:MusicAlbumProps) {
   
+
+  const [reviewLanguage, setReviewLanguage] = useState<MusicAlbumReviewLanguage>()
+
   const albumData: MusicAlbumData | null = useMemo(
     ()=> page ?  refineAlbumData(page) : null, 
     [page] 
   );
 
-  const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor, rym} = useMemo(
+  const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor, reviewJpn, rym} = useMemo(
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
@@ -50,6 +52,44 @@ export default function MusicAlbum({
       margin: 2,
     })
   },[])
+
+  const availableReviewLanguageList = useMemo(()=>{
+    const allReviewLanguageList = Object.keys(MusicAlbumReviewLanguage) as MusicAlbumReviewLanguage[];
+    
+    if (!albumData) return []
+    return allReviewLanguageList.filter(item => returnReviewDict(albumData)[item])
+    // TODO: fix, it does not return ["kr review...."]
+  },[albumData])
+
+  const showingReview = useMemo(()=>{
+    if (reviewLanguage === MusicAlbumReviewLanguage.KOR && reviewKor) return reviewKor
+    else if (reviewLanguage === MusicAlbumReviewLanguage.ENG && reviewEng) return reviewEng
+    else if (reviewLanguage === MusicAlbumReviewLanguage.JPN && reviewJpn) return reviewJpn
+    
+    else if (reviewKor){
+      setReviewLanguage(MusicAlbumReviewLanguage.KOR)
+      return reviewKor
+    }
+    else if (reviewEng){
+      setReviewLanguage(MusicAlbumReviewLanguage.ENG)
+      return reviewEng
+    }
+    else if (reviewJpn){
+      setReviewLanguage(MusicAlbumReviewLanguage.JPN)
+      return reviewJpn
+    }
+
+    else {
+      setReviewLanguage(undefined)
+      return null;
+    }
+  },[reviewEng, reviewJpn, reviewKor, reviewLanguage])
+
+
+  const onClickReviewLanguageButton = useCallback((newLanguage: MusicAlbumReviewLanguage)=>{
+    setReviewLanguage(newLanguage)
+  },[])
+
 
   return (
     <TemplateA>
@@ -89,7 +129,6 @@ export default function MusicAlbum({
                 <Heading as={"h1"} sx={{fontSize: ["1.4rem", "1.6rem", "2rem", null]}} >{title}</Heading>
                 <Text sx={{fontSize: "1.3rem"}}>{artist}</Text>
                 <Text sx={{fontSize: "1.2rem", color: ColorKey["text.weak"]}}>{dateText}</Text>
-                {/* TODO: score, rank */}
                 <Flex sx={{flexDirection: "row", width: "auto", marginTop: 4,}}>
                   <Link to={"/music"} sx={badgeSx}>
                     <Text>{rating}</Text>
@@ -113,7 +152,13 @@ export default function MusicAlbum({
 
         <Box>
           <Flex>
-            <Paragraph>{reviewKor}</Paragraph>
+            <Flex sx={{flexDirection: "row"}}>
+              {/* TODO: add styles to first-end of buttons */}
+              {[availableReviewLanguageList.map(item=>(
+                <Button key={`language-button-${item}`} onClick={()=>onClickReviewLanguageButton(item)}>{item}</Button>
+              ))]}
+            </Flex>
+            <Paragraph>{showingReview}</Paragraph>
           </Flex>
         </Box>
     

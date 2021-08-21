@@ -94,3 +94,17 @@ export enum MusicAlbumTag {
   BLOCKED_COVER = "blocked-cover",
   CLASSICAL = "classical",
 }
+
+export enum MusicAlbumReviewLanguage {
+  ENG = "eng",
+  KOR = "kor",
+  JPN = "jpn",
+}
+
+export const returnReviewDict = (data: MusicAlbumData) => {
+  return ({
+    [MusicAlbumReviewLanguage.KOR]: data.essence?.reviewKor,
+    [MusicAlbumReviewLanguage.ENG]: data.essence?.reviewEng,
+    [MusicAlbumReviewLanguage.JPN]: data.essence?.reviewJpn,
+  })
+}

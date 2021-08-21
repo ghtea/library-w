@@ -1,6 +1,6 @@
 import {useCallback} from "react"
 
-import {Box, Flex, Icon, IconSize, LocalLink, Text} from "components/atoms"
+import {Box, Flex, Icon, IconSize, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
 import {ColorKey, sizes} from "theme"
@@ -31,9 +31,9 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
       <Box>
         <Flex sx={{justifyContent: "center", alignItems: "center"}}>
           <Box sx={{py: 4}}>
-            <LocalLink to={"/"}>
+            <Link to={"/"}>
               <IconButton src={"/svgs/bao-house.svg"}></IconButton>
-            </LocalLink>
+            </Link>
           </Box>
         </Flex> 
       </Box>
@@ -43,7 +43,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
 
           <Flex sx={{alignItems: "flex-start"}}>
             {nav.map(item=>(
-              <LocalLink key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
+              <Link key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
                 <Flex sx={{
                   flexDirection: "row", 
                   justifyContent: "flex-start",
@@ -62,7 +62,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
                     </Text>
                   </Box>
                 </Flex>
-              </LocalLink>
+              </Link>
             ))}
           </Flex>
             

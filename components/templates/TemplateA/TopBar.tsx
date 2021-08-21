@@ -1,6 +1,6 @@
 import {Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState} from "react"
 
-import {Box, Flex, Icon, IconSize, LocalLink, Responsive, Text} from "components/atoms"
+import {Box, Flex, Icon, IconSize, Link, Responsive, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem} from "components/templates/TemplateA"
 import {ColorKey, sizes, zIndex} from "theme"
@@ -34,9 +34,9 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
       >
         <Box>
           <Flex>
-            <LocalLink to={"/"}>
+            <Link to={"/"}>
               <IconButton src={"/svgs/bao-house.svg"}></IconButton>
-            </LocalLink>
+            </Link>
           </Flex> 
         </Box>
 
@@ -57,7 +57,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
             <Responsive range={"mdOnly"}>
               <Flex sx={{flexDirection: "row"}}>
                 {nav.map(item=>(
-                  <LocalLink key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
+                  <Link key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
                     <IconButton
                       sx={{
                         color: getIsActive(item.id) ? ColorKey["primary-partner"] : "unset",
@@ -66,7 +66,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
                       src={`/svgs/${item.svg}`}
                     >
                     </IconButton>
-                  </LocalLink>
+                  </Link>
                 ))}
               </Flex>
             </Responsive>

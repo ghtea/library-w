@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
 import {Page} from "@notionhq/client/build/src/api-types"
-import {Box, Flex, LocalLink, NextImage,Ratio, Text} from "components/atoms"
+import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
 import {MovieData, MovieRating} from "pages/movie/types"
 import {ColorKey} from "theme"
 import {zIndex} from "theme/space"
@@ -24,12 +24,12 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
     else if (rating === MovieRating.TOP_100) return ColorKey["badge.rating.top-100.bg"]
     else if (rating === MovieRating.TOP_200) return ColorKey["badge.rating.top-200.bg"]
     else if (rating === MovieRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
-    else return ColorKey["card.strong.bg"]
+    else return ColorKey["card.bg"]
   },[rating])
 
   return (
     <Flex>
-      <LocalLink to={`/movie/${data.id}`} sx={{width: "100%"}}>
+      <Link to={`/movie/${data.id}`} sx={{width: "100%"}}>
         <Box sx={{width: "100%"}} >
           <Box
             sx={{
@@ -40,7 +40,7 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
               px: 3,
               py: 2,
               backgroundColor: badgeBgColorKey, 
-              color: ColorKey["card.strong.text"],
+              color: ColorKey["text.strong"],
               zIndex: 2,
               opacity: 0.8,
             }}
@@ -65,7 +65,7 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
           </Box>
         </Box >
 
-        <Box sx={{py:4, width: "100%", color: ColorKey["card.strong.text"], backgroundColor: ColorKey["card.strong.bg"]}}>
+        <Box sx={{py:4, width: "100%", color: ColorKey["text.strong"], backgroundColor: ColorKey["card.bg"]}}>
           <Flex>
             <Text sx={{fontSize: "1.1rem", px: 3, py: 1}}>
               {title}
@@ -75,7 +75,7 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
             </Text>
           </Flex>
         </Box>
-      </LocalLink>
+      </Link>
     </Flex>   
   )
 }
