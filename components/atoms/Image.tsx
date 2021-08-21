@@ -1,51 +1,25 @@
-import React, { useMemo } from "react";
+import React, { useEffect,useRef, useState } from "react";
+import { LazyLoadImage, LazyLoadImageProps } from 'react-lazy-load-image-component';
 
-import { ColorKey } from "theme";
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue, ThemeUIStyleObject } from "theme-ui"
+// https://www.npmjs.com/package/react-lazy-load-image-component
 
-export type ImageProps = ThemeUiBoxProps & {
-  src: string;
-  alt: string;
-};
 
-export const Image = React.forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
 
-  const {
-    src,
-    alt,
-    sx,
-    ...rest
-  } = props;
+export type ImageProps = LazyLoadImageProps
 
-  // const length = useMemo(()=>{
-  //   if (!size) return size;
-  //   if ( (typeof size !== "object") && (Object.values(Size).includes(size))) return sizeLengthMap[size]
-  //   if ( Array.isArray(size) ){
-  //     return size.map(item => item ? (sizeLengthMap[item] || null) : null )
-  //   }
-  // },[size])
+export const Image: React.FunctionComponent<ImageProps> = ({
+  src, alt, width = "auto", height = "auto"
+}) => {
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>({
-    flexShrink: 0,
-    flexGrow: 0,
-    flexBasis: "auto",
-    width: length ? length : "unset",
-    height: length ? length : "unset",
-    color: ColorKey.text,
-    lineHeight: 0,
-    ...sx
-  }),[sx, length])
+  // const imgRef = useRef<HTMLImageElement>(null);
+  // const [isLoad, setIsLoad] = useState(false);
 
   return (
-    <ThemeUiBox 
-      ref={ref}
-      sx={_sx} 
-      {...rest} 
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} style={{width: "100%", height: "100%"}} />  
-    </ThemeUiBox>
+    <LazyLoadImage
+      alt={alt}
+      height={height}
+      src={src}
+      width={width} 
+    />
   );
-})
-
-Image.displayName = "Image";
+}
