@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject } from "theme-ui"
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
 
 export type BoxProps = ThemeUiBoxProps & {
 

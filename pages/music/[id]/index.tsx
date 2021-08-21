@@ -1,24 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, {useCallback, useEffect, useMemo, useState} from "react"
 
-import { PagesRetrieveResponse } from "@notionhq/client/build/src/api-endpoints"
-import { NumberFormulaValue, Page } from "@notionhq/client/build/src/api-types"
-import { Box } from "components/atoms/Box"
-import { Divider } from "components/atoms/Divider"
-import { Flex } from "components/atoms/Flex"
-import { Heading } from "components/atoms/Heading"
-import { Paragraph } from "components/atoms/Paragraph"
-import { Ratio } from "components/atoms/Ratio"
-import { Text } from "components/atoms/Text"
-import { MusicAlbumCard } from "components/organisms/movie/MovieCard"
-import { TemplateA } from "components/templates/TemplateA"
-import { GetServerSideProps } from "next"
+import {PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
+import {Box, Divider, Flex, Heading, Paragraph, Ratio, Text} from "components/atoms"
+import {TemplateA} from "components/templates/TemplateA"
+import {GetServerSideProps} from "next"
 import Head from "next/head"
 import Image from "next/image"
-import { refineAlbumData } from "pages/music"
-import { ColorKey } from "theme"
-import { notion } from "tools/notion"
+import {refineAlbumData} from "pages/music"
+import {ColorKey} from "theme"
+import {notion} from "tools/notion"
 
-import { MusicAlbumData } from "../types"
+import {MusicAlbumData} from "../types"
 
 
 export type MusicAlbumProps = {
@@ -113,16 +105,16 @@ export  const getServerSideProps: GetServerSideProps = async (context) => {
 
     if (typeof musicAlbumId !== "string") throw Error("id of album is not valid");
 
-    const page = await notion.pages.retrieve({ page_id: musicAlbumId || "" });
+    const page = await notion.pages.retrieve({page_id: musicAlbumId || ""});
 
     console.log(page);
 
-    return { props: { 
+    return {props: { 
       page,
-    } }
+    }}
   }
   catch {
-    return { props: { 
+    return {props: { 
       page: null, 
     }}
   }

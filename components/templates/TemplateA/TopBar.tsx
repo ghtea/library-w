@@ -1,15 +1,10 @@
-import { Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState } from "react"
+import {Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState} from "react"
 
-import { Box } from "components/atoms/Box"
-import { Flex } from "components/atoms/Flex"
-import { Icon, Size } from "components/atoms/Icon"
-import { LocalLink } from "components/atoms/LocalLink"
-import { Responsive } from "components/atoms/Responsive"
-import { Text } from "components/atoms/Text"
-import { IconButton } from "components/molecules/IconButton"
+import {Box, Flex, Icon, IconSize, LocalLink, Responsive, Text} from "components/atoms"
+import {IconButton} from "components/molecules/IconButton"
 import {NavItem} from "components/templates/TemplateA"
 import {ColorKey, sizes, zIndex} from "theme"
-import { useAdvancedRouter } from "tools/router"
+import {useAdvancedRouter} from "tools/router"
 
 export type TopBarProps = {
   nav: NavItem[];

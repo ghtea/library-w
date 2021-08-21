@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 
-import { Paragraph as ThemeUiParagraph, ParagraphProps as ThemeUiParagraphProps, ResponsiveStyleValue, ThemeUIStyleObject } from "theme-ui"
+import {Paragraph as ThemeUiParagraph, ParagraphProps as ThemeUiParagraphProps, ResponsiveStyleValue, ThemeUIStyleObject} from "theme-ui"
 
 export type ParagraphProps = ThemeUiParagraphProps & {
   

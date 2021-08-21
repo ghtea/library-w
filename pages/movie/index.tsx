@@ -1,14 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import {useCallback, useEffect, useMemo, useState} from "react"
 
-import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints"
-import { Box } from "components/atoms/Box"
-import { Flex } from "components/atoms/Flex"
-import { MovieCard } from "components/organisms/movie/MovieCard"
-import { TemplateA } from "components/templates/TemplateA"
+import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
+import {Box, Flex} from "components/atoms"
+import {MovieCard} from "components/organisms/movie/MovieCard"
+import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import { notion, notionFileUrlPrefix } from "tools/notion"
+import {notion, notionFileUrlPrefix} from "tools/notion"
 
-import { getMovieRatingOrder, MovieData, MovieRating, MovieTag } from "./types"
+import {getMovieRatingOrder, MovieData, MovieRating, MovieTag} from "./types"
 
 
 export type MovieProps = {
@@ -90,7 +89,7 @@ export default function Movie({
 
       <Flex>
 
-        <Flex sx={{ p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap", alignItems: "flex-start"}}>
+        <Flex sx={{p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap", alignItems: "flex-start"}}>
           {movieDataList?.map((item, index)=>(
             <Box
               key={`album-${item?.essence?.title || index}`} 
@@ -116,13 +115,13 @@ export default function Movie({
 export async function getServerSideProps() {
    
   try { 
-    const database = await notion.databases.query({ database_id: process.env.NOTION_MOVIE_DB_ID || "" });
-    return { props: { 
+    const database = await notion.databases.query({database_id: process.env.NOTION_MOVIE_DB_ID || ""});
+    return {props: { 
       database,
-    } }
+    }}
   }
   catch {
-    return { props: { 
+    return {props: { 
       database: null, 
     }}
   }

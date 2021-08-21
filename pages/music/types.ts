@@ -1,4 +1,4 @@
-import { PropertyValueMap } from "@notionhq/client/build/src/api-endpoints";
+import {PropertyValueMap} from "@notionhq/client/build/src/api-endpoints";
 import { 
   CheckboxPropertyValue,
   CreatedByPropertyValue,
@@ -19,7 +19,7 @@ import {
   RollupPropertyValue,
   SelectPropertyValue,
   TitlePropertyValue,
-  URLPropertyValue } from "@notionhq/client/build/src/api-types";
+  URLPropertyValue} from "@notionhq/client/build/src/api-types";
 
 
 

@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 
-import { Link as ThemeUiLink, LinkProps as ThemeUiLinkProps, ThemeUIStyleObject } from "theme-ui"
+import {Link as ThemeUiLink, LinkProps as ThemeUiLinkProps, ThemeUIStyleObject} from "theme-ui"
 
 
 export type LinkProps = ThemeUiLinkProps & {

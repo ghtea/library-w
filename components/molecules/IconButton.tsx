@@ -1,8 +1,6 @@
-import React, { useMemo } from "react"
+import React, {useMemo} from "react"
 
-import { Button, ButtonProps, } from "components/atoms/Button";
-import { Icon, IconProps } from "components/atoms/Icon";
-import { ThemeUIStyleObject } from "theme-ui";
+import {Button, ButtonProps, Icon, IconProps} from "components/atoms";
 
 export type IconButtonProps = ButtonProps & Pick<IconProps, "src" | "size"> & {
 };

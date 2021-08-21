@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 
-import { Flex as ThemeUiFlex, FlexProps as ThemeUiFlexProps, ThemeUIStyleObject } from "theme-ui"
+import {Flex as ThemeUiFlex, FlexProps as ThemeUiFlexProps, ThemeUIStyleObject} from "theme-ui"
 
 export type FlexProps = ThemeUiFlexProps & {
   

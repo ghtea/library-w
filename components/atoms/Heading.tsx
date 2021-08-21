@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 
-import { ColorKey } from "theme";
-import { Heading as ThemeUiHeading, HeadingProps as ThemeUiHeadingProps, ResponsiveStyleValue, ThemeUIStyleObject } from "theme-ui"
+import {ColorKey} from "theme";
+import {Heading as ThemeUiHeading, HeadingProps as ThemeUiHeadingProps, ResponsiveStyleValue, ThemeUIStyleObject} from "theme-ui"
 
 export type HeadingProps = Omit<ThemeUiHeadingProps, "as"> & {
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
@@ -16,12 +16,12 @@ export const Heading = React.forwardRef<HTMLDivElement, HeadingProps>((props, re
   } = props;
 
   const fontSize = useMemo(()=>{
-    if (as === 'h6') return "1rem";
-    else if (as === 'h5') return "1.2rem";
-    else if (as === 'h4') return "1.4rem";
-    else if (as === 'h3') return "1.6rem";
-    else if (as === 'h2') return "1.8rem";
-    else if (as === 'h1') return "2rem";
+    if (as === "h6") return "1rem";
+    else if (as === "h5") return "1.2rem";
+    else if (as === "h4") return "1.4rem";
+    else if (as === "h3") return "1.6rem";
+    else if (as === "h2") return "1.8rem";
+    else if (as === "h1") return "2rem";
   },[as])
   
   const _sx: ThemeUIStyleObject = useMemo(()=>{

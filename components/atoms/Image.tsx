@@ -1,5 +1,5 @@
-import React, { useEffect,useRef, useState } from "react";
-import { LazyLoadImage, LazyLoadImageProps } from 'react-lazy-load-image-component';
+import React, {useEffect,useRef, useState} from "react";
+import {LazyLoadImage, LazyLoadImageProps} from "react-lazy-load-image-component";
 
 // https://www.npmjs.com/package/react-lazy-load-image-component
 

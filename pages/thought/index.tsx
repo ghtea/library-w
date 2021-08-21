@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import {useCallback, useEffect, useMemo, useState} from "react"
 
-import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints"
-import { Page } from "@notionhq/client/build/src/api-types"
-import { Flex } from "components/atoms/Flex"
-import { TemplateA } from "components/templates/TemplateA"
+import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
+import {Page} from "@notionhq/client/build/src/api-types"
+import {Flex} from "components/atoms"
+import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
 import Image from "next/image"
-import { notion } from "tools/notion"
+import {notion} from "tools/notion"
 // import { ThoughtAlbumPropertyValueMap } from "tools/notion/types"
 
 

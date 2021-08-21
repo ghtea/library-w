@@ -1,10 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import {useCallback, useEffect, useMemo, useState} from "react"
 
-import { Box } from "components/atoms/Box"
-import { Flex } from "components/atoms/Flex"
-import { Responsive } from "components/atoms/Responsive"
+import {Box, Flex, Responsive} from "components/atoms"
 import {ColorKey,sizes,zIndex} from "theme"
-import { Sx } from "tools/theme-ui"
+import {Sx} from "tools/theme-ui"
 
 import {SideBar} from "./SideBar"
 import {TopBar} from "./TopBar"
@@ -105,7 +103,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`
           ],
           top: [sizes["templateA.topNav.height"], null, 0, null],
-          left: [0, null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH ],
+          left: [0, null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH],
         }}
       >
         {children}

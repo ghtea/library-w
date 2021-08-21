@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 
-import { ColorKey } from "theme";
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject } from "theme-ui"
+import {ColorKey} from "theme";
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
 
 export type DividerProps = ThemeUiBoxProps & {
 

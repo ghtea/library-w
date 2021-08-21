@@ -1,15 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
-import { Page } from "@notionhq/client/build/src/api-types"
-import { Box } from "components/atoms/Box"
-import { Flex } from "components/atoms/Flex"
-import { LocalLink } from "components/atoms/LocalLink"
-import { Ratio } from "components/atoms/Ratio"
-import { Text } from "components/atoms/Text"
-import Image from "next/image"
-import { MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "pages/music/types"
-import { ColorKey } from "theme"
-import { zIndex } from "theme/space"
+import {Page} from "@notionhq/client/build/src/api-types"
+import {Box, Flex, LocalLink, NextImage,Ratio, Text} from "components/atoms"
+import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "pages/music/types"
+import {ColorKey} from "theme"
+import {zIndex} from "theme/space"
 
 
 export type MusicMusicAlbumCardProps = {
@@ -65,17 +60,17 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
 
           <Ratio>
             {src &&
-            <Image layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
+            <NextImage layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
             }
           </Ratio>
         </Box >
 
-        <Box sx={{ py:4, width: "100%", color: ColorKey["card.strong.text"], backgroundColor: ColorKey["card.strong.bg"]}}>
+        <Box sx={{py:4, width: "100%", color: ColorKey["card.strong.text"], backgroundColor: ColorKey["card.strong.bg"]}}>
           <Flex>
             <Text sx={{fontSize: "1.1rem", px: 3, py: 1}}>
               {title}
             </Text>
-            <Text sx={{ px: 3, py: 1}}>
+            <Text sx={{px: 3, py: 1}}>
               {artist}
             </Text>
           </Flex>

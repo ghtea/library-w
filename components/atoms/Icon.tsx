@@ -1,38 +1,38 @@
-import React, { useMemo } from "react";
-import { ReactSVG } from 'react-svg'
+import React, {useMemo} from "react";
+import {ReactSVG} from "react-svg"
 
-import { ColorKey } from "theme";
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue, ThemeUIStyleObject } from "theme-ui"
+import {ColorKey} from "theme";
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue, ThemeUIStyleObject} from "theme-ui"
 
 export type IconProps = ThemeUiBoxProps & {
   src: string;
-  size?: ResponsiveStyleValue<Size>;
+  size?: ResponsiveStyleValue<IconSize>;
 };
 
-export enum Size {
+export enum IconSize {
   SM = "sm",
   MD = "md",
   LG = "lg"
 }
 
-const sizeLengthMap: Record<Size, string> = {
-  [Size.SM]: "16px",
-  [Size.MD]: "24px",
-  [Size.LG]: "32px",
+const sizeLengthMap: Record<IconSize, string> = {
+  [IconSize.SM]: "16px",
+  [IconSize.MD]: "24px",
+  [IconSize.LG]: "32px",
 }
 
 export const Icon = React.forwardRef<HTMLDivElement, IconProps>((props, ref) => {
 
   const {
     src,
-    size = Size.MD,
+    size = IconSize.MD,
     sx,
     ...rest
   } = props;
 
   const length = useMemo(()=>{
     if (!size) return size;
-    if ( (typeof size !== "object") && (Object.values(Size).includes(size))) return sizeLengthMap[size]
+    if ( (typeof size !== "object") && (Object.values(IconSize).includes(size))) return sizeLengthMap[size]
     if ( Array.isArray(size) ){
       return size.map(item => item ? (sizeLengthMap[item] || null) : null )
     }

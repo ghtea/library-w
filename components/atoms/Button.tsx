@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 
-import { Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps, ThemeUIStyleObject } from "theme-ui"
+import {Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps, ThemeUIStyleObject} from "theme-ui"
 
 export type ButtonProps = ThemeUiButtonProps & {
   

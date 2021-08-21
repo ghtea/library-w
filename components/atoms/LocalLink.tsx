@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from "react";
+import React, {useCallback, useMemo} from "react";
 
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject } from "theme-ui"
-import { useAdvancedRouter } from "tools/router";
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
+import {useAdvancedRouter} from "tools/router";
 
 export type LocalLinkProps = ThemeUiBoxProps & {
   to: string;

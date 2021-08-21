@@ -1,14 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import {useCallback, useEffect, useMemo, useState} from "react"
 
-import { DatabasesQueryResponse } from "@notionhq/client/build/src/api-endpoints"
-import { Box } from "components/atoms/Box"
-import { Flex } from "components/atoms/Flex"
-import { MusicAlbumCard } from "components/organisms/music/MusicAlbumCard"
-import { TemplateA } from "components/templates/TemplateA"
+import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
+import {Box, Flex} from "components/atoms"
+import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
+import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import { notion, notionFileUrlPrefix } from "tools/notion"
+import {notion, notionFileUrlPrefix} from "tools/notion"
 
-import { getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag } from "./types"
+import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "./types"
 
 
 export type MusicProps = {
@@ -99,7 +98,7 @@ export default function Music({
 
       <Flex>
 
-        <Flex sx={{ p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap"}}>
+        <Flex sx={{p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap"}}>
           {albumDataList?.map((item, index)=>(
             <Box
               key={`album-${item?.essence?.title || index}`} 
@@ -125,13 +124,13 @@ export default function Music({
 export async function getServerSideProps() {
    
   try { 
-    const database = await notion.databases.query({ database_id: process.env.NOTION_MUSIC_DB_ID || "" });
-    return { props: { 
+    const database = await notion.databases.query({database_id: process.env.NOTION_MUSIC_DB_ID || ""});
+    return {props: { 
       database,
-    } }
+    }}
   }
   catch {
-    return { props: { 
+    return {props: { 
       database: null, 
     }}
   }

@@ -1,7 +1,7 @@
-import React, { RefObject, useEffect, useMemo, useRef } from "react";
+import React, {RefObject, useEffect, useMemo, useRef} from "react";
 
-import { Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject } from "theme-ui"
-import { useResponsive } from "tools/responsive"
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
+import {useResponsive} from "tools/responsive"
 
 export type RatioProps = ThemeUiBoxProps & {
   ratio?: number

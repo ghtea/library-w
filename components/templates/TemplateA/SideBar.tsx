@@ -1,14 +1,10 @@
-import { useCallback } from "react"
+import {useCallback} from "react"
 
-import { Box } from "components/atoms/Box"
-import { Flex } from "components/atoms/Flex"
-import { Icon, Size } from "components/atoms/Icon"
-import { LocalLink } from "components/atoms/LocalLink"
-import { Text } from "components/atoms/Text"
-import { IconButton } from "components/molecules/IconButton"
+import {Box, Flex, Icon, IconSize, LocalLink, Text} from "components/atoms"
+import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
-import { ColorKey, sizes } from "theme"
-import { useAdvancedRouter } from "tools/router"
+import {ColorKey, sizes} from "theme"
+import {useAdvancedRouter} from "tools/router"
 
 export type SideBarProps = {
   nav: NavItem[];
