@@ -7,6 +7,9 @@
   "rules": {
     "indent": ["error", 2],
     "react/jsx-indent": [2,2],
+    "quotes": ["error", "double"],
+    "array-bracket-spacing": ["error", "never"],
+    "object-curly-spacing": ["error", "never"],
     // import sorting rules
     // cf: https://github.com/lydell/eslint-plugin-simple-import-sort
     "sort-imports": "off",
