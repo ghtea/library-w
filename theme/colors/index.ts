@@ -3,7 +3,7 @@ import palette from "./palette";
 
 export enum ColorKey {
 
-  "background" = "background",
+  "bg" = "background",
   "text" = "text",
 
   "primary" = "primary",
@@ -12,9 +12,13 @@ export enum ColorKey {
   "secondary" = "secondary",
   "secondary-partner" = "secondary-partner",
   
-  "background-weak" = "background-weak",
-  "text-strong" = "text-strong",
-  
+  "bg.weak" = "bg-weak",
+  "text.strong" = "text-strong",
+  "text.weak" = "text-weak",
+
+  //
+  "image.placeholder.bg" = "image-placeholder-bg",
+
   //
   "badge.rating.the-best.bg" = "badge-the-best-bg",
   "badge.rating.top-10.bg" = "badge-top-10-bg",
@@ -25,8 +29,7 @@ export enum ColorKey {
   "badge.rating.text" = "badge-rating-text",
 
   //
-  "card.strong.bg" = "card-strong-bg",
-  "card.strong.text" = "card-strong-text",
+  "card.bg" = "card-bg",
 
   "nav.bg" = "nav-bg",
   "nav.border" = "nav-border",
@@ -37,17 +40,21 @@ export enum ColorKey {
 
 export const colors = {
 
-  [ColorKey.background] : palette["white"],
+  [ColorKey.bg] : palette["white"],
   [ColorKey.text]: palette["gray-700"],
 
   [ColorKey.primary]: palette.primary,
   [ColorKey["primary-partner"]]: palette["white"],
   // [ColorKey.secondary]: "#1997F0",
 
-  [ColorKey["background-weak"]]: palette["cool-gray-100"],
-  [ColorKey["text-strong"]]: palette["cool-gray-900"],
+  [ColorKey["bg.weak"]]: palette["cool-gray-100"],
+  [ColorKey["text.strong"]]: palette["cool-gray-900"],
+  [ColorKey["text.weak"]]: palette["cool-gray-500"],
 
+  //
+  [ColorKey["image.placeholder.bg"]]: palette["cool-gray-100"],
 
+  //
   [ColorKey["badge.rating.the-best.bg"]]: palette["rose-700"],
   [ColorKey["badge.rating.top-10.bg"]]: palette["fuchsia-700"],
   [ColorKey["badge.rating.top-50.bg"]]: palette["violet-700"],
@@ -57,8 +64,7 @@ export const colors = {
 
   [ColorKey["badge.rating.text"]]: palette["cool-gray-50"],
 
-  [ColorKey["card.strong.bg"]] : palette["cool-gray-900"],
-  [ColorKey["card.strong.text"]] : palette["white"],
+  [ColorKey["card.bg"]] : "transparent",
 
   [ColorKey["nav.bg"]]: palette["cool-gray-50"],
   [ColorKey["nav.border"]]: palette["cool-gray-200"],

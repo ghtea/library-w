@@ -1,6 +1,7 @@
 import React, {RefObject, useEffect, useMemo, useRef} from "react";
 
-import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
+import {Sx} from "theme";
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps} from "theme-ui"
 import {useResponsive} from "tools/responsive"
 
 export type RatioProps = ThemeUiBoxProps & {
@@ -27,7 +28,7 @@ export const Ratio = React.forwardRef<HTMLDivElement, RatioProps>((props, ref) =
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[containerRef, responsiveId, ratio])
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: Sx = useMemo(()=>({
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",

@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {Sx} from "theme";
 import {Flex as ThemeUiFlex, FlexProps as ThemeUiFlexProps, ThemeUIStyleObject} from "theme-ui"
 
 export type FlexProps = ThemeUiFlexProps & {
@@ -13,7 +14,7 @@ export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => 
     ...rest
   } = props;
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: Sx = useMemo(()=>({
     height: "auto",
     width: "100%",
     flexDirection: "column",

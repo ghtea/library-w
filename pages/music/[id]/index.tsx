@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react"
 
 import {PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
-import {Box, Divider, Flex, Heading, Paragraph, Ratio, Text} from "components/atoms"
+import {Box, Divider, Flex, Heading, Link, LocalLink, Paragraph, Ratio, Text} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import {GetServerSideProps} from "next"
 import Head from "next/head"
@@ -9,6 +9,7 @@ import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey} from "theme"
 import {notion} from "tools/notion"
+import {Sx} from "tools/theme-ui"
 
 import {MusicAlbumData} from "../types"
 
@@ -16,7 +17,6 @@ import {MusicAlbumData} from "../types"
 export type MusicAlbumProps = {
   page: PagesRetrieveResponse | null;
 }
-
 
 export default function MusicAlbum({
   page,
@@ -27,7 +27,7 @@ export default function MusicAlbum({
     [page] 
   );
 
-  const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor} = useMemo(
+  const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor, rym} = useMemo(
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
@@ -40,6 +40,17 @@ export default function MusicAlbum({
     return `${year}.${month}.${dayOfMonth}`
   },[released])
   
+
+  const badgeSx: Sx  = useMemo(()=>{
+    return ({
+      borderRadius: "4px",
+      paddingX: 3,
+      paddingY: 1,
+      backgroundColor: ColorKey["bg.weak"],
+      margin: 2,
+    })
+  },[])
+
   return (
     <TemplateA>
       <Head>
@@ -77,8 +88,21 @@ export default function MusicAlbum({
               <Flex sx={{height: "100%"}}>
                 <Heading as={"h1"} sx={{fontSize: ["1.4rem", "1.6rem", "2rem", null]}} >{title}</Heading>
                 <Text sx={{fontSize: "1.3rem"}}>{artist}</Text>
-                <Text sx={{fontSize: "1.2rem"}}>{dateText}</Text>
+                <Text sx={{fontSize: "1.2rem", color: ColorKey["text.weak"]}}>{dateText}</Text>
                 {/* TODO: score, rank */}
+                <Flex sx={{flexDirection: "row", width: "auto", marginTop: 4,}}>
+                  <Link to={"/music"} sx={badgeSx}>
+                    <Text>{rating}</Text>
+                  </Link>
+                  <Link href={rym} sx={badgeSx}>
+                    <Text>RYM</Text>
+                  </Link>
+                  <Box>
+                    <Text>
+
+                    </Text>
+                  </Box>
+                </Flex>
               </Flex>
             </Box>
 

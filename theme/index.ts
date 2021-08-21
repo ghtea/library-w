@@ -1,3 +1,5 @@
+import {ThemeUIStyleObject as Sx} from "theme-ui";
+
 import {breakpoints, BreakpointsSize} from "./breakpoints";
 import {buttons} from "./buttons";
 import {ColorKey,colors} from "./colors";
@@ -9,6 +11,9 @@ import {zIndex} from "./z-index";
 
 export {breakpoints, buttons, colors, forms, sizes, space, text, zIndex};
 export {BreakpointsSize, ColorKey};
+
+export type {Sx};
+
 
 export const theme = {
   breakpoints: breakpoints,

@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 
-import {ColorKey} from "theme";
+import {ColorKey,Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
 
 export type DividerProps = ThemeUiBoxProps & {
@@ -14,11 +14,11 @@ export const Divider = React.forwardRef<HTMLDivElement, DividerProps>((props, re
     ...rest
   } = props;
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: Sx = useMemo(()=>({
     width: "100%",
     height: "2px",
-    mt: 4,
-    backgroundColor: ColorKey["background-weak"],
+    my: 4,
+    backgroundColor: ColorKey["bg.weak"],
     ...sx,
   }),[sx])
 

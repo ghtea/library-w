@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
-import {Page} from "@notionhq/client/build/src/api-types"
 import {Box, Flex, LocalLink, NextImage,Ratio, Text} from "components/atoms"
 import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "pages/music/types"
 import {ColorKey} from "theme"
@@ -24,7 +23,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
     else if (rating === MusicAlbumRating.TOP_100) return ColorKey["badge.rating.top-100.bg"]
     else if (rating === MusicAlbumRating.TOP_200) return ColorKey["badge.rating.top-200.bg"]
     else if (rating === MusicAlbumRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
-    else return ColorKey["card.strong.bg"]
+    else return ColorKey["badge.rating.top-500.bg"]
   },[rating])
 
   return (
@@ -36,11 +35,11 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
               position: "absolute", 
               left: 0,
               top: 0,
-              height: "40px", 
+              height: "32px", 
               px: 3,
-              py: 2,
+              py: 1,
               backgroundColor: badgeBgColorKey, 
-              color: ColorKey["card.strong.text"],
+              color: ColorKey["badge.rating.text"],
               zIndex: 2,
               opacity: 0.8,
             }}
@@ -50,27 +49,29 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
               alignItems: "center",
             }}>
               <Text sx={{
-                fontSize: "1.2rem",
+                fontSize: "1rem",
                 fontWeight: "bold",
               }}>
                 {rating}
               </Text>
             </Flex>
           </Box>
-
-          <Ratio>
-            {src &&
-            <NextImage layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
-            }
-          </Ratio>
+          
+          <Box sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
+            <Ratio>
+              {src &&
+              <NextImage layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
+              }
+            </Ratio>
+          </Box>
         </Box >
 
-        <Box sx={{py:4, width: "100%", color: ColorKey["card.strong.text"], backgroundColor: ColorKey["card.strong.bg"]}}>
+        <Box sx={{py:2, width: "100%", backgroundColor: ColorKey["card.bg"]}}>
           <Flex>
-            <Text sx={{fontSize: "1.1rem", px: 3, py: 1}}>
+            <Text sx={{fontSize: "1.1rem", px: 3, py: 1, color: ColorKey["text.strong"]}}>
               {title}
             </Text>
-            <Text sx={{px: 3, py: 1}}>
+            <Text sx={{px: 3, py: 0, color: ColorKey["text.weak"]}}>
               {artist}
             </Text>
           </Flex>

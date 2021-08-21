@@ -1,8 +1,8 @@
 import React, {useMemo} from "react";
 import {ReactSVG} from "react-svg"
 
-import {ColorKey} from "theme";
-import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue, ThemeUIStyleObject} from "theme-ui"
+import {ColorKey,Sx} from "theme";
+import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue} from "theme-ui"
 
 export type IconProps = ThemeUiBoxProps & {
   src: string;
@@ -38,7 +38,7 @@ export const Icon = React.forwardRef<HTMLDivElement, IconProps>((props, ref) => 
     }
   },[size])
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: Sx = useMemo(()=>({
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",

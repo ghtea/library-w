@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 
-import {ColorKey} from "theme";
-import {Heading as ThemeUiHeading, HeadingProps as ThemeUiHeadingProps, ResponsiveStyleValue, ThemeUIStyleObject} from "theme-ui"
+import {ColorKey,Sx} from "theme";
+import {Heading as ThemeUiHeading, HeadingProps as ThemeUiHeadingProps, ResponsiveStyleValue} from "theme-ui"
 
 export type HeadingProps = Omit<ThemeUiHeadingProps, "as"> & {
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
@@ -24,7 +24,7 @@ export const Heading = React.forwardRef<HTMLDivElement, HeadingProps>((props, re
     else if (as === "h1") return "2rem";
   },[as])
   
-  const _sx: ThemeUIStyleObject = useMemo(()=>{
+  const _sx: Sx = useMemo(()=>{
     return ({
       flexShrink: 1,
       flexGrow: 1,
@@ -38,7 +38,7 @@ export const Heading = React.forwardRef<HTMLDivElement, HeadingProps>((props, re
       fontWeight: "bold",
       fontFamily: "unset",
       fontSize,
-      color: ColorKey["text-strong"],
+      color: ColorKey["text.strong"],
       ...sx,
     });
   },[sx, fontSize])

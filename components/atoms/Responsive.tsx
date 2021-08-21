@@ -3,7 +3,7 @@ import React, {Fragment} from "react";
 import {ResponsiveRange,useResponsive} from "tools/responsive";
 
 export type ResponsiveProps = {
-    range: ResponsiveRange
+  range: ResponsiveRange
 };
 
 export const Responsive: React.FunctionComponent<ResponsiveProps> = ({

@@ -1,6 +1,7 @@
 import React, {useMemo} from "react";
 
-import {Paragraph as ThemeUiParagraph, ParagraphProps as ThemeUiParagraphProps, ResponsiveStyleValue, ThemeUIStyleObject} from "theme-ui"
+import {Sx} from "theme";
+import {Paragraph as ThemeUiParagraph, ParagraphProps as ThemeUiParagraphProps, ResponsiveStyleValue} from "theme-ui"
 
 export type ParagraphProps = ThemeUiParagraphProps & {
   
@@ -13,7 +14,7 @@ export const Paragraph = React.forwardRef<HTMLDivElement, ParagraphProps>((props
     ...rest
   } = props;
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>{
+  const _sx: Sx = useMemo(()=>{
     return ({
       flexShrink: 1,
       flexGrow: 1,

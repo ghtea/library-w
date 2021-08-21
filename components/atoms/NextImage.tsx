@@ -4,13 +4,12 @@ import OriginalNextImage, {ImageProps as OriginalNextImageProps} from "next/imag
 
 
 export type NextImageProps = Omit<OriginalNextImageProps, "className"> & {
-  className?: string | string[];
 }
 
 // type Src = OriginalNextImageProps["src"]
 
 export const NextImage: React.FunctionComponent<NextImageProps> = ({
-  src, width = "auto", height = "auto", className, ...rest
+  src, width = "auto", height = "auto", ...rest
 }) => {
 
   return (

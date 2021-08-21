@@ -1,6 +1,7 @@
 import React, {useMemo} from "react";
 
-import {ResponsiveStyleValue, Text as ThemeUiText, TextProps as ThemeUiTextProps, ThemeUIStyleObject} from "theme-ui"
+import {Sx} from "theme";
+import {ResponsiveStyleValue, Text as ThemeUiText, TextProps as ThemeUiTextProps} from "theme-ui"
 
 export type TextProps = ThemeUiTextProps & {
   
@@ -13,7 +14,7 @@ export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => 
     ...rest
   } = props;
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>{
+  const _sx: Sx = useMemo(()=>{
     return ({
       flexShrink: 1,
       flexGrow: 1,

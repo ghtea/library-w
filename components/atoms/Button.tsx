@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {Sx} from "theme";
 import {Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps, ThemeUIStyleObject} from "theme-ui"
 
 export type ButtonProps = ThemeUiButtonProps & {
@@ -13,7 +14,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, r
     ...rest
   } = props;
 
-  const _sx: ThemeUIStyleObject = useMemo(()=>({
+  const _sx: Sx = useMemo(()=>({
     display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
