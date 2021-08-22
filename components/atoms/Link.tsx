@@ -40,6 +40,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) 
       color: "unset",
     },
     display: "inline-flex",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     flexShrink: 0,

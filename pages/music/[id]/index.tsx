@@ -54,12 +54,13 @@ export default function MusicAlbum({
   },[])
 
   const availableReviewLanguageList = useMemo(()=>{
-    const allReviewLanguageList = Object.keys(MusicAlbumReviewLanguage) as MusicAlbumReviewLanguage[];
+    const allReviewLanguageList = Object.values(MusicAlbumReviewLanguage) as MusicAlbumReviewLanguage[];
     
     if (!albumData) return []
     return allReviewLanguageList.filter(item => returnReviewDict(albumData)[item])
-    // TODO: fix, it does not return ["kr review...."]
   },[albumData])
+
+  const isThisLanguageSelected = useCallback((language: MusicAlbumReviewLanguage)=> (reviewLanguage && language === reviewLanguage), [reviewLanguage])
 
   const showingReview = useMemo(()=>{
     if (reviewLanguage === MusicAlbumReviewLanguage.KOR && reviewKor) return reviewKor
@@ -152,13 +153,24 @@ export default function MusicAlbum({
 
         <Box>
           <Flex>
-            <Flex sx={{flexDirection: "row"}}>
-              {/* TODO: add styles to first-end of buttons */}
+            <Flex sx={{flexDirection: "row", width: "auto"}}>
               {[availableReviewLanguageList.map(item=>(
-                <Button key={`language-button-${item}`} onClick={()=>onClickReviewLanguageButton(item)}>{item}</Button>
+                <Button 
+                  key={`language-button-${item}`} 
+                  onClick={()=>onClickReviewLanguageButton(item)}
+                  sx={{
+                    backgroundColor: isThisLanguageSelected(item) ? ColorKey["bg.weak"] : "transparent",
+                    color: isThisLanguageSelected(item) ? ColorKey["text.strong"] : ColorKey["text.weak"],
+                    margin: 2,
+                  }}
+                >
+                  {item}
+                </Button>
               ))]}
             </Flex>
-            <Paragraph>{showingReview}</Paragraph>
+            <Box sx={{padding: 4, marginTop: 4}}>
+              <Paragraph>{showingReview}</Paragraph>
+            </Box>
           </Flex>
         </Box>
     
