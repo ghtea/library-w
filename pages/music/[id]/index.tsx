@@ -11,7 +11,7 @@ import {ColorKey} from "theme"
 import {notion} from "tools/notion"
 import {Sx} from "tools/theme-ui"
 
-import {MusicAlbumData, MusicAlbumReviewLanguage, returnReviewDict} from "../types"
+import {MusicAlbumData, MusicAlbumReviewLanguage, returnReviewDict} from "../../../tools/types/music"
 
 export type MusicAlbumProps = {
   page: PagesRetrieveResponse | null;

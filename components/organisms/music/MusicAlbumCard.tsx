@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
 import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
-import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "pages/music/types"
 import {ColorKey} from "theme"
 import {zIndex} from "theme/space"
+import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "tools/types/music"
 
 
 export type MusicMusicAlbumCardProps = {

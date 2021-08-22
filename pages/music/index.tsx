@@ -7,7 +7,7 @@ import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
 import {notion, notionFileUrlPrefix} from "tools/notion"
 
-import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "./types"
+import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "../../tools/types/music"
 
 
 export type MusicProps = {
