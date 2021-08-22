@@ -61,7 +61,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
 
 
   return ( 
-    <Flex sx={{backgroundColor: ColorKey.background, color: ColorKey.text}}>
+    <Flex sx={{backgroundColor: ColorKey.bg, color: ColorKey.text}}>
 
       {/* top bar in sm, md */}
       <Responsive range={"sm-md"}>
