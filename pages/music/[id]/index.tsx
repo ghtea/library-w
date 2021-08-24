@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react"
 
 import {PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
-import {Box, Button, Divider, Flex, Heading, Link, Paragraph, Ratio, Text} from "components/atoms"
+import {Box, Button, Divider, Flex, Heading, Link, Paragraph, Ratio, Text, Textarea} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import {GetServerSideProps} from "next"
 import Head from "next/head"
@@ -23,6 +23,8 @@ export default function MusicAlbum({
   
 
   const [reviewLanguage, setReviewLanguage] = useState<MusicAlbumReviewLanguage>()
+  const [isEditingReview, setIsEditingReview] = useState(false)
+  const [editingReview, setEditingReview] = useState("");
 
   const albumData: MusicAlbumData | null = useMemo(
     ()=> page ?  refineAlbumData(page) : null, 
@@ -62,6 +64,7 @@ export default function MusicAlbum({
 
   const isThisLanguageSelected = useCallback((language: MusicAlbumReviewLanguage)=> (reviewLanguage && language === reviewLanguage), [reviewLanguage])
 
+  // TODO: make showingReview as state, and use useEffect here
   const showingReview = useMemo(()=>{
     if (reviewLanguage === MusicAlbumReviewLanguage.KOR && reviewKor) return reviewKor
     else if (reviewLanguage === MusicAlbumReviewLanguage.ENG && reviewEng) return reviewEng
@@ -86,6 +89,21 @@ export default function MusicAlbum({
     }
   },[reviewEng, reviewJpn, reviewKor, reviewLanguage])
 
+  const onClickEdit = useCallback(()=>{
+    if (showingReview){
+      setEditingReview(showingReview)
+    }
+    setIsEditingReview(true);
+  },[])
+
+  const onClickSave = useCallback(()=>{
+    // TODO: setShowingReview...
+    setIsEditingReview(false);
+  },[])
+
+  const onClickCancel = useCallback(()=>{
+    setIsEditingReview(false);
+  },[])
 
   const onClickReviewLanguageButton = useCallback((newLanguage: MusicAlbumReviewLanguage)=>{
     setReviewLanguage(newLanguage)
@@ -151,7 +169,7 @@ export default function MusicAlbum({
 
         <Divider sx={{width: "100%"}}/>
 
-        <Box>
+        <Box sx={{width: "100%"}}>
           <Flex>
             <Flex sx={{flexDirection: "row", width: "auto"}}>
               {[availableReviewLanguageList.map(item=>(
@@ -168,8 +186,21 @@ export default function MusicAlbum({
                 </Button>
               ))]}
             </Flex>
-            <Box sx={{padding: 4, marginTop: 4}}>
-              <Paragraph>{showingReview}</Paragraph>
+            <Box>
+              {isEditingReview
+                ? <>
+                  <Button onClick={onClickSave}>{"Save"}</Button>
+                  <Button onClick={onClickCancel}>{"Cancel"}</Button>
+                </>
+                : <Button onClick={onClickEdit}>{"Edit"}</Button>
+              }
+              
+            </Box>
+            <Box sx={{padding: 4, marginTop: 4, width: "100%"}}>
+              {isEditingReview
+                ? <Textarea value={editingReview} sx={{height: 600}}></Textarea>
+                : <Paragraph sx={{padding: "5px"}}>{showingReview}</Paragraph>
+              }
             </Box>
           </Flex>
         </Box>

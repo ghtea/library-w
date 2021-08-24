@@ -1,13 +1,13 @@
 import React, {useMemo} from "react";
 
 import {Sx} from "theme";
-import {Paragraph as ThemeUiParagraph, ParagraphProps as ThemeUiParagraphProps, ResponsiveStyleValue} from "theme-ui"
+import {ResponsiveStyleValue,Textarea as ThemeUiTextarea, TextareaProps as ThemeUiTextareaProps} from "theme-ui"
 
-export type ParagraphProps = ThemeUiParagraphProps & {
+export type TextareaProps = ThemeUiTextareaProps & {
   
 };
 
-export const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
+export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>((props, ref) => {
 
   const {
     sx,
@@ -26,13 +26,14 @@ export const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
       maxWidth: "100%",
       fontFamily: "unset",
       fontStyle: "unset",
+      width: "100%",
       ...sx,
     });
   },[sx])
 
   return (
-    <ThemeUiParagraph ref={ref} sx={_sx} {...rest} />
+    <ThemeUiTextarea ref={ref} sx={_sx} {...rest} />
   );
 })
 
-Paragraph.displayName = "Paragraph";
+Textarea.displayName = "Textarea";
