@@ -4,7 +4,7 @@ import {Box, Flex, Icon, IconSize, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
 import {ColorKey, sizes} from "theme"
-import {useAdvancedRouter} from "tools/router"
+import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
   nav: NavItem[];

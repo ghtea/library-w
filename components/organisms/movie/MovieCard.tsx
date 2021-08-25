@@ -4,7 +4,7 @@ import {Page} from "@notionhq/client/build/src/api-types"
 import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
 import {ColorKey} from "theme"
 import {zIndex} from "theme/space"
-import {MovieData, MovieRating} from "tools/types/movie"
+import {MovieData, MovieRating} from "utils/notion/movie"
 
 
 export type MovieCardProps = {

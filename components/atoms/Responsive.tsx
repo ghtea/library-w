@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 
-import {ResponsiveRange,useResponsive} from "tools/responsive";
+import {ResponsiveRange,useResponsive} from "utils/responsive";
 
 export type ResponsiveProps = {
   range: ResponsiveRange

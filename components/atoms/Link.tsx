@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from "react";
 
 import {Sx} from "theme";
 import {Link as ThemeUiLink, LinkProps as ThemeUiLinkProps} from "theme-ui"
-import {useAdvancedRouter} from "tools/router";
+import {useAdvancedRouter} from "utils/router";
 
 
 export type LinkProps = Omit<ThemeUiLinkProps, "href"> & {

@@ -6,7 +6,7 @@ import {Flex} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
 import Image from "next/image"
-import {notion} from "tools/notion"
+import {notion} from "utils/notion"
 // import { ThoughtAlbumPropertyValueMap } from "tools/notion/types"
 
 

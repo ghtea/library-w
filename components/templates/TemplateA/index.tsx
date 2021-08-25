@@ -2,7 +2,7 @@ import {useCallback, useEffect, useMemo, useState} from "react"
 
 import {Box, Flex, Responsive} from "components/atoms"
 import {ColorKey,sizes,zIndex} from "theme"
-import {Sx} from "tools/theme-ui"
+import {Sx} from "utils/theme-ui"
 
 import {SideBar} from "./SideBar"
 import {TopBar} from "./TopBar"

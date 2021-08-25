@@ -8,10 +8,8 @@ import Head from "next/head"
 import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey} from "theme"
-import {notion} from "tools/notion"
-import {Sx} from "tools/theme-ui"
-
-import {MusicAlbumData, MusicAlbumReviewLanguage, returnReviewDict} from "../../../tools/types/music"
+import {MusicAlbumData, MusicAlbumReviewLanguage, notion, returnReviewDict} from "utils/notion"
+import {Sx} from "utils/theme-ui"
 
 export type MusicAlbumProps = {
   page: PagesRetrieveResponse | null;

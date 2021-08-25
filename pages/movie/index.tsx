@@ -5,9 +5,8 @@ import {Box, Flex} from "components/atoms"
 import {MovieCard} from "components/organisms/movie/MovieCard"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import {notion, notionFileUrlPrefix} from "tools/notion"
+import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,notion, notionFileUrlPrefix} from "utils/notion"
 
-import {getMovieRatingOrder, MovieData, MovieRating, MovieTag} from "../../tools/types/movie"
 
 
 export type MovieProps = {

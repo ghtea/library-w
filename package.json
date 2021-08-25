@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lf": "next lint --fix"
+    "l-f": "next lint --fix"
   },
   "dependencies": {
     "@notionhq/client": "^0.2.2",

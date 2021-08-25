@@ -2,7 +2,7 @@ import React, {RefObject, useEffect, useMemo, useRef} from "react";
 
 import {Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps} from "theme-ui"
-import {useResponsive} from "tools/responsive"
+import {useResponsive} from "utils/responsive"
 
 export type RatioProps = ThemeUiBoxProps & {
   ratio?: number

@@ -4,7 +4,7 @@ import {Box, Flex, Icon, IconSize, Link, Responsive, Text} from "components/atom
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem} from "components/templates/TemplateA"
 import {ColorKey, sizes, zIndex} from "theme"
-import {useAdvancedRouter} from "tools/router"
+import {useAdvancedRouter} from "utils/router"
 
 export type TopBarProps = {
   nav: NavItem[];

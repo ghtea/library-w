@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
 import {ColorKey} from "theme"
 import {zIndex} from "theme/space"
-import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "tools/types/music"
+import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "utils/notion/music"
 
 
 export type MusicMusicAlbumCardProps = {

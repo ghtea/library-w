@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import type {AppProps} from "next/app"
 import theme from "theme";
 import {ThemeProvider} from "theme-ui";
-import ResponsiveProvider from "tools/responsive";
+import ResponsiveProvider from "utils/responsive";
 
 import "normalize.css";
 import "./fonts.css";
