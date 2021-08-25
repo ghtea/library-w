@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react"
+import {useMutation} from "react-query"
 
 import {PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Button, Divider, Flex, Heading, Link, Paragraph, Ratio, Text, Textarea} from "components/atoms"
@@ -8,7 +9,7 @@ import Head from "next/head"
 import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey} from "theme"
-import {MusicAlbumData, MusicAlbumReviewLanguage, notion, returnReviewDict} from "utils/notion"
+import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
 import {Sx} from "utils/theme-ui"
 
 export type MusicAlbumProps = {
@@ -19,7 +20,6 @@ export default function MusicAlbum({
   page,
 }:MusicAlbumProps) {
   
-
   const [reviewLanguage, setReviewLanguage] = useState<MusicAlbumReviewLanguage>()
   const [isEditingReview, setIsEditingReview] = useState(false)
   const [editingReview, setEditingReview] = useState("");
@@ -32,6 +32,9 @@ export default function MusicAlbum({
   const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor, reviewJpn, rym} = useMemo(
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
+
+  const updateMutation = useMutation((newMusicAlbumProperties: MusicAlbumPropertyValueMap) => updateNotionMusicAlbumPage(page?.id || "", newMusicAlbumProperties))
+
 
   const dateText = useMemo(()=>{
     if (!released) return "";
@@ -97,6 +100,7 @@ export default function MusicAlbum({
   const onClickSave = useCallback(()=>{
     // TODO: setShowingReview...
     setIsEditingReview(false);
+    // updateMutation.mutate({"Review ENG": {rich_text: [{plain_text: editingReview}]}})
   },[])
 
   const onClickCancel = useCallback(()=>{
