@@ -3,9 +3,8 @@ import React from "react"
 import {Flex, Text} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import Image from "next/image"
 
-export default function Home() {
+const Home:React.FunctionComponent = () => {
   return (
     <TemplateA>
       <Head>
@@ -21,3 +20,5 @@ export default function Home() {
     </TemplateA>
   )
 }
+
+export default Home;

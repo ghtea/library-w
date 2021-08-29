@@ -1,4 +1,4 @@
-import {firebaseAuth, myFirebaseAuth} from "./global"
+import {firebaseAuth, myFirebaseAuth} from "./_global"
 
 // ref
 // https://firebase.google.com/docs/reference/node/firebase.auth.GoogleAuthProvider?authuser=0

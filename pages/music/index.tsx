@@ -123,7 +123,7 @@ export default function Music({
 export async function getServerSideProps() {
    
   try { 
-    const database = await notion.databases.query({database_id: process.env.NOTION_MUSIC_DB_ID || ""});
+    const database = await notion.databases.query({database_id: process.env.NEXT_PUBLIC_NOTION_MUSIC_DB_ID || ""});
     return {props: { 
       database,
     }}
