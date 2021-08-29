@@ -1,19 +1,16 @@
-import React, {useEffect} from "react"
+import React, {useCallback} from "react"
 
-import {Flex, Text} from "components/atoms"
+import {Button, Flex, Text} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import {useSession} from "next-auth/client"
+import {signOut} from "next-auth/client"
 
-const Home:React.FunctionComponent = () => {
+const Setting:React.FunctionComponent = () => {
 
+  const onClickSignOut  = useCallback(()=>{
+    signOut({callbackUrl: "/"})  
+  },[])
 
-  const [session, loading] = useSession()
-
-  useEffect(()=>{
-    console.log(session)
-  },[session, loading])
-  
   return (
     <TemplateA>
       <Head>
@@ -23,11 +20,11 @@ const Home:React.FunctionComponent = () => {
       </Head>
 
       <Flex>
-        <Text>{"Library of W"}</Text>
+        <Button onClick={onClickSignOut}>Sign Out</Button>
       </Flex>
       
     </TemplateA>
   )
 }
 
-export default Home;
+export default Setting;

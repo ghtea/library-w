@@ -1,9 +1,9 @@
 import {useEffect} from "react";
 
 import type {AppProps} from "next/app"
+import {Provider} from "next-auth/client"
 import theme from "theme";
 import {ThemeProvider} from "theme-ui";
-import {AuthProvider} from "utils/firebase/auth";
 import {queryClient, QueryClientProvider} from "utils/react-query"
 import ResponsiveProvider from "utils/responsive";
 
@@ -13,7 +13,7 @@ import "./fonts.css";
 function MyApp({Component, pageProps}: AppProps) {
 
   return (
-    <AuthProvider>
+    <Provider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <ResponsiveProvider>
@@ -21,7 +21,7 @@ function MyApp({Component, pageProps}: AppProps) {
           </ResponsiveProvider>
         </ThemeProvider>
       </QueryClientProvider>
-    </AuthProvider>
+    </Provider>
   )
 }
 

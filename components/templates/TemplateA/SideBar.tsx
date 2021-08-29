@@ -3,8 +3,8 @@ import {useCallback} from "react"
 import {Box, Flex, Icon, IconSize, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
+import {signIn, signOut, useSession} from "next-auth/client"
 import {ColorKey, sizes} from "theme"
-import {signInWithPopupByGoogle} from "utils/firebase/index"
 import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
@@ -14,13 +14,14 @@ export type SideBarProps = {
 export const SideBar: React.FunctionComponent<SideBarProps> = ({
   nav
 }) => {
+  const [session, loading] = useSession()
 
   const {pathSeries} = useAdvancedRouter()
 
   const getIsActive = useCallback((pageId: string)=>(pageId === pathSeries[0]),[pathSeries]) 
 
   const onClickLogIn = useCallback(()=>{
-    signInWithPopupByGoogle()
+    signIn()
   },[])
 
   return ( 
@@ -76,7 +77,10 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
 
       <Box sx={{py: 4}}>
         <Flex sx={{justifyContent: "center", alignItems: "center"}}>
-          <IconButton src={"/svgs/bao-enter.svg"} onClick={onClickLogIn}></IconButton>
+          {session 
+            ? (<Link to={"/setting"}><IconButton src={"/svgs/bao-person.svg"} ></IconButton></Link>) 
+            : (<IconButton src={"/svgs/bao-enter.svg"} onClick={onClickLogIn}></IconButton>)
+          }
         </Flex> 
       </Box>
     </Flex>

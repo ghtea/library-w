@@ -48,7 +48,6 @@ export const nav: NavItem[] = [
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   children
 }) => {
-
   const [isOpen, setIsOpen] = useState(false);
 
   const navBarSx: Sx = useMemo(()=>({
@@ -74,7 +73,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             borderBottomWidth: "1px", 
           }}
         >
-          <TopBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen} ></TopBar>
+          <TopBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen}></TopBar>
         </Box>
       </Responsive>
       

@@ -1,5 +1,0 @@
-export {firebaseAdmin} from "./admin"
-export {firebaseApp} from "./app"
-export {AuthProvider,firebaseAuth,useAuth} from "./auth"
-export {firebaseFirestore} from "./database"
-export {firebaseStorage} from "./storage"
