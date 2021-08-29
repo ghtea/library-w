@@ -3,17 +3,9 @@ import React, {useEffect} from "react"
 import {Flex, Text} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import {useSession} from "next-auth/client"
 
 const Home:React.FunctionComponent = () => {
 
-
-  const [session, loading] = useSession()
-
-  useEffect(()=>{
-    console.log(session)
-  },[session, loading])
-  
   return (
     <TemplateA>
       <Head>

@@ -33,7 +33,7 @@ export const useResponsive = () => {
   return useContext(ResponsiveContext);
 };
 
-const ResponsiveProvider: FunctionComponent = (props) => {
+export const ResponsiveProvider: FunctionComponent = (props) => {
   const [value, setValue] = useState<ResponsiveContext>({});
 
   const hasWindow = typeof window !== "undefined";
@@ -92,5 +92,3 @@ const ResponsiveProvider: FunctionComponent = (props) => {
     </ResponsiveContext.Provider>
   );
 };
-
-export default ResponsiveProvider;

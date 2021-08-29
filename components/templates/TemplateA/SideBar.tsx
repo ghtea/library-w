@@ -3,8 +3,9 @@ import {useCallback} from "react"
 import {Box, Flex, Icon, IconSize, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
-import {signIn, signOut, useSession} from "next-auth/client"
+import {signIn} from "next-auth/client"
 import {ColorKey, sizes} from "theme"
+import {useAuth} from "utils/auth"
 import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
@@ -14,7 +15,7 @@ export type SideBarProps = {
 export const SideBar: React.FunctionComponent<SideBarProps> = ({
   nav
 }) => {
-  const [session, loading] = useSession()
+  const {user, loading} = useAuth()
 
   const {pathSeries} = useAdvancedRouter()
 
@@ -77,7 +78,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
 
       <Box sx={{py: 4}}>
         <Flex sx={{justifyContent: "center", alignItems: "center"}}>
-          {session 
+          {user 
             ? (<Link to={"/setting"}><IconButton src={"/svgs/bao-person.svg"} ></IconButton></Link>) 
             : (<IconButton src={"/svgs/bao-enter.svg"} onClick={onClickLogIn}></IconButton>)
           }

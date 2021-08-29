@@ -2,6 +2,7 @@ import {useCallback, useEffect, useMemo, useState} from "react"
 
 import {Box, Flex, Responsive} from "components/atoms"
 import {ColorKey,sizes,zIndex} from "theme"
+import {ResponsiveStyleValue} from "theme-ui"
 import {Sx} from "utils/theme-ui"
 
 import {SideBar} from "./SideBar"
@@ -12,7 +13,7 @@ export const TEMPLATE_A_SIDE_BAR_LG_WIDTH = 140;
 
 
 export type TemplateAProps = {
-  
+  height?: ResponsiveStyleValue<"auto" | "100%">
 }
 
 export type NavItem = {
@@ -46,7 +47,7 @@ export const nav: NavItem[] = [
 
 
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
-  children
+  children, height = "auto"
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -60,7 +61,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
 
 
   return ( 
-    <Flex sx={{backgroundColor: ColorKey.bg, color: ColorKey.text}}>
+    <Flex sx={{backgroundColor: ColorKey.bg, color: ColorKey.text, height: height}}>
 
       {/* top bar in sm, md */}
       <Responsive range={"sm-md"}>
@@ -101,6 +102,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_MD_WIDTH}px)`, 
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`
           ],
+          height: height,
           top: [sizes["templateA.topNav.height"], null, 0, null],
           left: [0, null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH],
         }}

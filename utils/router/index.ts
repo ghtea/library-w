@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 
 type PathSeries = string[];

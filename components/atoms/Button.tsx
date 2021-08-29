@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 
 import {Sx} from "theme";
-import {Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps, ThemeUIStyleObject} from "theme-ui"
+import {Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps} from "theme-ui"
 
 export type ButtonProps = ThemeUiButtonProps & {
   
@@ -24,8 +24,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, r
     background: "none",
     cursor: "pointer",
     color: "unset",
-    px: 3,
-    py: 3,
+    px: 4,
+    py: 4,
     ...sx,
   }),[sx])
 

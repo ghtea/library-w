@@ -3,8 +3,9 @@ import {Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState} from
 import {Box, Flex, Icon, IconSize, Link, Responsive, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem} from "components/templates/TemplateA"
-import {signIn, signOut, useSession} from "next-auth/client"
+import {signIn} from "next-auth/client"
 import {ColorKey, sizes, zIndex} from "theme"
+import {useAuth} from "utils/auth"
 import {useAdvancedRouter} from "utils/router"
 
 export type TopBarProps = {
@@ -16,7 +17,7 @@ export type TopBarProps = {
 export const TopBar: React.FunctionComponent<TopBarProps> = ({
   nav, isOpen, setIsOpen
 }) => {
-  const [session, loading] = useSession()
+  const {user} = useAuth()
 
   const {pathSeries} = useAdvancedRouter()
 
@@ -83,7 +84,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
         <Box> 
           <Flex>
             <Box>
-              {session 
+              {user 
                 ? (<IconButton src={"/svgs/bao-person.svg"} ></IconButton>) 
                 : (<IconButton src={"/svgs/bao-enter.svg"} onClick={onClickLogIn}></IconButton>)
               }
