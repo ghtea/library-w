@@ -5,7 +5,7 @@ import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
 import {signIn} from "next-auth/client"
 import {ColorKey, sizes} from "theme"
-import {useAuth} from "utils/auth"
+import {useAuthentication} from "utils/authentication"
 import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
@@ -15,15 +15,11 @@ export type SideBarProps = {
 export const SideBar: React.FunctionComponent<SideBarProps> = ({
   nav
 }) => {
-  const {user, loading} = useAuth()
+  const {user, loading} = useAuthentication()
 
   const {pathSeries} = useAdvancedRouter()
 
   const getIsActive = useCallback((pageId: string)=>(pageId === pathSeries[0]),[pathSeries]) 
-
-  const onClickLogIn = useCallback(()=>{
-    signIn()
-  },[])
 
   return ( 
     <Flex 
@@ -80,7 +76,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
         <Flex sx={{justifyContent: "center", alignItems: "center"}}>
           {user 
             ? (<Link to={"/setting"}><IconButton src={"/svgs/bao-person.svg"} ></IconButton></Link>) 
-            : (<IconButton src={"/svgs/bao-enter.svg"} onClick={onClickLogIn}></IconButton>)
+            : (<Link to={"/auth/signin"}><IconButton src={"/svgs/bao-enter.svg"} ></IconButton></Link>)
           }
         </Flex> 
       </Box>

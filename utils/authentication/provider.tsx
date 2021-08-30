@@ -10,7 +10,7 @@ import {Session} from "next-auth";
 import {useSession} from "next-auth/client";
 
 
-export type AuthContext = {
+export type AuthenticationContext = {
   session: null | Pick<Session, "expires">
   user: null | Session["user"] & {
     role: "admin" | "guest"
@@ -18,20 +18,20 @@ export type AuthContext = {
   loading: boolean;
 };
 
-const initialAuthContext = {
+const initialAuthenticationContext = {
   session: null,
   user: null,
   loading: false,
 };
 
-export const AuthContext = createContext<AuthContext>(initialAuthContext);
+export const AuthenticationContext = createContext<AuthenticationContext>(initialAuthenticationContext);
 
-export const useAuth = () => {
-  return useContext(AuthContext);
+export const useAuthentication = () => {
+  return useContext(AuthenticationContext);
 };
 
-export const AuthProvider: FunctionComponent = (props) => {
-  const [value, setValue] = useState<AuthContext>(initialAuthContext);
+export const AuthenticationProvider: FunctionComponent = (props) => {
+  const [value, setValue] = useState<AuthenticationContext>(initialAuthenticationContext);
 
   const [session, loading] = useSession()
 
@@ -40,7 +40,7 @@ export const AuthProvider: FunctionComponent = (props) => {
       console.log("raw session: ", session)
 
       if (session){
-        const newValue: AuthContext = {
+        const newValue: AuthenticationContext = {
           session: {
             expires: session.expires
           },
@@ -58,7 +58,7 @@ export const AuthProvider: FunctionComponent = (props) => {
         setValue(newValue);
       }
       else {
-        setValue(initialAuthContext)
+        setValue(initialAuthenticationContext)
       }
     }
     else {
@@ -67,8 +67,8 @@ export const AuthProvider: FunctionComponent = (props) => {
   }, [session, loading]);
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthenticationContext.Provider value={value}>
       {props.children}
-    </AuthContext.Provider>
+    </AuthenticationContext.Provider>
   );
 };

@@ -5,7 +5,7 @@ import {IconButton} from "components/molecules/IconButton"
 import {NavItem} from "components/templates/TemplateA"
 import {signIn} from "next-auth/client"
 import {ColorKey, sizes, zIndex} from "theme"
-import {useAuth} from "utils/auth"
+import {useAuthentication} from "utils/authentication"
 import {useAdvancedRouter} from "utils/router"
 
 export type TopBarProps = {
@@ -17,7 +17,7 @@ export type TopBarProps = {
 export const TopBar: React.FunctionComponent<TopBarProps> = ({
   nav, isOpen, setIsOpen
 }) => {
-  const {user} = useAuth()
+  const {user} = useAuthentication()
 
   const {pathSeries} = useAdvancedRouter()
 

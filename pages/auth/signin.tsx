@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useCallback} from "react"
 
 import {Box, Button,Flex} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
@@ -16,6 +16,10 @@ export default function SignIn({
 
   const providerList = providers ? Object.values(providers) : [];
 
+  const onClickSignIn = useCallback((providerId: string)=>{
+    signIn(providerId, {callbackUrl: "/"})
+  },[])
+
   return (
     <TemplateA height={"100%"}>
       <Flex sx={{justifyContent: "center", alignItems: "center", height: "100%"}}>
@@ -23,7 +27,7 @@ export default function SignIn({
           <Flex>
             {providerList.map(provider => (
               <Box key={provider.name}>
-                <Button sx={{backgroundColor: ColorKey["bg.weak"]}} onClick={() => signIn(provider.id)}>Sign in with {provider.name}</Button>
+                <Button sx={{backgroundColor: ColorKey["bg.weak"]}} onClick={() => onClickSignIn(provider.id)}>Sign in with {provider.name}</Button>
               </Box>
             ))}
           </Flex>

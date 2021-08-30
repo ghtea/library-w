@@ -4,7 +4,7 @@ import type {AppProps} from "next/app"
 import {Provider} from "next-auth/client"
 import theme from "theme";
 import {ThemeProvider} from "theme-ui";
-import {AuthProvider} from "utils/auth"
+import {AuthenticationProvider} from "utils/authentication"
 import {queryClient, QueryClientProvider} from "utils/react-query"
 import {ResponsiveProvider} from "utils/responsive";
 
@@ -15,7 +15,7 @@ function MyApp({Component, pageProps}: AppProps) {
 
   return (
     <Provider session={pageProps.session}>
-      <AuthProvider>
+      <AuthenticationProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             <ResponsiveProvider>
@@ -23,7 +23,7 @@ function MyApp({Component, pageProps}: AppProps) {
             </ResponsiveProvider>
           </ThemeProvider>
         </QueryClientProvider>
-      </AuthProvider>
+      </AuthenticationProvider>
     </Provider>
   )
 }
