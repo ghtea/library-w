@@ -1,7 +1,7 @@
 import {pathToRegexp} from "path-to-regexp";
 
 // access 
-export const AccessList = [
+export const accessPermissionList = [
   "ACCESS_HOME",
   "ACCESS_MUSIC",
   "ACCESS_MOVIE",
@@ -11,9 +11,9 @@ export const AccessList = [
 
   "ACCESS_SETTING",
 ] as const;
-export type Access = typeof AccessList[number];
+export type AccessPermission = typeof accessPermissionList[number];
 
-export const accessRegExpMap = new Map<Access, RegExp>([
+export const accessPermissionRegExpMap = new Map<AccessPermission, RegExp>([
   ["ACCESS_HOME", pathToRegexp("/"),],
   ["ACCESS_MUSIC",pathToRegexp("/music"),],
   ["ACCESS_MOVIE",pathToRegexp("/movie"),],
@@ -27,7 +27,7 @@ export const accessRegExpMap = new Map<Access, RegExp>([
 // permissions
 export const PermissionList = [
   // access pages
-  ...AccessList,
+  ...accessPermissionList,
   
   // music, movie
   "EDIT_REVIEW",
@@ -40,6 +40,7 @@ export type Permission = typeof PermissionList[number];
 export enum Role {
   "OWNER" = "owner",
   "GUEST" = "guest",
+  "UNKNOWN" = "unknown",
 } 
 
 export const rolePermissionMap = new Map<Role, Permission[]>([
@@ -62,6 +63,20 @@ export const rolePermissionMap = new Map<Role, Permission[]>([
   ],
   [
     Role.GUEST,
+    [
+      // access pages
+      "ACCESS_SETTING",
+      "ACCESS_HOME",
+      "ACCESS_MUSIC",
+      "ACCESS_MOVIE",
+      "ACCESS_KNOWLEDGE",
+      "ACCESS_AUTHENTICATION",
+
+      // music, movie
+    ],
+  ],
+  [
+    Role.UNKNOWN,
     [
       // access pages
       "ACCESS_SETTING",

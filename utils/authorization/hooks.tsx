@@ -1,63 +1,45 @@
-// WIP: work!!
+import {useCallback, useMemo} from "react";
+
+import {useAuthentication} from "utils/authentication";
+
+import {AccessPermission, accessPermissionRegExpMap, Permission, Role, rolePermissionMap} from "./maps";
+
+
 export const useAuthorization = () => {
 
-  const {} = useAuthentication();
+  const {user} = useAuthentication();
 
-  const userRole: RoleMapKey | null = useMemo(() => {
-    if (isInvitationPending) {
-      return "PENDING";
-    } else if (userType === SportsUserType.ORG) {
-      return "ORG";
-    } else {
-      return store.navigation.teamAuthority;
+  const role: Role = useMemo(() => {
+    if (!user) return Role.UNKNOWN;
+    if (user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL){
+      return Role.OWNER
     }
-  }, [isInvitationPending, store.navigation.teamAuthority, userType]);
+    else {
+      return Role.GUEST
+    }
+  }, [user]);
 
-  const hasRole = useCallback((role: RoleMapKey): boolean => {
-    if (!userRole) return false;
-
-    return userRole === role;
-  }, [userRole]);
-
-  const hasPermission = useCallback((permission: PermissionMapKey): boolean => {
-    if (!userRole || !roleMap.has(userRole)) return false;
-
-    return roleMap?.get(userRole)?.includes(permission) || false;
-  }, [userRole]);
-
-  const hasSomePermissions = useCallback((permissions: PermissionMapKey[]): boolean => {
-    if (!userRole || !roleMap.has(userRole)) return false;
-
-    return permissions.some(permission => roleMap?.get(userRole)?.includes(permission));
-  }, [userRole]);
-
-  const hasEveryPermissions = useCallback((permissions: PermissionMapKey[]): boolean => {
-    if (!userRole || !roleMap.has(userRole)) return false;
-
-    return permissions.every(permission => roleMap?.get(userRole)?.includes(permission));
-  }, [userRole]);
+  const hasPermission = useCallback((permission: Permission): boolean => {
+    return rolePermissionMap?.get(role)?.includes(permission) || false;
+  }, [role]);
 
   const hasAccess = useCallback((url: string): boolean => {
-    if (!userRole || !roleMap.has(userRole)) return false;
-
-    // find url's matching permission by comparaing to route regex
-    let permission;
-    accessMap.forEach((value, key) => {
+    const matchingAccessPermissionList: AccessPermission[] = [];
+    
+    accessPermissionRegExpMap.forEach((value, key) => {
       if (url.match(value) !== null) {
-        permission = key;
+        matchingAccessPermissionList.push(key)
       }
     });
 
-    return permission
-      ? roleMap?.get(userRole)?.includes(permission) || false
-      : false;
-  }, [userRole]);
+    return matchingAccessPermissionList.every(item => {
+      return rolePermissionMap?.get(role)?.includes(item) || false
+    });
+  }, [role]);
 
   return {
-    hasRole,
+    role,
     hasPermission,
-    hasSomePermissions,
-    hasEveryPermissions,
     hasAccess,
   };
 };

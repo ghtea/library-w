@@ -12,9 +12,7 @@ import {useSession} from "next-auth/client";
 
 export type AuthenticationContext = {
   session: null | Pick<Session, "expires">
-  user: null | Session["user"] & {
-    role: "admin" | "guest"
-  }
+  user: null | Session["user"]
   loading: boolean;
 };
 
@@ -46,14 +44,9 @@ export const AuthenticationProvider: FunctionComponent = (props) => {
           },
           user: {
             ...session.user,
-            role: "guest"
           },
           loading: loading,
         };
-
-        if (newValue.user && newValue.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL){
-          newValue.user.role = "admin"
-        }
 
         setValue(newValue);
       }
