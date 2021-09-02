@@ -16,7 +16,7 @@ export type AuthenticationContext = {
   loading: boolean;
 };
 
-const initialAuthenticationContext = {
+const initialAuthenticationContext: AuthenticationContext = {
   session: null,
   user: null,
   loading: false,
