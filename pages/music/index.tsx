@@ -13,8 +13,8 @@ export type MusicProps = {
   database: DatabasesQueryResponse | null;
 }
 
-const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: MusicAlbumTag[]) => {
-  if (tags?.includes(MusicAlbumTag.BLOCKED_COVER)){
+const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tagList: MusicAlbumTag[]) => {
+  if (tagList?.includes(MusicAlbumTag.BLOCKED_COVER)){
     return `${notionFileUrlPrefix}/music-album-covers/blocked.jpg` 
   }
   else {
@@ -24,8 +24,8 @@ const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: Musi
 
 export const refineAlbumData = (item: MusicAlbumData) => {
 
-  const artist = item.properties.Artist?.rich_text[0]?.plain_text;
-  
+  const artistList = (item.properties.Artist?.multi_select || []).map(item=>item.name) as string[]; 
+
   const rating = item.properties.Rating?.select.name as MusicAlbumRating;
 
   const releasedString = item.properties.Released?.date.start; // "1990-7-10"
@@ -37,23 +37,23 @@ export const refineAlbumData = (item: MusicAlbumData) => {
   const reviewEng = item.properties["Review ENG"]?.rich_text[0]?.plain_text;
   const reviewJpn = item.properties["Review JPN"]?.rich_text[0]?.plain_text;
 
-  const tags = (item.properties.Tags?.multi_select || []).map(item=>item.name) as MusicAlbumTag[]; 
+  const tagList = (item.properties.Tags?.multi_select || []).map(item=>item.name) as MusicAlbumTag[]; 
   const title = item.properties.Title?.title[0].plain_text;
 
   const key = item.properties.Key?.rich_text[0]?.plain_text;
 
-  const src = getSrc(key, notionFileUrlPrefix, tags);
+  const src = getSrc(key, notionFileUrlPrefix, tagList);
 
   const performer = item.properties.Key?.rich_text[0]?.plain_text;
 
   return ({
     ...item,
     essence: {
-      artist,
+      artistList,
       rating,
       released,
       rym,
-      tags,
+      tagList,
       title,
       key,
       src,

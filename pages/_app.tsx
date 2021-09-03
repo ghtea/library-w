@@ -6,6 +6,7 @@ import {AuthenticationProvider} from "utils/authentication"
 import {AuthorizationProvider} from "utils/authorization/provider";
 import {queryClient, QueryClientProvider} from "utils/react-query"
 import {ResponsiveProvider} from "utils/responsive";
+import {RouterProvider} from "utils/router";
 
 import "normalize.css";
 import "./fonts.css";
@@ -13,19 +14,21 @@ import "./fonts.css";
 function MyApp({Component, pageProps}: AppProps) {
 
   return (
-    <Provider session={pageProps.session}>
-      <AuthenticationProvider>
-        <AuthorizationProvider>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>
-              <ResponsiveProvider>
-                <Component {...pageProps} />
-              </ResponsiveProvider>
-            </ThemeProvider>
-          </QueryClientProvider>
-        </AuthorizationProvider>
-      </AuthenticationProvider>
-    </Provider>
+    <RouterProvider>
+      <Provider session={pageProps.session}>
+        <AuthenticationProvider>
+          <AuthorizationProvider>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider theme={theme}>
+                <ResponsiveProvider>
+                  <Component {...pageProps} />
+                </ResponsiveProvider>
+              </ThemeProvider>
+            </QueryClientProvider>
+          </AuthorizationProvider>
+        </AuthenticationProvider>
+      </Provider>
+    </RouterProvider>
   )
 }
 

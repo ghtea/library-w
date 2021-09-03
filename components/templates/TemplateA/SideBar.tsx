@@ -1,12 +1,11 @@
-import {useCallback} from "react"
+import {useCallback, useEffect, useState} from "react"
 
-import {Box, Flex, Icon, IconSize, Link, Text} from "components/atoms"
+import {Box, Flex, Icon, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
-import {signIn} from "next-auth/client"
 import {ColorKey, sizes} from "theme"
 import {useAuthentication} from "utils/authentication"
-import {useAdvancedRouter} from "utils/router"
+import {useRouter} from "utils/router"
 
 export type SideBarProps = {
   nav: NavItem[];
@@ -16,10 +15,21 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
   nav
 }) => {
   const {user, loading} = useAuthentication()
+  const {pathSeries} = useRouter()
 
-  const {pathSeries} = useAdvancedRouter()
+  const [selectedPageId, setSelectedPageId] = useState<string>();
 
-  const getIsActive = useCallback((pageId: string)=>(pageId === pathSeries[0]),[pathSeries]) 
+  useEffect(()=>{
+    if (selectedPageId !== pathSeries[0]){
+      setSelectedPageId(pathSeries[0])
+    }
+  },[pathSeries, selectedPageId]);
+
+  const getIsActive = useCallback((pageId: string)=>(pageId === selectedPageId),[selectedPageId]) 
+
+  const onClickNavLink = useCallback((clickedPageId: string)=>{
+    setSelectedPageId(clickedPageId);
+  },[])
 
   return ( 
     <Flex 
@@ -46,7 +56,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
 
           <Flex sx={{alignItems: "flex-start"}}>
             {nav.map(item=>(
-              <Link key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
+              <Link key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`} onClick={()=>onClickNavLink(item.id)}>
                 <Flex sx={{
                   flexDirection: "row", 
                   justifyContent: "flex-start",

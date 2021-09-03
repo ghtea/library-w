@@ -5,22 +5,23 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState,
 } from "react";
 
 import {useAuthentication} from "utils/authentication";
-import {useAdvancedRouter} from "utils/router";
+import {useRouter} from "utils/router";
 
 import {AccessPermission, accessPermissionRegExpMap, Permission, Role, rolePermissionMap} from "./maps";
 
 export type AuthorizationContext = {
   role: Role;
-  hasPermission?: (permission: Permission) => boolean
-  hasAccess?: (url: string) => boolean
+  hasPermission: (permission: Permission) => boolean
+  hasAccess: (url: string) => boolean
 };
 
 const initialAuthorizationContext: AuthorizationContext = {
   role: Role.UNKNOWN,
+  hasPermission: (permission: Permission) => false,
+  hasAccess: (url: string) => false,
 };
 
 export const AuthorizationContext = createContext<AuthorizationContext>(initialAuthorizationContext);
@@ -30,7 +31,7 @@ export const useAuthorization = () => {
 };
 
 export const AuthorizationProvider: FunctionComponent = (props) => {
-  const {router} = useAdvancedRouter();
+  const {router} = useRouter();
   const {user} = useAuthentication();
 
   const role: Role = useMemo(() => {
@@ -63,7 +64,7 @@ export const AuthorizationProvider: FunctionComponent = (props) => {
   
   // redirect
   useEffect(() => {
-    const isNotFoundPage = router.pathname.match("/404") !== null;
+    const isNotFoundPage = router?.pathname.match("/404") !== null;
     if (!isNotFoundPage) {
       if (!hasAccess(router.asPath)){
         router.push("/401");

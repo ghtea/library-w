@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from "react";
 
 import {Sx} from "theme";
 import {Link as ThemeUiLink, LinkProps as ThemeUiLinkProps} from "theme-ui"
-import {useAdvancedRouter} from "utils/router";
+import {useRouter} from "utils/router";
 
 
 export type LinkProps = Omit<ThemeUiLinkProps, "href"> & {
@@ -19,7 +19,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) 
     ...rest
   } = props;
 
-  const {router} = useAdvancedRouter()
+  const {router} = useRouter()
 
   const isInApp = useMemo(()=>!href,[href])
 
@@ -28,7 +28,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) 
       onClick(event);
     }
     if (to){
-      router.push(to)
+      router?.push(to)
     }
   },[onClick, router, to])
 

@@ -9,6 +9,7 @@ import Head from "next/head"
 import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey} from "theme"
+import {useAuthorization} from "utils/authorization"
 import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
 import {Sx} from "utils/theme-ui"
 
@@ -19,7 +20,8 @@ export type MusicAlbumProps = {
 export default function MusicAlbum({
   page,
 }:MusicAlbumProps) {
-  
+  const {hasPermission} = useAuthorization()
+
   const [reviewLanguage, setReviewLanguage] = useState<MusicAlbumReviewLanguage>()
   const [isEditingReview, setIsEditingReview] = useState(false)
   const [editingReview, setEditingReview] = useState("");
@@ -29,7 +31,7 @@ export default function MusicAlbum({
     [page] 
   );
 
-  const {title, artist, key, src, rating, performer, released, reviewEng, reviewKor, reviewJpn, rym} = useMemo(
+  const {title, artistList, key, src, rating, performer, released, reviewEng, reviewKor, reviewJpn, rym} = useMemo(
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
@@ -95,13 +97,14 @@ export default function MusicAlbum({
       setEditingReview(showingReview)
     }
     setIsEditingReview(true);
-  },[])
+  },[showingReview])
 
   const onClickSave = useCallback(()=>{
     // TODO: setShowingReview...
+    console.log(editingReview)
     setIsEditingReview(false);
     // updateMutation.mutate({"Review ENG": {rich_text: [{plain_text: editingReview}]}})
-  },[])
+  },[editingReview])
 
   const onClickCancel = useCallback(()=>{
     setIsEditingReview(false);
@@ -110,6 +113,14 @@ export default function MusicAlbum({
   const onClickReviewLanguageButton = useCallback((newLanguage: MusicAlbumReviewLanguage)=>{
     setReviewLanguage(newLanguage)
   },[])
+
+  const onChangeReview: React.ChangeEventHandler<HTMLTextAreaElement> = useCallback((event)=>{
+    setEditingReview(event.currentTarget.value)
+  },[])
+
+  const artistText = useMemo(()=>{
+    return artistList?.reduce((acc, cur)=> `${acc}, ${cur}`)
+  },[artistList])
 
 
   return (
@@ -148,7 +159,7 @@ export default function MusicAlbum({
             <Box sx={{width: "66%", height: "100%"}}>
               <Flex sx={{height: "100%"}}>
                 <Heading as={"h1"} sx={{fontSize: ["1.4rem", "1.6rem", "2rem", null]}} >{title}</Heading>
-                <Text sx={{fontSize: "1.3rem"}}>{artist}</Text>
+                <Text sx={{fontSize: "1.3rem"}}>{artistText}</Text>
                 <Text sx={{fontSize: "1.2rem", color: ColorKey["text.weak"]}}>{dateText}</Text>
                 <Flex sx={{flexDirection: "row", width: "auto", marginTop: 4,}}>
                   <Link to={"/music"} sx={badgeSx}>
@@ -194,13 +205,14 @@ export default function MusicAlbum({
                   <Button onClick={onClickSave}>{"Save"}</Button>
                   <Button onClick={onClickCancel}>{"Cancel"}</Button>
                 </>
-                : <Button onClick={onClickEdit}>{"Edit"}</Button>
+                : hasPermission("EDIT_REVIEW") 
+                  ? <Button onClick={onClickEdit}>{"Edit"}</Button>
+                  : null
               }
-              
             </Box>
             <Box sx={{padding: 4, marginTop: 4, width: "100%"}}>
               {isEditingReview
-                ? <Textarea value={editingReview} sx={{height: 600}}></Textarea>
+                ? <Textarea value={editingReview} sx={{height: 600}} onChange={onChangeReview}></Textarea>
                 : <Paragraph sx={{padding: "5px"}}>{showingReview}</Paragraph>
               }
             </Box>

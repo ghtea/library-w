@@ -6,7 +6,7 @@ import {NavItem} from "components/templates/TemplateA"
 import {signIn} from "next-auth/client"
 import {ColorKey, sizes, zIndex} from "theme"
 import {useAuthentication} from "utils/authentication"
-import {useAdvancedRouter} from "utils/router"
+import {useRouter} from "utils/router"
 
 export type TopBarProps = {
   nav: NavItem[];
@@ -19,7 +19,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
 }) => {
   const {user} = useAuthentication()
 
-  const {pathSeries} = useAdvancedRouter()
+  const {pathSeries} = useRouter()
 
   const getIsActive = useCallback((pageId: string)=>(pageId === pathSeries[0]),[pathSeries]) 
 

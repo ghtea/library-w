@@ -28,7 +28,7 @@ import {updateNotionPage} from "./global";
 
 export type MusicAlbumPropertyValueMap = PropertyValueMap & {
     
-    Artist?: RichTextPropertyValue;
+    Artist?: MultiSelectPropertyValue;
 
     Key?: RichTextPropertyValue;
 
@@ -53,7 +53,7 @@ export type MusicAlbumData = Page & {
 }
 
 export type MusicAlbumEssence = {
-  artist?: string;
+  artistList?: string[];
 
   key?: string;
 
@@ -67,7 +67,7 @@ export type MusicAlbumEssence = {
   reviewEng?: string;
   reviewJpn?: string;
 
-  tags?: MusicAlbumTag[];
+  tagList?: MusicAlbumTag[];
   title?: string;
   
   src?: string;
