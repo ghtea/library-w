@@ -14,7 +14,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
   data
 }) => {
 
-  const {title, artist, key, src, rating, released, tags, reviewKor, reviewEng} = data.essence || {};
+  const {title, artistList, key, src, rating, released, tagList, reviewKor, reviewEng} = data.essence || {};
 
   const badgeBgColorKey = useMemo(()=>{
     if (rating === MusicAlbumRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]
@@ -25,6 +25,10 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
     else if (rating === MusicAlbumRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
     else return ColorKey["badge.rating.top-500.bg"]
   },[rating])
+
+  const artistText = useMemo(()=>{
+    return artistList?.reduce((acc, cur)=> `${acc}, ${cur}`)
+  },[artistList])
 
   return (
     <Flex>
@@ -72,7 +76,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
               {title}
             </Text>
             <Text sx={{px: 3, py: 0, color: ColorKey["text.weak"]}}>
-              {artist}
+              {artistText}
             </Text>
           </Flex>
         </Box>
