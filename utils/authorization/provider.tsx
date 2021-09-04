@@ -64,12 +64,14 @@ export const AuthorizationProvider: FunctionComponent = (props) => {
   
   // redirect
   useEffect(() => {
-    const isNotFoundPage = router?.pathname.match("/404") !== null;
-    if (!isNotFoundPage) {
-      if (!hasAccess(router.asPath)){
-        router.push("/401");
-      }
-    } 
+    if (router){
+      const isNotFoundPage = router.pathname.match("/404") !== null;
+      if (!isNotFoundPage) {
+        if (!hasAccess(router.asPath)){
+          router.push("/401");
+        }
+      } 
+    }
   }, [hasAccess, router]);
 
   const value = useMemo(()=>{
