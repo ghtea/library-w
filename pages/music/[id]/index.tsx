@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react"
 import {useMutation} from "react-query"
 
-import {PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
+import {InputPropertyValueMap, PagesRetrieveResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Button, Divider, Flex, Heading, Link, Paragraph, Ratio, Text, Textarea} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import {GetServerSideProps} from "next"
@@ -10,11 +10,11 @@ import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey} from "theme"
 import {useAuthorization} from "utils/authorization"
-import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
+import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
 import {Sx} from "utils/theme-ui"
 
 export type MusicAlbumProps = {
-  page: PagesRetrieveResponse | null;
+  page: MusicPage | null;
 }
 
 export default function MusicAlbum({
@@ -35,8 +35,10 @@ export default function MusicAlbum({
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
-  const updateMutation = useMutation((newMusicAlbumProperties: MusicAlbumPropertyValueMap) => updateNotionMusicAlbumPage(page?.id || "", newMusicAlbumProperties))
-
+  const updateMutation = useMutation((newMusicAlbumProperties: InputPropertyValueMap) => updateNotionMusicAlbumPage(page?.id || "", newMusicAlbumProperties), {
+    onError: (error) => console.log(error),
+    onSuccess: (data) => console.log("success!", data)
+  })
 
   const dateText = useMemo(()=>{
     if (!released) return "";
@@ -104,7 +106,23 @@ export default function MusicAlbum({
     console.log(editingReview)
     setIsEditingReview(false);
     // updateMutation.mutate({"Review ENG": {rich_text: [{plain_text: editingReview}]}})
-  },[editingReview])
+    updateMutation.mutate(
+      {
+        "Review ENG": {
+          type: "rich_text",
+          "rich_text": [
+            {
+              type: "text",
+              "text": {
+                content: editingReview,
+              }
+            }
+          ]
+        }
+      }
+    )
+
+  },[editingReview, updateMutation])
 
   const onClickCancel = useCallback(()=>{
     setIsEditingReview(false);

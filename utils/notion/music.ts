@@ -1,4 +1,4 @@
-import {PropertyValueMap} from "@notionhq/client/build/src/api-endpoints";
+import {InputPropertyValueMap, PagesRetrieveResponse, PropertyValueMap} from "@notionhq/client/build/src/api-endpoints";
 import { 
   CheckboxPropertyValue,
   CreatedByPropertyValue,
@@ -25,6 +25,14 @@ import {property} from "lodash";
 import {updateNotionPage} from "./global";
 
 
+export type MusicPage = Omit<PagesRetrieveResponse, "properties"> & {
+  properties: MusicAlbumPropertyValueMap;
+} 
+
+export type MusicAlbumData = MusicPage & {
+  properties: MusicAlbumPropertyValueMap; // PropertyValueMap
+  essence?: MusicAlbumEssence
+}
 
 export type MusicAlbumPropertyValueMap = PropertyValueMap & {
     
@@ -45,11 +53,6 @@ export type MusicAlbumPropertyValueMap = PropertyValueMap & {
 
     Tags?: MultiSelectPropertyValue;
     Title?: TitlePropertyValue;
-}
-
-export type MusicAlbumData = Page & {
-  properties: MusicAlbumPropertyValueMap; // PropertyValueMap
-  essence?: MusicAlbumEssence
 }
 
 export type MusicAlbumEssence = {
@@ -112,4 +115,4 @@ export const returnReviewDict = (data: MusicAlbumData) => {
   })
 }
 
-export const updateNotionMusicAlbumPage = (pageId:string, properties: MusicAlbumPropertyValueMap) => updateNotionPage(pageId, properties)
+export const updateNotionMusicAlbumPage = (pageId:string, properties: InputPropertyValueMap) => updateNotionPage(pageId, properties)
