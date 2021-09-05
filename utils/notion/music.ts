@@ -25,6 +25,7 @@ import {property} from "lodash";
 import {updateNotionPage} from "./global";
 
 
+
 export type MusicPage = Omit<PagesRetrieveResponse, "properties"> & {
   properties: MusicAlbumPropertyValueMap;
 } 
