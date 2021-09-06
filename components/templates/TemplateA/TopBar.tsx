@@ -2,7 +2,7 @@ import {Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState} from
 
 import {Box, Flex, Icon, IconSize, Link, Responsive, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
-import {NavItem} from "components/templates/TemplateA"
+import {NavItem, TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT} from "components/templates/TemplateA"
 import {signIn} from "next-auth/client"
 import {ColorKey, sizes, zIndex} from "theme"
 import {useAuthentication} from "utils/authentication"
@@ -33,7 +33,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
       {/* first main row */}
       <Flex 
         sx={{
-          height: sizes["templateA.topNav.height"],
+          height: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, "unset", null],
           flexDirection: "row", 
           justifyContent: "space-between",
           alignItems: "center",
@@ -51,20 +51,16 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
           <Flex sx={{flexDirection: "row"}}>
 
             <Box>
-              <Flex>
-                <Box>
-                  <IconButton
-                    src={ isOpen ? "/svgs/bao-arrow-simple-double-down.svg" : "/svgs/bao-arrow-simple-double-up.svg"} 
-                    onClick={()=>setIsOpen(!isOpen)}
-                  ></IconButton>
-                </Box>
-              </Flex>
+              <IconButton
+                src={ isOpen ? "/svgs/bao-arrow-simple-double-down.svg" : "/svgs/bao-arrow-simple-double-up.svg"} 
+                onClick={()=>setIsOpen(!isOpen)}
+              ></IconButton>
             </Box>
 
             <Responsive range={"mdOnly"}>
-              <Flex sx={{flexDirection: "row"}}>
+              <Flex sx={{flexDirection: "row", width: "auto"}}>
                 {nav.map(item=>(
-                  <Link key={`nav-item-${item.id}`} sx={{width: "100%"}} to={`/${item.id}`}>
+                  <Link key={`nav-item-${item.id}`} to={`/${item.id}`}>
                     <IconButton
                       sx={{
                         color: getIsActive(item.id) ? ColorKey["primary-partner"] : "unset",
@@ -77,6 +73,13 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
                 ))}
               </Flex>
             </Responsive>
+
+            <Box>
+              <IconButton
+                src={ isOpen ? "/svgs/bao-arrow-simple-double-down.svg" : "/svgs/bao-arrow-simple-double-up.svg"} 
+                onClick={()=>setIsOpen(!isOpen)}
+              ></IconButton>
+            </Box>
             
           </Flex>
         </Box>

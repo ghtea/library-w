@@ -102,13 +102,18 @@ export default function MusicAlbum({
   },[showingReview])
 
   const onClickSave = useCallback(()=>{
-    // TODO: setShowingReview...
-    console.log(editingReview)
     setIsEditingReview(false);
-    // updateMutation.mutate({"Review ENG": {rich_text: [{plain_text: editingReview}]}})
+
+    const propertyName = (
+      reviewLanguage === MusicAlbumReviewLanguage.ENG ? "Review ENG"
+        : reviewLanguage === MusicAlbumReviewLanguage.KOR ? "Review KOR"
+          : reviewLanguage === MusicAlbumReviewLanguage.JPN ? "Review JPN"
+            : "Review ENG"
+    );
+
     updateMutation.mutate(
       {
-        "Review ENG": {
+        [propertyName]: {
           type: "rich_text",
           "rich_text": [
             {
@@ -122,15 +127,17 @@ export default function MusicAlbum({
       }
     )
 
-  },[editingReview, updateMutation])
+  },[editingReview, reviewLanguage, updateMutation])
 
   const onClickCancel = useCallback(()=>{
     setIsEditingReview(false);
   },[])
 
   const onClickReviewLanguageButton = useCallback((newLanguage: MusicAlbumReviewLanguage)=>{
-    setReviewLanguage(newLanguage)
-  },[])
+    if (!isEditingReview){
+      setReviewLanguage(newLanguage)
+    }
+  },[isEditingReview])
 
   const onChangeReview: React.ChangeEventHandler<HTMLTextAreaElement> = useCallback((event)=>{
     setEditingReview(event.currentTarget.value)
@@ -250,8 +257,6 @@ export  const getServerSideProps: GetServerSideProps = async (context) => {
     if (typeof musicAlbumId !== "string") throw Error("id of album is not valid");
 
     const page = await notion.pages.retrieve({page_id: musicAlbumId || ""});
-
-    console.log(page);
 
     return {props: { 
       page,

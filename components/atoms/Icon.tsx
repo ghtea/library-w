@@ -15,10 +15,19 @@ export enum IconSize {
   LG = "lg"
 }
 
-const sizeLengthMap: Record<IconSize, string> = {
+const sizeLengthDict: Record<IconSize, string> = {
   [IconSize.SM]: "16px",
   [IconSize.MD]: "24px",
   [IconSize.LG]: "32px",
+}
+
+const getLength = (size: ResponsiveStyleValue<IconSize>) =>{
+  if (size === undefined || size === null || size === false) return undefined;
+  else if ( Array.isArray(size) ){
+    return size.map(item => item ? (sizeLengthDict[item] || null) : null )
+  }
+  else if (Object.values(IconSize).includes(size)) return sizeLengthDict[size]
+  else return undefined
 }
 
 export const Icon = React.forwardRef<HTMLDivElement, IconProps>((props, ref) => {
@@ -30,13 +39,7 @@ export const Icon = React.forwardRef<HTMLDivElement, IconProps>((props, ref) => 
     ...rest
   } = props;
 
-  const length = useMemo(()=>{
-    if (!size) return size;
-    if ( (typeof size !== "object") && (Object.values(IconSize).includes(size))) return sizeLengthMap[size]
-    if ( Array.isArray(size) ){
-      return size.map(item => item ? (sizeLengthMap[item] || null) : null )
-    }
-  },[size])
+  const length = useMemo(()=>getLength(size),[size])
 
   const _sx: Sx = useMemo(()=>({
     flexShrink: 0,

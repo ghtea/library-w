@@ -1,15 +1,21 @@
 import {useCallback, useEffect, useMemo, useState} from "react"
 
-import {Box, Flex, Responsive} from "components/atoms"
+import {Box, Flex, Responsive, Spinner, SpinnerSize} from "components/atoms"
 import {ColorKey,sizes,zIndex} from "theme"
 import {ResponsiveStyleValue} from "theme-ui"
+import {useRouter} from "utils/router"
 import {Sx} from "utils/theme-ui"
 
 import {SideBar} from "./SideBar"
 import {TopBar} from "./TopBar"
 
-export const TEMPLATE_A_SIDE_BAR_MD_WIDTH = 140;
+
+export const TEMPLATE_A_TOP_BAR_SM_HEIGHT = 48;
+export const TEMPLATE_A_TOP_BAR_MD_HEIGHT = 48;
 export const TEMPLATE_A_SIDE_BAR_LG_WIDTH = 140;
+export const TEMPLATE_A_SIDE_BAR_XL_WIDTH = 140;
+
+
 
 
 export type TemplateAProps = {
@@ -49,6 +55,8 @@ export const nav: NavItem[] = [
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   children, height = "auto"
 }) => {
+  const {loading} = useRouter()
+
   const [isOpen, setIsOpen] = useState(false);
 
   const navBarSx: Sx = useMemo(()=>({
@@ -99,15 +107,26 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
           width: [
             "100%", 
             null, 
-            `calc(100vw - ${TEMPLATE_A_SIDE_BAR_MD_WIDTH}px)`, 
-            `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`
+            `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`, 
+            `calc(100vw - ${TEMPLATE_A_SIDE_BAR_XL_WIDTH}px)`
           ],
           height: height,
-          top: [sizes["templateA.topNav.height"], null, 0, null],
-          left: [0, null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH],
+          top: [`${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px`, `${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px`, 0, null],
+          left: [0, null, `${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px`, `${TEMPLATE_A_SIDE_BAR_XL_WIDTH}px`],
         }}
       >
-        {children}
+        { loading 
+          ? (
+            <Flex sx={{
+              justifyContent: "center", 
+              alignItems: "center", 
+              height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT})`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT})`, "100vh", null]
+            }}> 
+              <Spinner size={SpinnerSize.MD}/>
+            </Flex>
+          )
+          : children
+        }
       </Box>
 
     </Flex>
