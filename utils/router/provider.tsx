@@ -16,7 +16,7 @@ const RouterContext = createContext<RouterContext>({
   loading: false,
 });
 
-export const useRouter = () => {
+export const useAdvancedRouter = () => {
   return useContext(RouterContext);
 };
 

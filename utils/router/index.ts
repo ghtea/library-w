@@ -1,1 +1,1 @@
-export {RouterProvider, useRouter} from "./provider"
+export {RouterProvider, useAdvancedRouter} from "./provider"

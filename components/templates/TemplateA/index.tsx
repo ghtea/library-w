@@ -3,7 +3,7 @@ import {useCallback, useEffect, useMemo, useState} from "react"
 import {Box, Flex, Responsive, Spinner, SpinnerSize} from "components/atoms"
 import {ColorKey,sizes,zIndex} from "theme"
 import {ResponsiveStyleValue} from "theme-ui"
-import {useRouter} from "utils/router"
+import {useAdvancedRouter} from "utils/router"
 import {Sx} from "utils/theme-ui"
 
 import {SideBar} from "./SideBar"
@@ -55,7 +55,7 @@ export const nav: NavItem[] = [
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   children, height = "auto"
 }) => {
-  const {loading} = useRouter()
+  const {loading} = useAdvancedRouter()
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -100,7 +100,9 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
           <SideBar nav={nav}></SideBar>
         </Box>
       </Responsive>
-        
+      
+
+
       <Box
         sx={{
           position: "absolute",
@@ -115,7 +117,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
           left: [0, null, `${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px`, `${TEMPLATE_A_SIDE_BAR_XL_WIDTH}px`],
         }}
       >
-        { true 
+        { loading 
           ? (
             <Flex sx={{
               justifyContent: "center", 

@@ -2,10 +2,10 @@ import {useCallback, useEffect, useState} from "react"
 
 import {Box, Flex, Icon, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
-import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_MD_WIDTH} from "components/templates/TemplateA"
+import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH} from "components/templates/TemplateA"
 import {ColorKey, sizes} from "theme"
 import {useAuthentication} from "utils/authentication"
-import {useRouter} from "utils/router"
+import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
   nav: NavItem[];
@@ -15,7 +15,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
   nav
 }) => {
   const {user, loading} = useAuthentication()
-  const {pathSeries} = useRouter()
+  const {pathSeries} = useAdvancedRouter()
 
   const [selectedPageId, setSelectedPageId] = useState<string>();
 
@@ -35,7 +35,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
     <Flex 
       sx={{
         height: "100%",
-        width: ["unset", null, TEMPLATE_A_SIDE_BAR_MD_WIDTH, TEMPLATE_A_SIDE_BAR_LG_WIDTH],
+        width: ["unset", null, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH],
         flexDirection: "column", 
         justifyContent: "space-between",
         alignItems: "stretch"

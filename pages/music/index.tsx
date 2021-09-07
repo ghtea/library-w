@@ -2,9 +2,11 @@ import {useCallback, useEffect, useMemo, useState} from "react"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
+import {SearchBar} from "components/organisms/global/SearchBar"
 import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
-import {TemplateA} from "components/templates/TemplateA"
+import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
+import {zIndex} from "theme"
 import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/notion"
 
 
@@ -65,6 +67,7 @@ export const refineAlbumData = (item: MusicAlbumData) => {
   })
 }
 
+const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
 
 export default function Music({
   database,
@@ -97,7 +100,24 @@ export default function Music({
 
       <Flex>
 
-        <Flex sx={{p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap"}}>
+        <Box sx={{
+          position: "fixed", 
+          top: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, 0, 0], 
+          height: SEARCH_BAR_CONTAINER_HEIGHT,
+          zIndex: zIndex.searchBar,
+        }}>
+          <SearchBar/>
+        </Box>
+
+        <Flex 
+          sx={{
+            p: 3, 
+            flexDirection: "row", 
+            justifyContent: "flex-start", 
+            flexWrap: "wrap",
+            pt: SEARCH_BAR_CONTAINER_HEIGHT,
+          }}
+        >
           {albumDataList?.map((item, index)=>(
             <Box
               key={`album-${item?.essence?.title || index}`} 

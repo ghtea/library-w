@@ -8,7 +8,7 @@ import React, {
 } from "react";
 
 import {useAuthentication} from "utils/authentication";
-import {useRouter} from "utils/router";
+import {useAdvancedRouter} from "utils/router";
 
 import {AccessPermission, accessPermissionRegExpMap, Permission, Role, rolePermissionMap} from "./maps";
 
@@ -31,7 +31,7 @@ export const useAuthorization = () => {
 };
 
 export const AuthorizationProvider: FunctionComponent = (props) => {
-  const {router} = useRouter();
+  const {router} = useAdvancedRouter();
   const {user} = useAuthentication();
 
   const role: Role = useMemo(() => {
