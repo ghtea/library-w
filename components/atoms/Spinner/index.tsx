@@ -12,19 +12,22 @@ export type SpinnerProps = ThemeUiBoxProps & {
 export enum SpinnerSize {
   SM = "sm",
   MD = "md",
-  LG = "lg"
+  LG = "lg",
+  XL = "xl",
 }
 
 const sizeWidthDict: Record<SpinnerSize, string> = {
   [SpinnerSize.SM]: "30px",
-  [SpinnerSize.MD]: "60px",
-  [SpinnerSize.LG]: "120px",
+  [SpinnerSize.MD]: "48px",
+  [SpinnerSize.LG]: "60px",
+  [SpinnerSize.XL]: "75px",
 }
 
 const sizeHeightDict: Record<SpinnerSize, string> = {
   [SpinnerSize.SM]: "10px",
-  [SpinnerSize.MD]: "20px",
-  [SpinnerSize.LG]: "40px",
+  [SpinnerSize.MD]: "16px",
+  [SpinnerSize.LG]: "60px",
+  [SpinnerSize.XL]: "75px",
 }
 
 const getWidth = (size: ResponsiveStyleValue<SpinnerSize>) =>{
@@ -63,13 +66,41 @@ export const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>((props, re
     ...sx,
   }),[height, sx, width])
 
-  return (
-    <ThemeUiBox className={styles["spinner"]} ref={ref} sx={_sx} {...rest}>
-      <ThemeUiBox className={styles["bounce1"]} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
-      <ThemeUiBox className={styles["bounce2"]} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
-      <ThemeUiBox className={styles["bounce3"]} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
-    </ThemeUiBox>
-  );
+  // const bigSx: Sx = useMemo(()=>({
+  //   width: width ? width : "unset",
+  //   height: height ? height : "unset",
+  //   position: "relative",
+  //   ...sx,
+  // }),[height, sx, width])
+
+  const isBig = useMemo(()=>{
+    if (size === SpinnerSize.LG || size === SpinnerSize.XL) return "big"
+    else return "small"
+  },[size])
+
+  return (<>
+    {!isBig 
+      ? (
+        <ThemeUiBox className={styles["small"]} ref={ref} sx={_sx} {...rest}>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube1"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube2"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube3"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+        </ThemeUiBox>
+      ) 
+      : (
+        <ThemeUiBox className={styles["big"]} ref={ref} sx={_sx} {...rest}>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube1"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube2"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube3"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube4"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube5"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube6"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube7"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube8"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+          <ThemeUiBox className={`${styles["cube"]} ${styles["cube9"]}`} sx={{backgroundColor: ColorKey.primary}}></ThemeUiBox>
+        </ThemeUiBox>
+      )}
+  </>);
 });
 
 Spinner.displayName = "Spinner";
