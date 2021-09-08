@@ -73,13 +73,6 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
                 ))}
               </Flex>
             </Responsive>
-
-            <Box>
-              <IconButton
-                src={ isOpen ? "/svgs/bao-arrow-simple-double-down.svg" : "/svgs/bao-arrow-simple-double-up.svg"} 
-                onClick={()=>setIsOpen(!isOpen)}
-              ></IconButton>
-            </Box>
             
           </Flex>
         </Box>

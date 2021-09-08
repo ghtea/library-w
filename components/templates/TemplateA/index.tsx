@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from "react"
+import {useMemo, useState} from "react"
 
 import {Box, Flex, Responsive, Spinner, SpinnerSize} from "components/atoms"
 import {ColorKey,sizes,zIndex} from "theme"
@@ -9,13 +9,10 @@ import {Sx} from "utils/theme-ui"
 import {SideBar} from "./SideBar"
 import {TopBar} from "./TopBar"
 
-
 export const TEMPLATE_A_TOP_BAR_SM_HEIGHT = 48;
 export const TEMPLATE_A_TOP_BAR_MD_HEIGHT = 48;
 export const TEMPLATE_A_SIDE_BAR_LG_WIDTH = 140;
 export const TEMPLATE_A_SIDE_BAR_XL_WIDTH = 140;
-
-
 
 
 export type TemplateAProps = {
@@ -65,8 +62,6 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
     backgroundColor: ColorKey["nav.bg"],
     borderColor: ColorKey["nav.border"],
   }),[]);
-
-
 
   return ( 
     <Flex sx={{backgroundColor: ColorKey.bg, color: ColorKey.text, height: height}}>
@@ -122,7 +117,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             <Flex sx={{
               justifyContent: "center", 
               alignItems: "center", 
-              height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT})`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT})`, "100vh", null]
+              height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px)`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px)`, "100vh", null]
             }}> 
               <Spinner size={SpinnerSize.XL}/>
             </Flex>

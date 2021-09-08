@@ -3,6 +3,7 @@ import {useCallback, useEffect, useState} from "react"
 import {Box, Button,Flex, Icon, Input,Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_TOP_BAR_MD_HEIGHT,TEMPLATE_A_TOP_BAR_SM_HEIGHT} from "components/templates/TemplateA"
+import {useInput} from "utils/input"
 import {useAdvancedRouter} from "utils/router"
 
 export type SearchBarProps = {
@@ -16,6 +17,7 @@ export const SearchBar: React.FunctionComponent<SearchBarProps> = ({
 }) => {
   const {pathSeries} = useAdvancedRouter()
 
+  const {value, onChange} = useInput("")
 
   return ( 
     <Flex 
@@ -28,10 +30,12 @@ export const SearchBar: React.FunctionComponent<SearchBarProps> = ({
       }} 
     >
       <Box>
-        <Input value={"test"} 
+        <Input 
+          value={value} 
+          onChange={onChange}
           sx={{
             p: 3, 
-            fontSize: ["1.4rem", "1.6rem", "1.8rem", "1.8rem"],
+            fontSize: ["1.3rem", "1.4rem", "1.5rem", "1.6rem"],
             borderWidth: ["1px", "1px", "2px", "2px"]
           }}></Input>
       </Box>
