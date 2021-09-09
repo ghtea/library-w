@@ -26,6 +26,10 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
   const onClickLogIn = useCallback(()=>{
     signIn()
   },[])
+
+  const onClickAdd = useCallback(()=>{
+
+  },[])
   
   return ( 
     <Flex >
@@ -73,6 +77,13 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
                 ))}
               </Flex>
             </Responsive>
+
+            <Box>
+              <IconButton
+                src={ "/svgs/bao-plus.svg"} 
+                onClick={onClickAdd}
+              ></IconButton>
+            </Box>
             
           </Flex>
         </Box>

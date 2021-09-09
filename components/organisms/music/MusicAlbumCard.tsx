@@ -10,11 +10,17 @@ export type MusicMusicAlbumCardProps = {
     data: MusicAlbumData
   }
 
+const ReviewIndicatorBox = () => {
+  return (
+    <Box sx={{width: "33%", height: "3px", backgroundColor: ColorKey["text.weak"]}}></Box>
+  )
+}
+
 export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> = ({
   data
 }) => {
 
-  const {title, artistList, key, src, rating, released, tagList, reviewKor, reviewEng} = data.essence || {};
+  const {title, artistList, key, src, rating, released, tagList, reviewKor, reviewEng, reviewJpn} = data.essence || {};
 
   const badgeBgColorKey = useMemo(()=>{
     if (rating === MusicAlbumRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]
@@ -70,7 +76,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
           </Box>
         </Box >
 
-        <Box sx={{py:2, width: "100%", backgroundColor: ColorKey["card.bg"]}}>
+        <Box sx={{my:3, width: "100%", backgroundColor: ColorKey["card.bg"]}}>
           <Flex>
             <Text sx={{fontSize: "1.1rem", px: 3, py: 1, color: ColorKey["text.strong"]}}>
               {title}
@@ -80,6 +86,13 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
             </Text>
           </Flex>
         </Box>
+
+        <Flex sx={{flexDirection: "row", justifyContent: "space-between"}}>
+          {reviewEng && <ReviewIndicatorBox></ReviewIndicatorBox>}
+          {reviewKor && <ReviewIndicatorBox></ReviewIndicatorBox>}
+          {reviewJpn && <ReviewIndicatorBox></ReviewIndicatorBox>}
+        </Flex>
+
       </Link>
     </Flex>   
   )

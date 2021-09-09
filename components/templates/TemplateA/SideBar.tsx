@@ -31,6 +31,10 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
     setSelectedPageId(clickedPageId);
   },[])
 
+  const onClickAdd = useCallback(()=>{
+
+  },[])
+
   return ( 
     <Flex 
       sx={{
@@ -76,9 +80,16 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
                   </Box>
                 </Flex>
               </Link>
+              
             ))}
           </Flex>
-            
+
+          <Box>
+            <IconButton
+              src={ "/svgs/bao-plus.svg"} 
+              onClick={onClickAdd}
+            ></IconButton>
+          </Box>
         </Flex>
       </Box>
 

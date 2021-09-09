@@ -17,9 +17,9 @@ export const Image: React.FunctionComponent<ImageProps> = ({
   return (
     <LazyLoadImage
       alt={alt}
-      height={height}
       src={src}
       width={width} 
+      height={height}
     />
   );
 }
