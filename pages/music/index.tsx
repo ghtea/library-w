@@ -1,14 +1,15 @@
-import {useCallback, useEffect, useMemo, useState} from "react"
+import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "react"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
 import {SearchBar} from "components/organisms/global/SearchBar"
-import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
+import {MusicAlbumCardDisplay} from "components/organisms/music/MusicAlbumCardDisplay"
 import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
+import Fuse from "fuse.js"
 import Head from "next/head"
 import {zIndex} from "theme"
 import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/notion"
-
+import {useDebouncedEffect} from "utils/optimization"
 
 
 export type MusicProps = {
@@ -67,28 +68,78 @@ export const refineAlbumData = (item: MusicAlbumData) => {
   })
 }
 
-const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
+const FUSE_OPTIONS = {
+  keys: [
+    {
+      name: "essence.title",
+      weight: 12,
+    },
+    {
+      name: "essence.artistList",
+      weight: 8,
+    },
+    {
+      name: "essence.rating",
+      weight: 4,
+    },
+    {
+      name: "essence.released",
+      weight: 4,
+    },
+    "essence.tagList",
+    "essence.performer",
+    "essence.reviewKor",
+    "essence.reviewEng",
+    "essence.reviewJpn",
+  ]
+}
+
+export const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
 
 export default function Music({
   database,
 }:MusicProps) {
+
+  const [searchValue, setSearchValue] = useState("");
+  const [albumDataList, setAlbumDataList] = useState<MusicAlbumData[]>([])
   
-  const albumDataList: MusicAlbumData[] = useMemo(()=>{ 
-    const filteredAlbumDataList = database?.results.filter((item: MusicAlbumData) => {
+  const updateAlbumDataList = useCallback(()=>{ 
+    console.log("triggered")
+
+    const existingAlbumDataList = database?.results.filter((item: MusicAlbumData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
     })
 
-    console.log("raw album-list: ", filteredAlbumDataList)
+    const refinedAlbumDataList: MusicAlbumData[] = (existingAlbumDataList || []).map(refineAlbumData)
 
-    const refinedAlbumDataList = (filteredAlbumDataList || []).map(refineAlbumData)
+    const fuse = new Fuse(refinedAlbumDataList, FUSE_OPTIONS) 
 
-    const sortedAlbumDataList = refinedAlbumDataList.sort((a, b)=>{
-      return (getMusicAlbumRatingOrder(b.essence.rating) - getMusicAlbumRatingOrder(a.essence.rating))
+    const filteredAlbumDataList = !searchValue 
+      ? refinedAlbumDataList
+      : fuse.search(searchValue).map(item => item.item)
+
+    const sortedAlbumDataList = filteredAlbumDataList.sort((a, b)=>{
+      if (a.essence?.rating && b.essence?.rating){
+        return (getMusicAlbumRatingOrder(b.essence.rating) - getMusicAlbumRatingOrder(a.essence.rating))
+      }
+      else { 
+        return 0 
+      }
     });
 
-    return sortedAlbumDataList
-  }, [database?.results]);
+    setAlbumDataList(sortedAlbumDataList)
+  }, [database?.results, searchValue]);
+
+  
+  const onChangeSearch: ChangeEventHandler<HTMLInputElement> = useCallback((event)=>{
+    setSearchValue(event.currentTarget.value)
+  },[])
+
+  useDebouncedEffect(()=>{
+    console.log("try")
+    updateAlbumDataList()
+  }, [searchValue], 300)
 
   return (
     <TemplateA>
@@ -106,34 +157,12 @@ export default function Music({
           height: SEARCH_BAR_CONTAINER_HEIGHT,
           zIndex: zIndex.searchBar,
         }}>
-          <SearchBar/>
+          <SearchBar value={searchValue} onChange={onChangeSearch}/>
         </Box>
 
-        <Flex 
-          sx={{
-            p: 3, 
-            flexDirection: "row", 
-            justifyContent: "flex-start", 
-            flexWrap: "wrap",
-            pt: SEARCH_BAR_CONTAINER_HEIGHT,
-          }}
-        >
-          {albumDataList?.map((item, index)=>(
-            <Box
-              key={`album-${item?.essence?.title || index}`} 
-              sx={{
-                lineHeight: 0, 
-                p: 4,
-                width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
-              }}
-            >
-              <MusicAlbumCard
-                data={item}
-              ></MusicAlbumCard>
-            </Box>
-          )
-          )}
-        </Flex>
+        <Box>
+          <MusicAlbumCardDisplay albumDataList={albumDataList}></MusicAlbumCardDisplay>
+        </Box>
         
       </Flex>
     </TemplateA>

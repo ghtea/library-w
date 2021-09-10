@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react"
+import {ChangeEventHandler, useCallback, useEffect, useState} from "react"
 
 import {Box, Button,Flex, Icon, Input,Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
@@ -7,17 +7,17 @@ import {useInput} from "utils/input"
 import {useAdvancedRouter} from "utils/router"
 
 export type SearchBarProps = {
-  
+  value: string
+  onChange: ChangeEventHandler<HTMLInputElement>
 }
 
 
 
 export const SearchBar: React.FunctionComponent<SearchBarProps> = ({
-  
+  value,
+  onChange
 }) => {
   const {pathSeries} = useAdvancedRouter()
-
-  const {value, onChange} = useInput("")
 
   return ( 
     <Flex 
