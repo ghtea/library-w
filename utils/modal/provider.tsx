@@ -1,6 +1,7 @@
 import React, {
   createContext,
   FunctionComponent,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -12,14 +13,16 @@ import {Flex} from "components/atoms"
 import { ModalId } from "./maps";
 
 export type ModalContext = {
-  openModalList: [ModalId, React.FunctionComponent<any>][];
-  openModal: (modalId: ModalId, component: React.FunctionComponent<T>, props: T) => void;
+  openedModalList: ReactNode[];
+  openModal: (content: ReactNode) => void;
+  closeModal: (component: FunctionComponent) => void;
   //toggleModal: (modalId: string, shouldOpen?: boolean) => void
 };
 
 const initialModalContext: ModalContext = {
-  openModalList: [],
-  openModal: (modalId: ModalId, component: React.FunctionComponent<any>) => {},
+  openedModalList: [],
+  openModal: (content: ReactNode) => {},
+  closeModal: (component: FunctionComponent) => {},
   // toggleModal: (modalId: string, shouldOpen?: boolean) => {}
 };
 
@@ -30,7 +33,7 @@ export const useModal = () => {
 };
 
 export const ModalProvider: FunctionComponent = (props) => {
-  const [openModalList, setOpenModalList] = useState<[ModalId, React.FunctionComponent<any>][]>([])
+  const [openedModalList, setOpenedModalList] = useState<ReactNode[]>([])
 
   // const toggleModal = useCallback((modalId: string, shouldOpen?: boolean)=>{
   //   const isOpenModal = openModalList.includes(modalId);
@@ -45,27 +48,36 @@ export const ModalProvider: FunctionComponent = (props) => {
   //   }
   // },[])
 
-  const openModal = useCallback((modalId: ModalId, component: React.FunctionComponent<any>)=>{
-
+  const openModal = useCallback((content: ReactNode)=>{
+    setOpenedModalList([content, ...openedModalList])
   },[])
 
+  const closeModal = useCallback((component: FunctionComponent)=>{
+    if (!component){
+      setOpenedModalList(openedModalList.slice(0))
+    }else {
+      const newOpenedModalList = [...openedModalList.filter(item => !(item instanceof component))]
+      setOpenedModalList(newOpenedModalList)
+    }
+  },[])
 
   const value = useMemo(()=>{
     return ({
-      openModalList,
-      openModal
+      openedModalList,
+      openModal,
+      closeModal,
     })
-  },[openModalList])
+  },[])
   
   return (
     <ModalContext.Provider value={value}>
       {props.children}
       <Flex>
         
-      {openModalList.map(([modalId, modalComponent])=>{
+      {openedModalList.map((content)=>{
         return (
         <Flex>
-          <modalComponent></modalComponent>
+          {content}
         </Flex>
       )
       })}
