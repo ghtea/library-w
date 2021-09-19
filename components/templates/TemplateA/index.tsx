@@ -102,7 +102,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
         sx={{
           position: "absolute",
           width: [
-            "100%", 
+            "100vw", 
             null, 
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`, 
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_XL_WIDTH}px)`
@@ -114,7 +114,8 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
       >
         { loading 
           ? (
-            <Flex sx={{
+            <Flex 
+            sx={{
               justifyContent: "center", 
               alignItems: "center", 
               height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px)`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px)`, "100vh", null]

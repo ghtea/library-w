@@ -151,18 +151,18 @@ export default function Music({
 
       <Flex>
 
-        <Box sx={{
+        <Flex sx={{
           position: "fixed", 
           top: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, 0, 0], 
           height: SEARCH_BAR_CONTAINER_HEIGHT,
           zIndex: zIndex.searchBar,
         }}>
           <SearchBar value={searchValue} onChange={onChangeSearch}/>
-        </Box>
+        </Flex>
 
-        <Box>
+        <Flex>
           <MusicAlbumCardDisplay albumDataList={albumDataList}></MusicAlbumCardDisplay>
-        </Box>
+        </Flex>
         
       </Flex>
     </TemplateA>

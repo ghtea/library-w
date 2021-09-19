@@ -4,6 +4,13 @@ import {Flex, Image,Text} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
 
+export enum LibraryCategory {
+  MUSIC = "music",
+  MOVIE = "movie",
+  THOUGHT = "thought",
+  KNOWLEDGE = "knowledge"
+}
+
 const Home:React.FunctionComponent = () => {
 
   return (

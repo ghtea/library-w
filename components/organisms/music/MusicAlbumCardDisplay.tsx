@@ -22,7 +22,8 @@ export const MusicAlbumCardDisplay: React.FunctionComponent<MusicMusicAlbumCardD
       sx={{
         p: 3, 
         flexDirection: "row", 
-        justifyContent: "flex-start", 
+        justifyContent: "flex-start",
+
         flexWrap: "wrap",
         pt: SEARCH_BAR_CONTAINER_HEIGHT,
       }}
@@ -33,15 +34,14 @@ export const MusicAlbumCardDisplay: React.FunctionComponent<MusicMusicAlbumCardD
           sx={{
             lineHeight: 0, 
             p: 4,
-            width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
+            width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "calc(100% / 7)"],
           }}
         >
           <MusicAlbumCard
             data={item}
           ></MusicAlbumCard>
         </Box>
-      )
-      )}
+      ))}
     </Flex> 
   )
 })
