@@ -1,87 +1,101 @@
-import React, {
-  createContext,
-  FunctionComponent,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, {createContext, FunctionComponent, ReactChild, ReactComponentElement, ReactNode, useCallback, useContext, useState} from "react";
 
-import {Flex} from "components/atoms"
-import { ModalId } from "./maps";
+import {v4 as uuidV4} from "uuid";
 
-export type ModalContext = {
-  openedModalList: ReactNode[];
-  openModal: (content: ReactNode) => void;
-  closeModal: (component: FunctionComponent) => void;
-  //toggleModal: (modalId: string, shouldOpen?: boolean) => void
-};
+export type ModalData = {
+  children: ReactComponentElement<any, any>;
+  name: string;
+  id: string;
+}
 
-const initialModalContext: ModalContext = {
-  openedModalList: [],
-  openModal: (content: ReactNode) => {},
-  closeModal: (component: FunctionComponent) => {},
-  // toggleModal: (modalId: string, shouldOpen?: boolean) => {}
-};
+export type ModalProps = {
+  id?: ModalData["id"]
+}
 
-export const ModalContext = createContext<ModalContext>(initialModalContext);
+export type ModalDataInput = Partial<Omit<ModalData, "name">>
+export type ModalIdOrName = ModalData["id"] | ModalData["name"] | undefined
 
-export const useModal = () => {
+type ModalContext = {
+  modalDataList: ModalData[]
+  addModal: (dataInput: ModalDataInput) => void
+  removeModal: (idOrName: ModalIdOrName) => void
+  updateModal: (dataInput: ModalDataInput) => void
+  upsertModal: (dataInput: ModalDataInput) => void
+  findModalIndex: (idOrName: ModalIdOrName) => void
+}
+
+export const useModal= () => {
   return useContext(ModalContext);
 };
 
-export const ModalProvider: FunctionComponent = (props) => {
-  const [openedModalList, setOpenedModalList] = useState<ReactNode[]>([])
+export const ModalContext = createContext<ModalContext>({
+  modalDataList: [],
+  addModal: (dataInput: ModalDataInput) => {},
+  removeModal: (idOrName: ModalIdOrName) => {},
+  updateModal: (dataInput: ModalDataInput) => {},
+  upsertModal: (dataInput: ModalDataInput) => {}, 
+  findModalIndex: (idOrName: ModalIdOrName) => {},
+});
 
-  // const toggleModal = useCallback((modalId: string, shouldOpen?: boolean)=>{
-  //   const isOpenModal = openModalList.includes(modalId);
+export const ModalProvider: FunctionComponent = ({children}) => {
+  const [modalDataList, setModalDataList] = useState<ModalData[]>([])
 
-  //   const newShouldOpen = shouldOpen ? shouldOpen : !isOpenModal;
-  //   if (newShouldOpen){
-  //     const newOpenModalList = [modalId, ...openModalList];
-  //     setOpenModalList(newOpenModalList)
-  //   }else {
-  //     const newOpenModalList = openModalList.filter(item => item !== modalId)
-  //     setOpenModalList(newOpenModalList)
-  //   }
-  // },[])
-
-  const openModal = useCallback((content: ReactNode)=>{
-    setOpenedModalList([content, ...openedModalList])
-  },[])
-
-  const closeModal = useCallback((component: FunctionComponent)=>{
-    if (!component){
-      setOpenedModalList(openedModalList.slice(0))
-    }else {
-      const newOpenedModalList = [...openedModalList.filter(item => !(item instanceof component))]
-      setOpenedModalList(newOpenedModalList)
+  const addModal = useCallback((dataInput: ModalDataInput) => {
+    if (dataInput.children) {
+      const newModalData:ModalData = {
+        id: uuidV4(),
+        ...dataInput,
+        children: dataInput.children,
+        name: dataInput.children.type.name || ""
+      }
+      setModalDataList([...modalDataList, newModalData])
     }
-  },[])
+  },[modalDataList]);
 
-  const value = useMemo(()=>{
-    return ({
-      openedModalList,
-      openModal,
-      closeModal,
-    })
-  },[])
+  const removeModal = useCallback((idOrName: ModalIdOrName) => {
+    const newModalDataList = [...modalDataList]
+      .filter(item => item.id !== idOrName)
+      .filter(item => item.name !== idOrName)
+    setModalDataList(newModalDataList)
+  },[modalDataList]);
+
+  const findModalIndex = useCallback((idOrName: ModalIdOrName)=>{
+    const idModalIndex = modalDataList.findIndex(item => item.id === idOrName);
+    const nameModalIndex = [...modalDataList].reverse().findIndex(item => item.name === idOrName);
+
+    return idModalIndex !== -1 ? idModalIndex : nameModalIndex !== -1 ? nameModalIndex : -1;
+  },[modalDataList])
+
+  const updateModal = useCallback((dataInput: ModalDataInput) => {
+    const modalIndex = findModalIndex(dataInput.id || dataInput.children?.type.name);
+    if (modalIndex === -1) return;
+
+    const newModalDataList = [...modalDataList];
+    newModalDataList[modalIndex] = {...newModalDataList[modalIndex], ...dataInput};
+
+    setModalDataList(newModalDataList);
+  },[findModalIndex, modalDataList]);
+
+  const upsertModal = useCallback((dataInput: ModalDataInput)=>{
+    const modalIndex = findModalIndex(dataInput.id || dataInput.children?.type.name);
+    if (modalIndex === -1){
+      addModal(dataInput)
+    }
+    else {
+      updateModal(dataInput)
+    }
+  },[addModal, findModalIndex, updateModal])
   
   return (
-    <ModalContext.Provider value={value}>
-      {props.children}
-      <Flex>
-        
-      {openedModalList.map((content)=>{
-        return (
-        <Flex>
-          {content}
-        </Flex>
-      )
-      })}
-      </Flex>
+    <ModalContext.Provider value={{
+      modalDataList,
+      addModal,
+      removeModal,
+      updateModal,
+      upsertModal,
+      findModalIndex,
+    }}>
+      {children}
     </ModalContext.Provider>
   );
 };
