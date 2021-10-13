@@ -3,8 +3,6 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
 import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
 import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
 import {SEARCH_BAR_CONTAINER_HEIGHT} from "pages/music"
-import {ColorKey} from "theme"
-import {zIndex} from "theme/space"
 import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "utils/notion/music"
 
 
@@ -23,6 +21,7 @@ export const MusicAlbumCardDisplay: React.FunctionComponent<MusicMusicAlbumCardD
         p: 3, 
         flexDirection: "row", 
         justifyContent: "flex-start",
+        alignItems: "flex-start",
 
         flexWrap: "wrap",
         pt: SEARCH_BAR_CONTAINER_HEIGHT,

@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
+import React, { useMemo } from "react"
 
-import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
+import {Box, Flex, Link, Image,Ratio, Text} from "components/atoms"
 import {ColorKey} from "theme"
-import {zIndex} from "theme/space"
-import {MusicAlbumData, MusicAlbumRating, MusicAlbumTag} from "utils/notion/music"
+import {MusicAlbumData, MusicAlbumRating} from "utils/notion/music"
+import { CardBadge } from "components/molecules/CardBadge"
 
 
 export type MusicMusicAlbumCardProps = {
@@ -43,37 +43,20 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
           <Box
             sx={{
               position: "absolute", 
+              zIndex: 2,
               left: 0,
               top: 0,
-              height: "32px", 
-              px: 3,
-              py: 1,
-              backgroundColor: badgeBgColorKey, 
-              color: ColorKey["badge.rating.text"],
-              zIndex: 2,
-              opacity: 0.8,
             }}
           >
-            <Flex sx={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}>
-              <Text sx={{
-                fontSize: "1rem",
-                fontWeight: "bold",
-              }}>
-                {rating}
-              </Text>
-            </Flex>
+            <CardBadge title={rating || ""} color={badgeBgColorKey}></CardBadge>
           </Box>
           
-          <Box sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
-            <Ratio>
-              {src &&
-              <NextImage layout={"responsive"} width={"100%"} height={"100%"} alt={`album cover of ${title}`} src={src}/>
-              }
-            </Ratio>
-          </Box>
+          <Flex sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
+            {src 
+              ? <Image width={"100%"} height={"auto"} alt={`album cover of ${title}`} src={src}/>
+              : <Ratio/>
+            }
+          </Flex>
         </Box >
 
         <Box sx={{my:3, width: "100%", backgroundColor: ColorKey["card.bg"]}}>

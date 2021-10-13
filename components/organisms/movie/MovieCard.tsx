@@ -1,10 +1,9 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
+import React, { useMemo } from "react"
 
-import {Page} from "@notionhq/client/build/src/api-types"
-import {Box, Flex, Link, NextImage,Ratio, Text} from "components/atoms"
+import {Box, Flex, Link, Image, Ratio, Text} from "components/atoms"
 import {ColorKey} from "theme"
-import {zIndex} from "theme/space"
 import {MovieData, MovieRating} from "utils/notion/movie"
+import { CardBadge } from "components/molecules/CardBadge"
 
 
 export type MovieCardProps = {
@@ -34,35 +33,20 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
           <Box
             sx={{
               position: "absolute", 
+              zIndex: 2,
               left: 0,
               top: 0,
-              height: "40px", 
-              px: 3,
-              py: 2,
-              backgroundColor: badgeBgColorKey, 
-              color: ColorKey["text.strong"],
-              zIndex: 2,
-              opacity: 0.8,
             }}
           >
-            <Flex sx={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}>
-              <Text sx={{
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-              }}>
-                {rating}
-              </Text>
-            </Flex>
+            <CardBadge title={rating || ""} color={badgeBgColorKey}></CardBadge>
           </Box>
-          <Box sx={{width: "100%"}}>
-            {src &&
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={src} alt={`movie poster of ${title}`} style={{width: "100%"}}/>
+
+          <Flex sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
+          {src 
+              ? <Image width={"100%"} height={"auto"} alt={`movie poster of ${title}`} src={src}/>
+              : <Ratio ratio={0.8}/>
             }
-          </Box>
+          </Flex>
         </Box >
 
         <Box sx={{py:4, width: "100%", color: ColorKey["text.strong"], backgroundColor: ColorKey["card.bg"]}}>
