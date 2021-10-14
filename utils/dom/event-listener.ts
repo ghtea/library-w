@@ -91,9 +91,9 @@ export const useEventListener = <EventName extends (keyof WindowEventMap | keyof
     if (init) {
       eventListener();
     }
-    eventTarget.addEventListener(name, eventListener, eventOptions);
+    eventTarget?.addEventListener(name, eventListener, eventOptions);
     return () => {
-      eventTarget.removeEventListener(name, eventListener, eventOptions);
+      eventTarget?.removeEventListener(name, eventListener, eventOptions);
     };
   }, [name, element, eventOptions, eventListener, init]);
 };

@@ -52,10 +52,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
           </Box>
           
           <Flex sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
-            {src 
-              ? <Image width={"100%"} height={"auto"} alt={`album cover of ${title}`} src={src}/>
-              : <Ratio/>
-            }
+            <Image width={"100%"} height={"auto"} alt={`album cover of ${title}`} src={src} fallbackSrc={"/images/album-cover.jpeg"}/>
           </Flex>
         </Box >
 

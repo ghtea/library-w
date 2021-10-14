@@ -5,7 +5,6 @@ import {ColorKey} from "theme"
 import {MovieData, MovieRating} from "utils/notion/movie"
 import { CardBadge } from "components/molecules/CardBadge"
 
-
 export type MovieCardProps = {
     data: MovieData
   }
@@ -42,10 +41,7 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
           </Box>
 
           <Flex sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
-          {src 
-              ? <Image width={"100%"} height={"auto"} alt={`movie poster of ${title}`} src={src}/>
-              : <Ratio ratio={0.8}/>
-            }
+            <Image width={"100%"} height={"auto"} alt={`movie poster of ${title}`} src={src} fallbackSrc={"/images/movie-poster.jpeg"}/>
           </Flex>
         </Box >
 
