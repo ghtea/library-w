@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 
-import {throttle} from "lodash";
+import throttle from "lodash/throttle";
 import {theme} from "theme"
 
 
