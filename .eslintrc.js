@@ -1,8 +1,8 @@
 module.exports = {
   "extends": ["next", "next/core-web-vitals"],
   "plugins": [
-      "import",
-      "simple-import-sort"
+    "import",
+    "simple-import-sort"
   ],
   "rules": {
     "indent": ["error", 2],

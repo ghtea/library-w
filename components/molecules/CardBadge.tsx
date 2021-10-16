@@ -1,5 +1,6 @@
-import { Flex, Text } from "components/atoms"
-import React, { useMemo } from "react"
+import React, {useMemo} from "react"
+
+import {Flex, Text} from "components/atoms"
 import {ColorKey} from "theme"
 
 export type CardBadgeProps = {

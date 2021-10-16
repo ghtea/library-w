@@ -1,9 +1,9 @@
-import React, { useMemo } from "react"
+import React, {useMemo} from "react"
 
-import {Box, Flex, Link, Image,Ratio, Text} from "components/atoms"
+import {Box, Flex, Image,Link, Ratio, Text} from "components/atoms"
+import {CardBadge} from "components/molecules/CardBadge"
 import {ColorKey} from "theme"
 import {MusicAlbumData, MusicAlbumRating} from "utils/notion/music"
-import { CardBadge } from "components/molecules/CardBadge"
 
 
 export type MusicMusicAlbumCardProps = {

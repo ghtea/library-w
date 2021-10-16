@@ -115,11 +115,11 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
         { loading 
           ? (
             <Flex 
-            sx={{
-              justifyContent: "center", 
-              alignItems: "center", 
-              height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px)`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px)`, "100vh", null]
-            }}> 
+              sx={{
+                justifyContent: "center", 
+                alignItems: "center", 
+                height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px)`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px)`, "100vh", null]
+              }}> 
               <Spinner size={SpinnerSize.XL}/>
             </Flex>
           )

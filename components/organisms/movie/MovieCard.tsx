@@ -1,9 +1,9 @@
-import React, { useMemo } from "react"
+import React, {useMemo} from "react"
 
-import {Box, Flex, Link, Image, Ratio, Text} from "components/atoms"
+import {Box, Flex, Image, Link, Ratio, Text} from "components/atoms"
+import {CardBadge} from "components/molecules/CardBadge"
 import {ColorKey} from "theme"
 import {MovieData, MovieRating} from "utils/notion/movie"
-import { CardBadge } from "components/molecules/CardBadge"
 
 export type MovieCardProps = {
     data: MovieData
