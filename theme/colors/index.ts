@@ -9,12 +9,13 @@ export enum ColorKey {
   "primary" = "primary",
   "primary-partner" = "primary-partner",
 
-  "secondary" = "secondary",
-  "secondary-partner" = "secondary-partner",
+  // "secondary" = "secondary",
+  // "secondary-partner" = "secondary-partner",
   
   "bg.weak" = "bg-weak",
   "text.strong" = "text-strong",
   "text.weak" = "text-weak",
+  "text.alternative" = "text-alternative",
 
   //
   "image.placeholder.bg" = "image-placeholder-bg",
@@ -30,6 +31,10 @@ export enum ColorKey {
 
   //
   "card.bg" = "card-bg",
+  
+  //
+  "chip.default.bg" = "chip-bg-default",
+  "chip.default.border" = "chip-bg-border",
 
   "nav.bg" = "nav-bg",
   "nav.border" = "nav-border",
@@ -37,8 +42,9 @@ export enum ColorKey {
   // "@#F3F4F6" = "F3F4F6",
 }
 
+type Colors = Record<ColorKey, typeof palette[keyof (typeof palette)] | "transparent">;
 
-export const colors = {
+export const colors: Colors = {
 
   [ColorKey.bg] : palette["white"],
   [ColorKey.text]: palette["gray-700"],
@@ -50,6 +56,7 @@ export const colors = {
   [ColorKey["bg.weak"]]: palette["cool-gray-100"],
   [ColorKey["text.strong"]]: palette["cool-gray-900"],
   [ColorKey["text.weak"]]: palette["cool-gray-500"],
+  [ColorKey["text.alternative"]]: palette["white"],
 
   //
   [ColorKey["image.placeholder.bg"]]: palette["cool-gray-100"],
@@ -65,6 +72,10 @@ export const colors = {
   [ColorKey["badge.rating.text"]]: palette["cool-gray-50"],
 
   [ColorKey["card.bg"]] : "transparent",
+
+
+  [ColorKey["chip.default.bg"]]: palette["white"],
+  [ColorKey["chip.default.border"]]: palette["cool-gray-200"],
 
   [ColorKey["nav.bg"]]: palette["cool-gray-50"],
   [ColorKey["nav.border"]]: palette["cool-gray-200"],

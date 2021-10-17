@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import {ReactSVG} from "react-svg"
 
-import {ColorKey,Sx} from "theme";
+import {ColorKey, Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue} from "theme-ui"
 
 export type IconProps = ThemeUiBoxProps & {

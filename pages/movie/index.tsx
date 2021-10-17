@@ -3,9 +3,10 @@ import {useCallback, useEffect, useMemo, useState} from "react"
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
 import {MovieCard} from "components/organisms/movie/MovieCard"
+import {MovieFilterSection} from "components/organisms/movie/MovieFilterSection"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,notion, notionFileUrlPrefix} from "utils/notion"
+import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/notion"
 
 
 
@@ -18,6 +19,7 @@ const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: Movi
 }
 
 export const refineMovieData = (item: MovieData) => {
+  const type = item.properties.Type?.select.name as MovieType;
 
   const director = item.properties.Director?.rich_text[0]?.plain_text;
   
@@ -41,6 +43,7 @@ export const refineMovieData = (item: MovieData) => {
   return ({
     ...item,
     essence: {
+      type,
       director,
       rating,
       year,
@@ -56,27 +59,56 @@ export const refineMovieData = (item: MovieData) => {
   })
 }
 
+type FilterValueItem = {
+  value: any
+  selected: boolean
+}
+
+export type MovieFilterValue = (Omit<FilterValueItem, "value"> & {
+  value: MovieType
+})[]
 
 export default function Movie({
   database,
 }:MovieProps) {
-  
+
+  const [filterValue, setFilterValue] = useState<MovieFilterValue>(
+    [...Object.values(MovieType)]
+      .map(item => ({
+        value: item,
+        selected: true,
+      }))
+  );
+
+  const onChangeFilter = useCallback((newValue: MovieFilterValue)=>{
+    setFilterValue(newValue)
+  },[])
+
   const movieDataList: MovieData[] = useMemo(()=>{ 
-    const filteredMovieDataList = database?.results.filter((item: MovieData) => {
+    const validMovieDataList = database?.results.filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
     })
 
-    console.log("raw movie-list: ", filteredMovieDataList)
+    const refinedMovieDataList = (validMovieDataList || []).map(refineMovieData)
 
-    const refinedMovieDataList = (filteredMovieDataList || []).map(refineMovieData)
+    const selectedValueList = filterValue.filter(item => item.selected).map(filteredItem => filteredItem.value)
+    const filteredMovieDataList = refinedMovieDataList.filter(item => {
+      const type = item.essence.type;
 
-    const sortedMovieDataList = refinedMovieDataList.sort((a, b)=>{
+      if (!selectedValueList.includes(type)) {
+        return false
+      } else {
+        return true
+      }
+    })
+
+    const sortedMovieDataList = filteredMovieDataList.sort((a, b)=>{
       return (getMovieRatingOrder(b.essence.rating) - getMovieRatingOrder(a.essence.rating))
     });
 
     return sortedMovieDataList
-  }, [database?.results]);
+  }, [database?.results, filterValue]);
 
   return (
     <TemplateA>
@@ -87,6 +119,12 @@ export default function Movie({
       </Head>
 
       <Flex>
+        <Flex>
+          <MovieFilterSection
+            value={filterValue}
+            onChange={onChangeFilter}
+          />
+        </Flex>
 
         <Flex sx={{p: 3, flexDirection: "row", justifyContent: "flex-start", flexWrap: "wrap", alignItems: "flex-start"}}>
           {movieDataList?.map((item, index)=>(

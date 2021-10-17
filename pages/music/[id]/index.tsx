@@ -11,7 +11,8 @@ import {refineAlbumData} from "pages/music"
 import {ColorKey} from "theme"
 import {useAuthorization} from "utils/authorization"
 import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
-import {Sx} from "utils/theme-ui"
+import {Sx} from "theme"
+
 
 export type MusicAlbumProps = {
   page: MusicPage | null;

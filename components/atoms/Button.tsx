@@ -4,13 +4,15 @@ import {Sx} from "theme";
 import {Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps} from "theme-ui"
 
 export type ButtonProps = ThemeUiButtonProps & {
-  
+  active?: boolean
 };
 
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const {
     sx,
+    disabled = false,
+    active = false,
     ...rest
   } = props;
 

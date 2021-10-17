@@ -26,7 +26,8 @@ import {updateNotionPage} from "./global";
 
 
 export type MoviePropertyValueMap = PropertyValueMap & {
-    
+    Type?: SelectPropertyValue;
+
     Director?: RichTextPropertyValue;
 
     Key?: RichTextPropertyValue;
@@ -54,6 +55,7 @@ export type MovieData = Page & {
 }
 
 export type MovieEssence = {
+  type: MovieType;
   director?: string;
 
   key?: string;
@@ -75,6 +77,11 @@ export type MovieEssence = {
 
   watched?: number;
   year?: number;
+}
+
+export enum MovieType {
+  ANIMATION = "animation",
+  SHOOTING = "shooting",
 }
 
 export enum MovieRating {

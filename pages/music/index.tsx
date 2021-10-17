@@ -2,7 +2,7 @@ import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "rea
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
-import {SearchBar} from "components/organisms/global/SearchBar"
+import {SearchSection} from "components/organisms/global/SearchSection"
 import {MusicAlbumCardDisplay} from "components/organisms/music/MusicAlbumCardDisplay"
 import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
 import Fuse from "fuse.js"
@@ -157,7 +157,7 @@ export default function Music({
           height: SEARCH_BAR_CONTAINER_HEIGHT,
           zIndex: zIndex.searchBar,
         }}>
-          <SearchBar value={searchValue} onChange={onChangeSearch}/>
+          <SearchSection value={searchValue} onChange={onChangeSearch}/>
         </Flex>
 
         <Flex>

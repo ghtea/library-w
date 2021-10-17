@@ -3,17 +3,16 @@ import {ChangeEventHandler, useCallback, useEffect, useState} from "react"
 import {Box, Button,Flex, Icon, Input,Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {NavItem, TEMPLATE_A_TOP_BAR_MD_HEIGHT,TEMPLATE_A_TOP_BAR_SM_HEIGHT} from "components/templates/TemplateA"
-import {useInput} from "utils/input"
 import {useAdvancedRouter} from "utils/router"
 
-export type SearchBarProps = {
+export type SearchSectionProps = {
   value: string
   onChange: ChangeEventHandler<HTMLInputElement>
 }
 
 
 
-export const SearchBar: React.FunctionComponent<SearchBarProps> = ({
+export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
   value,
   onChange
 }) => {

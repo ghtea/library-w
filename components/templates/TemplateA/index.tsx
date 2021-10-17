@@ -1,10 +1,9 @@
 import {useMemo, useState} from "react"
 
 import {Box, Flex, Responsive, Spinner, SpinnerSize} from "components/atoms"
-import {ColorKey,sizes,zIndex} from "theme"
+import {ColorKey,sizes,Sx,zIndex} from "theme"
 import {ResponsiveStyleValue} from "theme-ui"
 import {useAdvancedRouter} from "utils/router"
-import {Sx} from "utils/theme-ui"
 
 import {SideBar} from "./SideBar"
 import {TopBar} from "./TopBar"

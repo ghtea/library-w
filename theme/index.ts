@@ -12,7 +12,7 @@ import {zIndex} from "./z-index";
 export {breakpoints, buttons, colors, forms, sizes, space, text, zIndex};
 export {BreakpointsSize, ColorKey};
 
-export type {Sx};
+export type {Sx as Sx};
 
 
 export const theme = {
@@ -22,16 +22,19 @@ export const theme = {
 
   space: space,
   fontSizes: {
-    h1: "2.25rem", // 36 px
-    h2: "1.875rem", // 30 px
-    h3: "1.625rem", // 26 px
-    h4: "1.375rem", // 22 px
-    h5: "1.25rem", // 20 px
-    s1: "1.125rem", // 18 px
-    s2: "1rem", // 16 px
-    p1: "0.875rem", // 14 px
-    p2: "0.75rem", // 12 px
-    l1: "0.75rem", // 12 px
+    xxh: "6rem", // 96 px
+    xh: "4rem", // 64 px
+    huge: "3rem", // 48 px
+    //
+    xxl: "1.875rem", // 30 px
+    xl: "1.5rem", // 24 px
+    lg: "1.25rem", // 20 px
+    //
+    body: "1rem", // 16 px
+    //
+    sm: "0.875rem", // 14 px
+    xs: "0.75rem", // 12 px
+    xxs: "0.625rem", // 10 px
   },
   fonts: {
     headline: "Noto Sans KR, sans-serif",
