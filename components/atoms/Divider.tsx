@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {ColorKey,Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ThemeUIStyleObject} from "theme-ui"
 
@@ -15,6 +16,7 @@ export const Divider = React.forwardRef<HTMLDivElement, DividerProps>((props, re
   } = props;
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     width: "100%",
     height: "2px",
     my: 4,

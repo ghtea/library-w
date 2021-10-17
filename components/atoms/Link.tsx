@@ -1,5 +1,6 @@
 import React, {useCallback, useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
 import {Link as ThemeUiLink, LinkProps as ThemeUiLinkProps} from "theme-ui"
 import {useAdvancedRouter} from "utils/router";
@@ -33,6 +34,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) 
   },[onClick, router, to])
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     "&:link":{
       color: "unset",
     },

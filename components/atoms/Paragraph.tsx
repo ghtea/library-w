@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
 import {Paragraph as ThemeUiParagraph, ParagraphProps as ThemeUiParagraphProps, ResponsiveStyleValue} from "theme-ui"
 
@@ -16,6 +17,7 @@ export const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
 
   const _sx: Sx = useMemo(()=>{
     return ({
+      ...DEFAULT_SX,
       flexShrink: 1,
       flexGrow: 1,
       overflow: "auto",

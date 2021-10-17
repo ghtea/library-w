@@ -1,6 +1,7 @@
 import React, {useMemo} from "react";
 import {ReactSVG} from "react-svg"
 
+import {DEFAULT_SX} from "components/atoms";
 import {ColorKey, Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue} from "theme-ui"
 
@@ -42,6 +43,7 @@ export const Icon = React.forwardRef<HTMLDivElement, IconProps>((props, ref) => 
   const length = useMemo(()=>getLength(size),[size])
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",

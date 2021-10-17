@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
 import {Button as ThemeUiButton, ButtonProps as ThemeUiButtonProps} from "theme-ui"
 
@@ -17,12 +18,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, r
   } = props;
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",
+    boxSizing: "border-box",
     background: "none",
     cursor: "pointer",
     color: "unset",

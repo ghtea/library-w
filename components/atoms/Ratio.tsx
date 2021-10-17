@@ -1,5 +1,6 @@
 import React, {RefObject, useEffect, useMemo, useRef} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps} from "theme-ui"
 import {useResponsive} from "utils/responsive"
@@ -29,6 +30,7 @@ export const Ratio = React.forwardRef<HTMLDivElement, RatioProps>((props, ref) =
   },[containerRef, responsiveId, ratio])
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",

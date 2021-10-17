@@ -1,14 +1,16 @@
-import {useCallback, useEffect, useMemo, useState} from "react"
+import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "react"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
+import {FilterSection, FilterValue, FilterValueItem} from "components/organisms/global/FilterSection"
+import {SEARCH_BAR_CONTAINER_HEIGHT,SearchSection} from "components/organisms/global/SearchSection"
 import {MovieCard} from "components/organisms/movie/MovieCard"
-import {MovieFilterSection} from "components/organisms/movie/MovieFilterSection"
-import {TemplateA} from "components/templates/TemplateA"
+import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
+import Fuse from "fuse.js"
 import Head from "next/head"
+import {zIndex} from "theme"
 import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/notion"
-
-
+import {useDebouncedEffect} from "utils/optimization"
 
 export type MovieProps = {
   database: DatabasesQueryResponse | null;
@@ -59,10 +61,37 @@ export const refineMovieData = (item: MovieData) => {
   })
 }
 
-type FilterValueItem = {
-  value: any
-  selected: boolean
+const FUSE_OPTIONS = {
+  keys: [
+    {
+      name: "essence.title",
+      weight: 12,
+    },
+    {
+      name: "essence.director",
+      weight: 8,
+    },
+    {
+      name: "essence.rating",
+      weight: 4,
+    },
+    {
+      name: "essence.released",
+      weight: 4,
+    },
+    "essence.type",
+    "essence.tags",
+    "essence.reviewKor",
+    "essence.reviewEng",
+    "essence.reviewJpn",
+  ]
 }
+
+const DEFAULT_SEARCH_VALUE = [...Object.values(MovieType)]
+  .map(item => ({
+    value: item,
+    selected: true,
+  }))
 
 export type MovieFilterValue = (Omit<FilterValueItem, "value"> & {
   value: MovieType
@@ -72,43 +101,59 @@ export default function Movie({
   database,
 }:MovieProps) {
 
-  const [filterValue, setFilterValue] = useState<MovieFilterValue>(
-    [...Object.values(MovieType)]
-      .map(item => ({
-        value: item,
-        selected: true,
-      }))
-  );
+  const [searchValue, setSearchValue] = useState("");
+  const [movieDataList, setMovieDataList] = useState<MovieData[]>([])
+  const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_SEARCH_VALUE);
 
-  const onChangeFilter = useCallback((newValue: MovieFilterValue)=>{
+  const onChangeFilter = useCallback((newValue: FilterValue)=>{
     setFilterValue(newValue)
   },[])
 
-  const movieDataList: MovieData[] = useMemo(()=>{ 
-    const validMovieDataList = database?.results.filter((item: MovieData) => {
+  const updateMovieDataList = useCallback(()=>{ 
+    const existingMovieDataList = database?.results.filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
     })
 
-    const refinedMovieDataList = (validMovieDataList || []).map(refineMovieData)
+    const refinedMovieDataList: MovieData[] = (existingMovieDataList || []).map(refineMovieData)
 
-    const selectedValueList = filterValue.filter(item => item.selected).map(filteredItem => filteredItem.value)
-    const filteredMovieDataList = refinedMovieDataList.filter(item => {
-      const type = item.essence.type;
+    const fuse = new Fuse(refinedMovieDataList, FUSE_OPTIONS) 
 
-      if (!selectedValueList.includes(type)) {
-        return false
-      } else {
-        return true
-      }
-    })
+    const filteredMovieDataList = !searchValue 
+      ? refinedMovieDataList
+      : fuse.search(searchValue).map(item => item.item)
 
     const sortedMovieDataList = filteredMovieDataList.sort((a, b)=>{
-      return (getMovieRatingOrder(b.essence.rating) - getMovieRatingOrder(a.essence.rating))
+      if (a.essence?.rating && b.essence?.rating){
+        return (getMovieRatingOrder(b.essence.rating) - getMovieRatingOrder(a.essence.rating))
+      }
+      else { 
+        return 0 
+      }
     });
 
-    return sortedMovieDataList
-  }, [database?.results, filterValue]);
+    setMovieDataList(sortedMovieDataList)
+  }, [database?.results, searchValue]);
+
+  useDebouncedEffect(()=>{
+    updateMovieDataList()
+  }, [searchValue], 300)
+  
+  const onChangeSearch: ChangeEventHandler<HTMLInputElement> = useCallback((event)=>{
+    setSearchValue(event.currentTarget.value)
+  },[])
+  
+  const text = (item: MovieFilterValue[number]) => {
+    if (item.value === MovieType.ANIMATION){
+      return "Animation"
+    }
+    else if (item.value === MovieType.SHOOTING){
+      return "Shooting"
+    }
+    else {
+      return ""
+    }
+  }
 
   return (
     <TemplateA>
@@ -118,9 +163,20 @@ export default function Movie({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex>
+      <Flex sx={{mt: 6}}>
+        <Flex sx={{
+          position: "fixed", 
+          width: "auto",
+          top: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, 0, 0], 
+          height: SEARCH_BAR_CONTAINER_HEIGHT,
+          zIndex: zIndex.searchBar,
+        }}>
+          <SearchSection value={searchValue} onChange={onChangeSearch}/>
+        </Flex>
+
         <Flex>
-          <MovieFilterSection
+          <FilterSection
+            text={text}
             value={filterValue}
             onChange={onChangeFilter}
           />

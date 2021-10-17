@@ -71,7 +71,7 @@ export type MusicAlbumEssence = {
   reviewEng?: string;
   reviewJpn?: string;
 
-  tagList?: MusicAlbumTag[];
+  tags?: MusicAlbumTag[];
   title?: string;
   
   src?: string;

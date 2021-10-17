@@ -39,6 +39,8 @@ export enum ColorKey {
   "nav.bg" = "nav-bg",
   "nav.border" = "nav-border",
 
+
+  "search-section.border" = "search-section-border",
   // "@#F3F4F6" = "F3F4F6",
 }
 
@@ -81,6 +83,7 @@ export const colors: Colors = {
   [ColorKey["nav.border"]]: palette["cool-gray-200"],
   
 
+  [ColorKey["search-section.border"]]: palette["cool-gray-400"],
 
 
   // [ColorKey["#F3F4F6"]]:  "#F3F4F6", 

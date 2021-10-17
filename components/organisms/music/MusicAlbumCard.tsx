@@ -20,7 +20,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
   data
 }) => {
 
-  const {title, artistList, key, src, rating, released, tagList, reviewKor, reviewEng, reviewJpn} = data.essence || {};
+  const {title, artistList, key, src, rating, released, tags, reviewKor, reviewEng, reviewJpn} = data.essence || {};
 
   const badgeBgColorKey = useMemo(()=>{
     if (rating === MusicAlbumRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]

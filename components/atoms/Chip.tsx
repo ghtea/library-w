@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {ColorKey, Sx} from "theme";
 import {Box as ThemeUiBox, BoxProps as ThemeUiBoxProps, ResponsiveStyleValue} from "theme-ui"
 
@@ -94,6 +95,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>((props, ref) => 
 
   const _sx: Sx = useMemo(()=>{
     const defaultSx: Sx = {
+      ...DEFAULT_SX,
       display: "inline-flex",
       justifyContent: "center",
       alignItems: "center",
@@ -101,6 +103,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>((props, ref) => 
       flexGrow: 0,
       flexBasis: "auto",
       color: "unset",
+      boxSizing: "border-box",
     }
 
     return ({

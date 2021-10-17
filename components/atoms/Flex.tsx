@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
 import {Flex as ThemeUiFlex, FlexProps as ThemeUiFlexProps, ThemeUIStyleObject} from "theme-ui"
 
@@ -15,6 +16,7 @@ export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => 
   } = props;
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     height: "auto",
     width: "100%",
     flexDirection: "column",
@@ -22,6 +24,7 @@ export const Flex = React.forwardRef<HTMLDivElement, FlexProps>((props, ref) => 
     flexShrink: 0,
     flexGrow: 0,
     flexBasis: "auto",
+    boxSizing: "border-box",
     ...sx,
   }),[sx])
 

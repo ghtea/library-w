@@ -2,7 +2,7 @@ import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "rea
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
-import {SearchSection} from "components/organisms/global/SearchSection"
+import {SEARCH_BAR_CONTAINER_HEIGHT,SearchSection} from "components/organisms/global/SearchSection"
 import {MusicAlbumCardDisplay} from "components/organisms/music/MusicAlbumCardDisplay"
 import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
 import Fuse from "fuse.js"
@@ -16,8 +16,8 @@ export type MusicProps = {
   database: DatabasesQueryResponse | null;
 }
 
-const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tagList: MusicAlbumTag[]) => {
-  if (tagList?.includes(MusicAlbumTag.BLOCKED_COVER)){
+const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: MusicAlbumTag[]) => {
+  if (tags?.includes(MusicAlbumTag.BLOCKED_COVER)){
     return `${notionFileUrlPrefix}/music-album-covers/blocked.jpg` 
   }
   else {
@@ -40,12 +40,12 @@ export const refineAlbumData = (item: MusicAlbumData) => {
   const reviewEng = item.properties["Review ENG"]?.rich_text[0]?.plain_text;
   const reviewJpn = item.properties["Review JPN"]?.rich_text[0]?.plain_text;
 
-  const tagList = (item.properties.Tags?.multi_select || []).map(item=>item.name) as MusicAlbumTag[]; 
+  const tags = (item.properties.Tags?.multi_select || []).map(item=>item.name) as MusicAlbumTag[]; 
   const title = item.properties.Title?.title[0].plain_text;
 
   const key = item.properties.Key?.rich_text[0]?.plain_text;
 
-  const src = getSrc(key, notionFileUrlPrefix, tagList);
+  const src = getSrc(key, notionFileUrlPrefix, tags);
 
   const performer = item.properties.Key?.rich_text[0]?.plain_text;
 
@@ -56,7 +56,7 @@ export const refineAlbumData = (item: MusicAlbumData) => {
       rating,
       released,
       rym,
-      tagList,
+      tags,
       title,
       key,
       src,
@@ -86,7 +86,7 @@ const FUSE_OPTIONS = {
       name: "essence.released",
       weight: 4,
     },
-    "essence.tagList",
+    "essence.tags",
     "essence.performer",
     "essence.reviewKor",
     "essence.reviewEng",
@@ -94,7 +94,6 @@ const FUSE_OPTIONS = {
   ]
 }
 
-export const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
 
 export default function Music({
   database,
@@ -104,8 +103,6 @@ export default function Music({
   const [albumDataList, setAlbumDataList] = useState<MusicAlbumData[]>([])
   
   const updateAlbumDataList = useCallback(()=>{ 
-    console.log("triggered")
-
     const existingAlbumDataList = database?.results.filter((item: MusicAlbumData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
@@ -130,14 +127,12 @@ export default function Music({
 
     setAlbumDataList(sortedAlbumDataList)
   }, [database?.results, searchValue]);
-
   
   const onChangeSearch: ChangeEventHandler<HTMLInputElement> = useCallback((event)=>{
     setSearchValue(event.currentTarget.value)
   },[])
 
   useDebouncedEffect(()=>{
-    console.log("try")
     updateAlbumDataList()
   }, [searchValue], 300)
 
@@ -153,6 +148,7 @@ export default function Music({
 
         <Flex sx={{
           position: "fixed", 
+          width: "auto",
           top: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, 0, 0], 
           height: SEARCH_BAR_CONTAINER_HEIGHT,
           zIndex: zIndex.searchBar,

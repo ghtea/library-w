@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {ColorKey, Sx} from "theme";
 import {Input as ThemeUiInput, InputProps as ThemeUiInputProps, ThemeUIStyleObject} from "theme-ui"
 
@@ -15,6 +16,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
   } = props;
 
   const _sx: Sx = useMemo(()=>({
+    ...DEFAULT_SX,
     // flexShrink: 0,
     // flexGrow: 0,
     // flexBasis: "auto",

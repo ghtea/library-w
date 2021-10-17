@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {ColorKey,Sx} from "theme";
 import {Heading as ThemeUiHeading, HeadingProps as ThemeUiHeadingProps, ResponsiveStyleValue} from "theme-ui"
 
@@ -26,6 +27,7 @@ export const Heading = React.forwardRef<HTMLDivElement, HeadingProps>((props, re
   
   const _sx: Sx = useMemo(()=>{
     return ({
+      ...DEFAULT_SX,
       flexShrink: 1,
       flexGrow: 1,
       overflow: "hidden",

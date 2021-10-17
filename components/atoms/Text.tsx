@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 
+import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
 import {ResponsiveStyleValue, Text as ThemeUiText, TextProps as ThemeUiTextProps} from "theme-ui"
 
@@ -16,6 +17,7 @@ export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => 
 
   const _sx: Sx = useMemo(()=>{
     return ({
+      ...DEFAULT_SX,
       flexShrink: 1,
       flexGrow: 1,
       overflow: "hidden",
