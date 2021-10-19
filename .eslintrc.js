@@ -33,6 +33,9 @@ module.exports = {
         ]
       }
     ],
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "react-hooks/exhaustive-deps": ["error", {
+      "additionalHooks": "useDebouncedEffect"
+    }]
   }
 }

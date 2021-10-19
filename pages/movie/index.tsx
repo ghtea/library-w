@@ -7,8 +7,10 @@ import {SEARCH_BAR_CONTAINER_HEIGHT,SearchSection} from "components/organisms/gl
 import {MovieCard} from "components/organisms/movie/MovieCard"
 import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
 import Fuse from "fuse.js"
+import debounce from "lodash/debounce"
 import Head from "next/head"
 import {zIndex} from "theme"
+import {useInput} from "utils/dom"
 import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/notion"
 import {useDebouncedEffect} from "utils/optimization"
 
@@ -100,6 +102,8 @@ export type MovieFilterValue = (Omit<FilterValueItem, "value"> & {
 export default function Movie({
   database,
 }:MovieProps) {
+  const searchInput = useInput("")
+  const {props: searchInputProps, state: searchInputState} = searchInput
 
   const [searchValue, setSearchValue] = useState("");
   const [movieDataList, setMovieDataList] = useState<MovieData[]>([])
@@ -109,7 +113,7 @@ export default function Movie({
     setFilterValue(newValue)
   },[])
 
-  const updateMovieDataList = useCallback(()=>{ 
+  const updateMovieDataList = useCallback((searchValue: string, filterValue: MovieFilterValue)=>{ 
     const existingMovieDataList = database?.results.filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
@@ -119,9 +123,14 @@ export default function Movie({
 
     const fuse = new Fuse(refinedMovieDataList, FUSE_OPTIONS) 
 
-    const filteredMovieDataList = !searchValue 
+    const searchedMovieDataList = !searchValue 
       ? refinedMovieDataList
       : fuse.search(searchValue).map(item => item.item)
+
+    const filterSelectedValues = filterValue.filter(item =>item.selected).map(item=>item.value)
+    const filteredMovieDataList = searchedMovieDataList.filter(item => {
+      return item.essence?.type && filterSelectedValues.includes(item.essence?.type)
+    })
 
     const sortedMovieDataList = filteredMovieDataList.sort((a, b)=>{
       if (a.essence?.rating && b.essence?.rating){
@@ -133,15 +142,15 @@ export default function Movie({
     });
 
     setMovieDataList(sortedMovieDataList)
-  }, [database?.results, searchValue]);
+  }, [database?.results]);
+
+  useEffect(()=>{
+    updateMovieDataList(searchValue, filterValue)
+  }, [filterValue, searchValue, updateMovieDataList])
 
   useDebouncedEffect(()=>{
-    updateMovieDataList()
-  }, [searchValue], 300)
-  
-  const onChangeSearch: ChangeEventHandler<HTMLInputElement> = useCallback((event)=>{
-    setSearchValue(event.currentTarget.value)
-  },[])
+    setSearchValue(searchInputProps.value)
+  }, [searchInputProps.value], 500)
   
   const text = (item: MovieFilterValue[number]) => {
     if (item.value === MovieType.ANIMATION){
@@ -171,7 +180,7 @@ export default function Movie({
           height: SEARCH_BAR_CONTAINER_HEIGHT,
           zIndex: zIndex.searchBar,
         }}>
-          <SearchSection value={searchValue} onChange={onChangeSearch}/>
+          <SearchSection input={searchInput}/>
         </Flex>
 
         <Flex>

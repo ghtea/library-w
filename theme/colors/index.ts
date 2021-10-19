@@ -41,6 +41,7 @@ export enum ColorKey {
 
 
   "search-section.border" = "search-section-border",
+  "search-section.focus.border" = "search-section-focus-border",
   // "@#F3F4F6" = "F3F4F6",
 }
 
@@ -84,7 +85,7 @@ export const colors: Colors = {
   
 
   [ColorKey["search-section.border"]]: palette["cool-gray-400"],
-
+  [ColorKey["search-section.focus.border"]]: palette["primary"],
 
   // [ColorKey["#F3F4F6"]]:  "#F3F4F6", 
 

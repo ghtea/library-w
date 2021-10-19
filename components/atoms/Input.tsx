@@ -9,7 +9,6 @@ export type InputProps = ThemeUiInputProps & {
 };
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-
   const {
     sx,
     ...rest

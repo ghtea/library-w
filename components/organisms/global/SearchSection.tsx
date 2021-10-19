@@ -1,18 +1,17 @@
 import {ChangeEventHandler, useCallback, useEffect, useState} from "react"
 
-import {Box, Button,Flex, Icon, Input,Link, Text} from "components/atoms"
+import {Box, Button,Flex, Icon, Input, Link, Text} from "components/atoms"
 import {ColorKey} from "theme"
+import {useInput} from "utils/dom"
 
 export type SearchSectionProps = {
-  value: string
-  onChange: ChangeEventHandler<HTMLInputElement>
+  input: ReturnType<typeof useInput>
 }
 
 export const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
 
 export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
-  value,
-  onChange
+  input
 }) => {
 
   return ( 
@@ -31,7 +30,7 @@ export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
           borderWidth: 1,
           borderStyle: "solid",
           borderRadius: "6px",
-          borderColor: ColorKey["search-section.border"],
+          borderColor: input.state.focused ? ColorKey["search-section.focus.border"] : ColorKey["search-section.border"],
           backgroundColor: ColorKey["bg"],
           p: 3,
         }}
@@ -48,8 +47,7 @@ export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
             }}
           >
             <Input 
-              value={value} 
-              onChange={onChange}
+              {...input.props}
               sx={{
                 p: 0, 
                 fontSize: ["body", null, "lg", null],
@@ -65,3 +63,4 @@ export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
     </Flex>
   )
 }
+

@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 
 import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
-import {ResponsiveStyleValue,Textarea as ThemeUiTextarea, TextareaProps as ThemeUiTextareaProps} from "theme-ui"
+import {Textarea as ThemeUiTextarea, TextareaProps as ThemeUiTextareaProps} from "theme-ui"
 
 export type TextareaProps = ThemeUiTextareaProps & {
   

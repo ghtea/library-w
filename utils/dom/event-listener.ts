@@ -4,7 +4,7 @@ import {
 
 import lodashDebounce from "lodash/debounce";
 import lodashThrottle from "lodash/throttle";
-import { useDeepCompareEffect, useDeepCompareMemo } from "use-deep-compare";
+import {useDeepCompareEffect, useDeepCompareMemo} from "use-deep-compare";
 
 export type EventListenerConfig<EventName extends (keyof WindowEventMap | keyof DocumentEventMap | keyof ElementEventMap)> = (
   EventName extends keyof WindowEventMap ? WindowEventListenerConfig<EventName> :
