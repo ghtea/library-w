@@ -1,4 +1,4 @@
 export const zIndex = {
   navBar: 300,
-  searchBar: 200,
+  toolBar: 200,
 }

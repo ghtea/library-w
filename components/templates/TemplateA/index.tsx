@@ -58,8 +58,8 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   const navBarSx: Sx = useMemo(()=>({
     position: "fixed", 
     zIndex: zIndex.navBar,
-    backgroundColor: ColorKey["nav.bg"],
-    borderColor: ColorKey["nav.border"],
+    backgroundColor: ColorKey["nav-bar.bg"],
+    borderColor: ColorKey["nav-bar.border"],
   }),[]);
 
   return ( 

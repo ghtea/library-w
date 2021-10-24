@@ -36,12 +36,16 @@ export enum ColorKey {
   "chip.default.bg" = "chip-bg-default",
   "chip.default.border" = "chip-bg-border",
 
-  "nav.bg" = "nav-bg",
-  "nav.border" = "nav-border",
-
+  "nav-bar.bg" = "nav-bar-bg",
+  "nav-bar.border" = "nav-bar-border",
+  "tool-bar.bg" = "tool-bar-bg",
+  "tool-bar.border" = "tool-bar-border",
 
   "search-section.border" = "search-section-border",
+  "search-section.icon" = "search-section-icon",
+  "search-section.bg" = "search-section-bg",
   "search-section.focus.border" = "search-section-focus-border",
+  "search-section.focus.icon" = "search-section-focus-icon",
   // "@#F3F4F6" = "F3F4F6",
 }
 
@@ -52,17 +56,17 @@ export const colors: Colors = {
   [ColorKey.bg] : palette["white"],
   [ColorKey.text]: palette["gray-700"],
 
-  [ColorKey.primary]: palette.primary,
+  [ColorKey.primary]: palette["blue-500"],
   [ColorKey["primary-partner"]]: palette["white"],
   // [ColorKey.secondary]: "#1997F0",
 
-  [ColorKey["bg.weak"]]: palette["cool-gray-100"],
-  [ColorKey["text.strong"]]: palette["cool-gray-900"],
-  [ColorKey["text.weak"]]: palette["cool-gray-500"],
+  [ColorKey["bg.weak"]]: palette["gray-100"],
+  [ColorKey["text.strong"]]: palette["gray-900"],
+  [ColorKey["text.weak"]]: palette["gray-500"],
   [ColorKey["text.alternative"]]: palette["white"],
 
   //
-  [ColorKey["image.placeholder.bg"]]: palette["cool-gray-100"],
+  [ColorKey["image.placeholder.bg"]]: palette["gray-100"],
 
   //
   [ColorKey["badge.rating.the-best.bg"]]: palette["rose-700"],
@@ -70,22 +74,26 @@ export const colors: Colors = {
   [ColorKey["badge.rating.top-50.bg"]]: palette["violet-700"],
   [ColorKey["badge.rating.top-100.bg"]]: palette["blue-700"],
   [ColorKey["badge.rating.top-200.bg"]]: palette["green-700"],
-  [ColorKey["badge.rating.top-500.bg"]]: palette["cool-gray-700"],
+  [ColorKey["badge.rating.top-500.bg"]]: palette["gray-700"],
 
-  [ColorKey["badge.rating.text"]]: palette["cool-gray-50"],
+  [ColorKey["badge.rating.text"]]: palette["gray-50"],
 
   [ColorKey["card.bg"]] : "transparent",
 
 
   [ColorKey["chip.default.bg"]]: palette["white"],
-  [ColorKey["chip.default.border"]]: palette["cool-gray-200"],
+  [ColorKey["chip.default.border"]]: palette["gray-200"],
 
-  [ColorKey["nav.bg"]]: palette["cool-gray-50"],
-  [ColorKey["nav.border"]]: palette["cool-gray-200"],
-  
+  [ColorKey["nav-bar.bg"]]: palette["gray-50"],
+  [ColorKey["nav-bar.border"]]: palette["gray-200"],
+  [ColorKey["tool-bar.bg"]]: palette["gray-50-95%"],
+  [ColorKey["tool-bar.border"]]: palette["gray-200"],
 
-  [ColorKey["search-section.border"]]: palette["cool-gray-400"],
-  [ColorKey["search-section.focus.border"]]: palette["primary"],
+  [ColorKey["search-section.border"]]: palette["gray-300"],
+  [ColorKey["search-section.icon"]]: palette["gray-400"],
+  [ColorKey["search-section.bg"]]: palette["white-95%"],
+  [ColorKey["search-section.focus.border"]]: palette["blue-500"],
+  [ColorKey["search-section.focus.icon"]]: palette["blue-600"],
 
   // [ColorKey["#F3F4F6"]]:  "#F3F4F6", 
 

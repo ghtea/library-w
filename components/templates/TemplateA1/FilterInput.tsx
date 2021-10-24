@@ -4,7 +4,7 @@ import {ChipSize,Flex} from "components/atoms"
 import {ChipButtonInput, ChipButtonInputItem} from "components/molecules/ChipButtonInput"
 import {ColorKey} from "theme"
 
-export type FilterSectionProps = {
+export type FilterInputProps = {
   value: FilterValue
   text: (item: FilterValueItem) => string
   onChange: (value: FilterValue) => void
@@ -17,7 +17,7 @@ export type FilterValueItem = {
   selected: boolean
 }
 
-export const FilterSection: React.FunctionComponent<FilterSectionProps> = ({
+export const FilterInput: React.FunctionComponent<FilterInputProps> = ({
   value,
   onChange = () => {},
   text,
@@ -50,8 +50,6 @@ export const FilterSection: React.FunctionComponent<FilterSectionProps> = ({
     <Flex 
       sx={{
         flexDirection: "row",
-        p: 4,
-        height: "100%",
         justifyContent: "center",
         alignItems: "center"
       }} 

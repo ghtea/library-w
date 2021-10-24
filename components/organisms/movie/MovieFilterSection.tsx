@@ -6,12 +6,12 @@ import {MovieFilterValue} from "pages/movie"
 import {ColorKey} from "theme"
 import {MovieType} from "utils/notion"
 
-export type MovieFilterSectionProps = Omit<Partial<ChipButtonInputProps>, "value" | "onChange"> & {
+export type MovieFilterInputProps = Omit<Partial<ChipButtonInputProps>, "value" | "onChange"> & {
   value: MovieFilterValue
   onChange?: (value: MovieFilterValue) => void
 }
 
-export const MovieFilterSection: React.FunctionComponent<MovieFilterSectionProps> = ({
+export const MovieFilterInput: React.FunctionComponent<MovieFilterInputProps> = ({
   value,
   onChange = () => {},
 }) => {

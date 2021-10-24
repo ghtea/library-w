@@ -4,13 +4,13 @@ import {Box, Button,Flex, Icon, Input, Link, Text} from "components/atoms"
 import {ColorKey} from "theme"
 import {useInput} from "utils/dom"
 
-export type SearchSectionProps = {
+export type SearchInputProps = {
   input: ReturnType<typeof useInput>
 }
 
-export const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
+// export const SEARCH_BAR_CONTAINER_HEIGHT = ["64px", "72px", "90px", "90px"]
 
-export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
+export const SearchInput: React.FunctionComponent<SearchInputProps> = ({
   input
 }) => {
 
@@ -18,8 +18,6 @@ export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
     <Flex 
       sx={{
         flexDirection: "row",
-        p: 4,
-        height: "100%",
         justifyContent: "center",
         alignItems: "center"
       }} 
@@ -27,23 +25,35 @@ export const SearchSection: React.FunctionComponent<SearchSectionProps> = ({
       <Box
         sx={{
           width: ["360px", null, "480px", null],
-          borderWidth: 1,
+          borderWidth: 2,
           borderStyle: "solid",
           borderRadius: "6px",
           borderColor: input.state.focused ? ColorKey["search-section.focus.border"] : ColorKey["search-section.border"],
-          backgroundColor: ColorKey["bg"],
-          p: 3,
+          backgroundColor: ColorKey["search-section.bg"],
+          p: 2,
         }}
       >
         <Flex
           sx={{flexDirection: "row"}}
         >
-          <Box>
-            <Icon src={"/svgs/bao-search.svg"}></Icon>
+          <Box
+            sx={{
+              flexShrink: 0,
+              flexGrow: 0,
+            }}
+          >
+            <Icon 
+              src={"/svgs/bao-search.svg"}
+              sx={{
+                color: input.state.focused ? ColorKey["search-section.focus.icon"] : ColorKey["search-section.icon"]
+              }}
+            />
           </Box>
           <Box
             sx={{
               ml: 3,
+              flexShrink: 1,
+              flexGrow: 1,
             }}
           >
             <Input 
