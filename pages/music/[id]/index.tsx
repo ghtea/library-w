@@ -8,10 +8,9 @@ import {GetServerSideProps} from "next"
 import Head from "next/head"
 import Image from "next/image"
 import {refineAlbumData} from "pages/music"
-import {ColorKey} from "theme"
+import {ColorKey,Sx} from "theme"
 import {useAuthorization} from "utils/authorization"
 import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
-import {Sx} from "theme"
 
 
 export type MusicAlbumProps = {

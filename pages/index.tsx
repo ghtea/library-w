@@ -22,7 +22,7 @@ const Home:React.FunctionComponent = () => {
       </Head>
 
       <Flex sx={{width: "100%", height: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "#E7EFFC"}}>
-        <Image src={"/images/home.jpg"} width={"100%"} ></Image>
+        <Image src={"/images/home.jpg"} width={"100%"} alt={"home image"}></Image>
       </Flex>
       
     </TemplateA>
