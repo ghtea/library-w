@@ -1,4 +1,4 @@
-import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "react"
+import {useCallback, useEffect, useMemo, useState} from "react"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
@@ -7,7 +7,6 @@ import {TemplateA1} from "components/templates/TemplateA1"
 import {FilterValue, FilterValueItem} from "components/templates/TemplateA1/FilterInput"
 import Fuse from "fuse.js"
 import Head from "next/head"
-import {zIndex} from "theme"
 import {useInput} from "utils/dom"
 import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/notion"
 import {useDebouncedEffect} from "utils/optimization"
@@ -87,7 +86,7 @@ const FUSE_OPTIONS = {
   ]
 }
 
-const DEFAULT_SEARCH_VALUE = [...Object.values(MovieType)]
+const DEFAULT_FILTER_VALUE = [...Object.values(MovieType)]
   .map(item => ({
     value: item,
     selected: true,
@@ -103,15 +102,11 @@ export default function Movie({
   const searchInput = useInput("")
   const {props: searchInputProps, state: searchInputState} = searchInput
 
-  const [searchValue, setSearchValue] = useState("");
+  const [actualSearchValue, setActualSearchValue] = useState("");
   const [movieDataList, setMovieDataList] = useState<MovieData[]>([])
-  const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_SEARCH_VALUE);
+  const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_FILTER_VALUE);
 
-  const onChangeFilter = useCallback((newValue: FilterValue)=>{
-    setFilterValue(newValue)
-  },[])
-
-  const updateMovieDataList = useCallback((searchValue: string, filterValue: MovieFilterValue)=>{ 
+  const updateMovieDataList = useCallback(()=>{ 
     const existingMovieDataList = database?.results.filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
@@ -121,9 +116,9 @@ export default function Movie({
 
     const fuse = new Fuse(refinedMovieDataList, FUSE_OPTIONS) 
 
-    const searchedMovieDataList = !searchValue 
+    const searchedMovieDataList = !actualSearchValue 
       ? refinedMovieDataList
-      : fuse.search(searchValue).map(item => item.item)
+      : fuse.search(actualSearchValue).map(item => item.item)
 
     const filterSelectedValues = filterValue.filter(item =>item.selected).map(item=>item.value)
     const filteredMovieDataList = searchedMovieDataList.filter(item => {
@@ -140,17 +135,21 @@ export default function Movie({
     });
 
     setMovieDataList(sortedMovieDataList)
-  }, [database?.results]);
+  }, [database?.results, actualSearchValue, filterValue]);
 
   useEffect(()=>{
-    updateMovieDataList(searchValue, filterValue)
-  }, [filterValue, searchValue, updateMovieDataList])
+    updateMovieDataList()
+  }, [updateMovieDataList])
 
   useDebouncedEffect(()=>{
-    setSearchValue(searchInputProps.value)
+    setActualSearchValue(searchInputProps.value)
   }, [searchInputProps.value], 500)
   
-  const text = (item: MovieFilterValue[number]) => {
+  const onChangeFilter = useCallback((newValue: FilterValue)=>{
+    setFilterValue(newValue)
+  },[])
+
+  const filterText = useCallback((item: MovieFilterValue[number]) => {
     if (item.value === MovieType.ANIMATION){
       return "Animation"
     }
@@ -160,15 +159,15 @@ export default function Movie({
     else {
       return ""
     }
-  }
+  },[])
 
   return (
     <TemplateA1
-      searchSectionProps={{
+      searchInputProps={{
         input: searchInput
       }}
-      filterSectionProps={{
-        text: text,
+      filterInputProps={{
+        text: filterText,
         value: filterValue,
         onChange: onChangeFilter,
       }}
@@ -179,7 +178,13 @@ export default function Movie({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex sx={{p: 3, flexDirection: "row", justifyContent: "center", flexWrap: "wrap", alignItems: "flex-start"}}>
+      <Flex sx={{
+        p: 3, 
+        flexDirection: "row", 
+        justifyContent: "center", 
+        flexWrap: "wrap", 
+        alignItems: "flex-start"
+      }}>
         {movieDataList?.map((item, index)=>(
           <Box
             key={`album-${item?.essence?.title || index}`} 
@@ -191,7 +196,7 @@ export default function Movie({
           >
             <MovieCard
               data={item}
-            ></MovieCard>
+            />
           </Box>
         )
         )}

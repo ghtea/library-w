@@ -1,22 +1,22 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
 import {Box, Flex, Icon} from "components/atoms"
-import {TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT,TemplateA} from "components/templates/TemplateA"
-import {ColorKey,sizes,Sx,zIndex} from "theme"
+import {TemplateA} from "components/templates/TemplateA"
+import {ColorKey,zIndex} from "theme"
 
 import {FilterInput, FilterInputProps} from "./FilterInput"
 import {SearchInput, SearchInputProps} from "./SearchInput"
 
 
 export type TemplateA1Props = {
-  searchSectionProps: SearchInputProps,
-  filterSectionProps: FilterInputProps
+  searchInputProps: SearchInputProps,
+  filterInputProps: FilterInputProps
 }
 
 export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
   children,
-  searchSectionProps,
-  filterSectionProps,
+  searchInputProps,
+  filterInputProps,
 }) => {
   const [fixedBoxHeight, setFixedBoxHeight] = useState(0)
   const fixedBoxRef = useRef<HTMLDivElement>(null)
@@ -50,7 +50,7 @@ export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
           borderBottomStyle: "solid",
           p: 4,
         }}>
-          <SearchInput {...searchSectionProps}/>
+          <SearchInput {...searchInputProps}/>
         </Flex>
         
         <Flex sx={{
@@ -60,7 +60,7 @@ export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
           borderBottomStyle: "solid",
           p: 3,
         }}>
-          <FilterInput {...filterSectionProps} />
+          <FilterInput {...filterInputProps} />
         </Flex>
       </Flex>
       
