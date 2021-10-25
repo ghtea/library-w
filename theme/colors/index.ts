@@ -33,6 +33,12 @@ export enum ColorKey {
   "card.bg" = "card-bg",
   
   //
+  "modal.bg" = "modal-bg",
+  "modal.border" = "modal-border",
+  "modal.header.bg" = "modal-header-bg",
+  "modal.shadow.bg" = "modal-shadow-bg",
+
+  //
   "chip.default.bg" = "chip-bg-default",
   "chip.default.border" = "chip-bg-border",
 
@@ -80,6 +86,10 @@ export const colors: Colors = {
 
   [ColorKey["card.bg"]] : "transparent",
 
+  [ColorKey["modal.bg"]] : palette["white"],
+  [ColorKey["modal.border"]] : palette["gray-200"],
+  [ColorKey["modal.header.bg"]] : palette["gray-50"],
+  [ColorKey["modal.shadow.bg"]] : palette["gray-500-50%"],
 
   [ColorKey["chip.default.bg"]]: palette["white"],
   [ColorKey["chip.default.border"]]: palette["gray-200"],

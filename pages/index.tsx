@@ -11,6 +11,24 @@ export enum LibraryCategory {
   KNOWLEDGE = "knowledge"
 }
 
+export const libraryCategoryText = (value: LibraryCategory) => {
+  if (value === LibraryCategory.MUSIC) {
+    return "Music"
+  }
+  else if (value === LibraryCategory.MOVIE) {
+    return "Movie"
+  }
+  else if (value === LibraryCategory.THOUGHT) {
+    return "Thought"
+  }
+  else if (value === LibraryCategory.KNOWLEDGE) {
+    return "Knowledge"
+  }
+  else {
+    ""
+  }
+}
+
 const Home:React.FunctionComponent = () => {
 
   return (

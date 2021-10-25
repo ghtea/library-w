@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from "react"
+import React, {useCallback, useMemo, useState} from "react"
 
 import {Box,ButtonProps, ChipProps, ChipSize, Flex} from "components/atoms";
 import {ChipButton, ChipButtonProps} from "components/molecules/ChipButton";
@@ -7,12 +7,13 @@ import {Sx} from "theme";
 export type ChipButtonInputProps = Omit<ButtonProps & Partial<ChipProps>, "type" | "onChange"> & {
   type?: "select" | "multi-select";
   items: ChipButtonInputItem[];
-  onChange?: (items: ChipButtonInputItem[]) => void;
+  onChange?: (value: ChipButtonInputItem[]) => void;
   selectedProps?: Partial<ChipButtonProps>;
 };
 
 export type ChipButtonInputItem = Partial<ChipButtonProps> & {
-  selected?: boolean;
+  value: ChipButtonProps["value"]
+  selected?: boolean
 };
 
 export const ChipButtonInput = React.forwardRef<HTMLDivElement, ChipButtonInputProps>(({
@@ -33,14 +34,14 @@ export const ChipButtonInput = React.forwardRef<HTMLDivElement, ChipButtonInputP
 
       onChange(newItems);
     } else if (type === "select") {
-      const newItems = items.map((i, idx) => {
-        if (idx === index) {
-          i.selected = true;
+      const newItems = items.map((newItem, newIndex) => {
+        if (newIndex === index) {
+          newItem.selected = true;
         } else {
-          i.selected = false;
+          newItem.selected = false;
         }
 
-        return i;
+        return newItem;
       });
 
       onChange(newItems);

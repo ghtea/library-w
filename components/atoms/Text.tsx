@@ -2,16 +2,21 @@ import React, {useMemo} from "react";
 
 import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
-import {ResponsiveStyleValue, Text as ThemeUiText, TextProps as ThemeUiTextProps} from "theme-ui"
+import {
+  Heading as ThemeUiHeading, HeadingProps as ThemeUiHeadingProps, 
+  Text as ThemeUiText, TextProps as ThemeUiTextProps,
+} from "theme-ui"
+
 
 export type TextProps = ThemeUiTextProps & {
-  
+  tag?: "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 };
 
 export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => {
 
   const {
     sx,
+    tag = "span",
     ...rest
   } = props;
 
@@ -27,12 +32,15 @@ export const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => 
       wordBreak: "break-all",
       display: "inline-block",
       maxWidth: "100%",
+      fontFamily: "unset",
       ...sx,
     });
   },[sx])
 
   return (
-    <ThemeUiText ref={ref} sx={_sx} {...rest} />
+    tag === "span" 
+      ? <ThemeUiText ref={ref} sx={_sx} {...rest} />
+      :<ThemeUiHeading as={tag} ref={ref} sx={_sx} {...rest} />
   );
 })
 

@@ -4,6 +4,8 @@ export enum BreakpointsSize {
     LG = "lg",
     XL = "xl",
 }
+
+export const MIN_WIDTH = "360px"
   
 export const breakpoints = [
   // // "0rem", //     0 ≥ screen < 600px  | sm | mobile

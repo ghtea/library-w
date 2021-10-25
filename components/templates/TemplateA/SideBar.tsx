@@ -2,9 +2,11 @@ import {useCallback, useEffect, useState} from "react"
 
 import {Box, Flex, Icon, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
+import {AddModal} from "components/organisms/modal/AddModal"
 import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH} from "components/templates/TemplateA"
 import {ColorKey, sizes} from "theme"
 import {useAuthentication} from "utils/authentication"
+import {useModal} from "utils/modal"
 import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
@@ -16,6 +18,7 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
 }) => {
   const {user, loading} = useAuthentication()
   const {pathSeries} = useAdvancedRouter()
+  const {upsertModal} = useModal()
 
   const [selectedPageId, setSelectedPageId] = useState<string>();
 
@@ -32,8 +35,14 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
   },[])
 
   const onClickAdd = useCallback(()=>{
-
-  },[])
+    upsertModal({
+      children:(
+        <AddModal 
+          
+        />
+      ),
+    })
+  },[upsertModal])
 
   return ( 
     <Flex 

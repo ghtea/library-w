@@ -39,7 +39,7 @@ export const FilterInput: React.FunctionComponent<FilterInputProps> = ({
       .map(filteredItem => filteredItem.value)
 
     const newFilterValue: FilterValue = [...value].map(item => ({
-      ...item,
+      value: item.value,
       selected: selectedValueList.includes(item.value),
     }))
 

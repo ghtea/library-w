@@ -19,6 +19,7 @@ const palette = {
   "gray-900": "#111827",
 
   "gray-50-95%": "rgba(249, 250, 251, 0.95)",
+  "gray-500-50%": "rgba(107, 114, 128, 0.5)",
 
   // "blue-gray-50": "#F8FAFC",
   // "blue-gray-100": "#F1F5F9",

@@ -2,10 +2,12 @@ import {Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState} from
 
 import {Box, Flex, Icon, IconSize, Link, Responsive, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
+import {AddModal} from "components/organisms/modal/AddModal"
 import {NavItem, TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT} from "components/templates/TemplateA"
 import {signIn} from "next-auth/client"
 import {ColorKey, sizes, zIndex} from "theme"
 import {useAuthentication} from "utils/authentication"
+import {useModal} from "utils/modal"
 import {useAdvancedRouter} from "utils/router"
 
 export type TopBarProps = {
@@ -18,8 +20,8 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
   nav, isOpen, setIsOpen
 }) => {
   const {user} = useAuthentication()
-
   const {pathSeries} = useAdvancedRouter()
+  const {upsertModal} = useModal()
 
   const getIsActive = useCallback((pageId: string)=>(pageId === pathSeries[0]),[pathSeries]) 
 
@@ -28,8 +30,14 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
   },[])
 
   const onClickAdd = useCallback(()=>{
-
-  },[])
+    upsertModal({
+      children:(
+        <AddModal 
+          
+        />
+      ),
+    })
+  },[upsertModal])
   
   return ( 
     <Flex >

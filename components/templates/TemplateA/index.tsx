@@ -2,6 +2,7 @@ import {useMemo, useState} from "react"
 
 import {Box, Flex, Responsive, Spinner, SpinnerSize} from "components/atoms"
 import {ColorKey,sizes,Sx,zIndex} from "theme"
+import {MIN_WIDTH} from "theme/breakpoints"
 import {ResponsiveStyleValue} from "theme-ui"
 import {useAdvancedRouter} from "utils/router"
 
@@ -63,7 +64,12 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
   }),[]);
 
   return ( 
-    <Flex sx={{backgroundColor: ColorKey.bg, color: ColorKey.text, height: height}}>
+    <Flex sx={{
+      backgroundColor: 
+      ColorKey.bg, 
+      color: ColorKey.text, 
+      height: height,
+    }}>
 
       {/* top bar in sm, md */}
       <Responsive range={"sm-md"}>
