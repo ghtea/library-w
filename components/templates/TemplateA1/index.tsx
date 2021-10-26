@@ -3,6 +3,7 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react"
 import {Box, Flex, Icon} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import {ColorKey,zIndex} from "theme"
+import {useAdvancedRouter} from "utils/router"
 
 import {FilterInput, FilterInputProps} from "./FilterInput"
 import {SearchInput, SearchInputProps} from "./SearchInput"
@@ -18,12 +19,22 @@ export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
   searchInputProps,
   filterInputProps,
 }) => {
+  const {router} = useAdvancedRouter()
+
   const [fixedBoxHeight, setFixedBoxHeight] = useState(0)
+  const [fixedBox, setFixedBox] = useState<HTMLDivElement>()
   const fixedBoxRef = useRef<HTMLDivElement>(null)
 
-  const handleResize = useCallback(()=>{
-    setFixedBoxHeight(fixedBoxRef.current?.offsetHeight || 0)
+  const handleRefChange = useCallback((element: HTMLDivElement)=>{
+    if (element){
+      console.log("element: ", element); // TODO: remove
+      setFixedBox(element)
+    }
   },[])
+
+  const handleResize = useCallback(()=>{
+    setFixedBoxHeight(fixedBox?.offsetHeight || 0)
+  },[fixedBox])
 
   useEffect(()=>{
     handleResize()
@@ -38,7 +49,7 @@ export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
   return ( 
     <TemplateA>
       <Flex 
-        ref={fixedBoxRef}
+        ref={handleRefChange}
         sx={{
           position: "fixed", 
           zIndex: zIndex.toolBar,
