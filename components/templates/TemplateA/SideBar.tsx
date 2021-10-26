@@ -23,10 +23,8 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
   const [selectedPageId, setSelectedPageId] = useState<string>();
 
   useEffect(()=>{
-    if (selectedPageId !== pathSeries[0]){
-      setSelectedPageId(pathSeries[0])
-    }
-  },[pathSeries, selectedPageId]);
+    setSelectedPageId(pathSeries[0])
+  },[pathSeries]);
 
   const getIsActive = useCallback((pageId: string)=>(pageId === selectedPageId),[selectedPageId]) 
 

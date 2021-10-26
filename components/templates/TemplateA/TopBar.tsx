@@ -23,10 +23,20 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
   const {pathSeries} = useAdvancedRouter()
   const {upsertModal} = useModal()
 
-  const getIsActive = useCallback((pageId: string)=>(pageId === pathSeries[0]),[pathSeries]) 
+  const [selectedPageId, setSelectedPageId] = useState<string>();
+
+  useEffect(()=>{
+    setSelectedPageId(pathSeries[0])
+  },[pathSeries]);
+
+  const getIsActive = useCallback((pageId: string)=>(pageId === selectedPageId),[selectedPageId]) 
 
   const onClickLogIn = useCallback(()=>{
     signIn()
+  },[])
+
+  const onClickNavLink = useCallback((clickedPageId: string)=>{
+    setSelectedPageId(clickedPageId);
   },[])
 
   const onClickAdd = useCallback(()=>{
@@ -72,7 +82,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
             <Responsive range={"mdOnly"}>
               <Flex sx={{flexDirection: "row", width: "auto"}}>
                 {nav.map(item=>(
-                  <Link key={`nav-item-${item.id}`} to={`/${item.id}`}>
+                  <Link key={`nav-item-${item.id}`} to={`/${item.id}`} onClick={()=>onClickNavLink(item.id)}>
                     <IconButton
                       sx={{
                         color: getIsActive(item.id) ? ColorKey["primary-partner"] : "unset",
