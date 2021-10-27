@@ -1,8 +1,8 @@
 import React, {useMemo} from "react"
 
 import {Box, Flex, Image,Link, Ratio, Text} from "components/atoms"
-import {CardBadge} from "components/molecules/CardBadge"
-import {ColorKey} from "theme"
+import {CardBand} from "components/molecules/CardBand"
+import {ColorKey, Sx} from "theme"
 import {MusicAlbumData, MusicAlbumRating} from "utils/notion/music"
 
 
@@ -22,14 +22,33 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
 
   const {title, artistList, key, src, rating, released, tags, reviewKor, reviewEng, reviewJpn} = data.essence || {};
 
-  const badgeBgColorKey = useMemo(()=>{
-    if (rating === MusicAlbumRating.THE_BEST) return ColorKey["badge.rating.the-best.bg"]
-    else if (rating === MusicAlbumRating.TOP_10) return ColorKey["badge.rating.top-10.bg"]
-    else if (rating === MusicAlbumRating.TOP_50) return ColorKey["badge.rating.top-50.bg"]
-    else if (rating === MusicAlbumRating.TOP_100) return ColorKey["badge.rating.top-100.bg"]
-    else if (rating === MusicAlbumRating.TOP_200) return ColorKey["badge.rating.top-200.bg"]
-    else if (rating === MusicAlbumRating.TOP_500) return ColorKey["badge.rating.top-500.bg"]
-    else return ColorKey["badge.rating.top-500.bg"]
+  const CardBandSx = useMemo(()=>{
+    const sx: Sx = {}
+    if (rating === MusicAlbumRating.THE_BEST) {
+      sx.color = ColorKey["card-band.rating.the-best.text"],
+      sx.backgroundColor = ColorKey["card-band.rating.the-best.bg"]
+    }
+    else if (rating === MusicAlbumRating.TOP_10) {
+      sx.color = ColorKey["card-band.rating.top-10.text"],
+      sx.backgroundColor = ColorKey["card-band.rating.top-10.bg"]
+    }
+    else if (rating === MusicAlbumRating.TOP_50) {
+      sx.color = ColorKey["card-band.rating.top-50.text"],
+      sx.backgroundColor = ColorKey["card-band.rating.top-50.bg"]
+    }
+    else if (rating === MusicAlbumRating.TOP_100) {
+      sx.color = ColorKey["card-band.rating.top-100.text"],
+      sx.backgroundColor = ColorKey["card-band.rating.top-100.bg"]
+    }
+    else if (rating === MusicAlbumRating.TOP_200) {
+      sx.color = ColorKey["card-band.rating.top-200.text"],
+      sx.backgroundColor = ColorKey["card-band.rating.top-200.bg"]
+    }
+    else if (rating === MusicAlbumRating.TOP_500) {
+      sx.color = ColorKey["card-band.rating.top-500.text"],
+      sx.backgroundColor = ColorKey["card-band.rating.top-500.bg"]
+    }
+    return sx
   },[rating])
 
   const artistText = useMemo(()=>{
@@ -39,22 +58,12 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
   return (
     <Flex>
       <Link to={`/music/${data.id}`} sx={{width: "100%"}}>
-        <Box sx={{width: "100%"}} >
-          <Box
-            sx={{
-              position: "absolute", 
-              zIndex: 2,
-              left: 0,
-              top: 0,
-            }}
-          >
-            <CardBadge title={rating || ""} color={badgeBgColorKey}></CardBadge>
-          </Box>
-          
+        <Flex>
+          <CardBand title={(rating || "").toUpperCase()} sx={CardBandSx}></CardBand>
           <Flex sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
             <Image width={"100%"} height={"auto"} alt={`album cover of ${title}`} src={src} fallbackSrc={"/images/album-cover.jpeg"}/>
           </Flex>
-        </Box >
+        </Flex >
 
         <Box sx={{my:3, width: "100%", backgroundColor: ColorKey["card.bg"]}}>
           <Flex>

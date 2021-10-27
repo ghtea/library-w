@@ -21,13 +21,19 @@ export enum ColorKey {
   "image.placeholder.bg" = "image-placeholder-bg",
 
   //
-  "badge.rating.the-best.bg" = "badge-the-best-bg",
-  "badge.rating.top-10.bg" = "badge-top-10-bg",
-  "badge.rating.top-50.bg" = "badge-top-50-bg",
-  "badge.rating.top-100.bg" = "badge-top-100-bg",
-  "badge.rating.top-200.bg" = "badge-top-200-bg",
-  "badge.rating.top-500.bg" = "badge-top-500-bg",
-  "badge.rating.text" = "badge-rating-text",
+  "card-band.rating.the-best.bg" = "card-band-the-best-bg",
+  "card-band.rating.top-10.bg" = "card-band-top-10-bg",
+  "card-band.rating.top-50.bg" = "card-band-top-50-bg",
+  "card-band.rating.top-100.bg" = "card-band-top-100-bg",
+  "card-band.rating.top-200.bg" = "card-band-top-200-bg",
+  "card-band.rating.top-500.bg" = "card-band-top-500-bg",
+  
+  "card-band.rating.the-best.text" = "card-band-the-best-text",
+  "card-band.rating.top-10.text" = "card-band-top-10-text",
+  "card-band.rating.top-50.text" = "card-band-top-50-text",
+  "card-band.rating.top-100.text" = "card-band-top-100-text",
+  "card-band.rating.top-200.text" = "card-band-top-200-text",
+  "card-band.rating.top-500.text" = "card-band-top-500-text",
 
   //
   "card.bg" = "card-bg",
@@ -75,14 +81,19 @@ export const colors: Colors = {
   [ColorKey["image.placeholder.bg"]]: palette["gray-100"],
 
   //
-  [ColorKey["badge.rating.the-best.bg"]]: palette["rose-700"],
-  [ColorKey["badge.rating.top-10.bg"]]: palette["fuchsia-700"],
-  [ColorKey["badge.rating.top-50.bg"]]: palette["violet-700"],
-  [ColorKey["badge.rating.top-100.bg"]]: palette["blue-700"],
-  [ColorKey["badge.rating.top-200.bg"]]: palette["green-700"],
-  [ColorKey["badge.rating.top-500.bg"]]: palette["gray-700"],
+  [ColorKey["card-band.rating.the-best.bg"]]: palette["rose-100"],
+  [ColorKey["card-band.rating.top-10.bg"]]: palette["fuchsia-100"],
+  [ColorKey["card-band.rating.top-50.bg"]]: palette["violet-100"],
+  [ColorKey["card-band.rating.top-100.bg"]]: palette["blue-100"],
+  [ColorKey["card-band.rating.top-200.bg"]]: palette["green-100"],
+  [ColorKey["card-band.rating.top-500.bg"]]: palette["gray-100"],
 
-  [ColorKey["badge.rating.text"]]: palette["gray-50"],
+  [ColorKey["card-band.rating.the-best.text"]]: palette["rose-700"],
+  [ColorKey["card-band.rating.top-10.text"]]: palette["fuchsia-700"],
+  [ColorKey["card-band.rating.top-50.text"]]: palette["violet-700"],
+  [ColorKey["card-band.rating.top-100.text"]]: palette["blue-700"],
+  [ColorKey["card-band.rating.top-200.text"]]: palette["green-700"],
+  [ColorKey["card-band.rating.top-500.text"]]: palette["gray-700"],
 
   [ColorKey["card.bg"]] : "transparent",
 
