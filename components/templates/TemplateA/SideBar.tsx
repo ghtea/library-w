@@ -80,11 +80,11 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
                     src={`/svgs/${item.svg}`}
                     sx={{color: getIsActive(item.id) ? ColorKey["primary-partner"] : null,}}
                   ></Icon>
-                  <Box sx={{ml: 3, flexGrow: 1, flexShrink: 1}}>
-                    <Text sx={{fontSize: "0.9rem"}}>
+                  <Flex sx={{ml: 4, flexGrow: 1, flexShrink: 1, justifyContent: "center", alignItems: "flex-start"}}>
+                    <Text sx={{fontSize: "1rem"}}>
                       {item.text}
                     </Text>
-                  </Box>
+                  </Flex>
                 </Flex>
               </Link>
               

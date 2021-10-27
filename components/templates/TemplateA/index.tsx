@@ -11,8 +11,8 @@ import {TopBar} from "./TopBar"
 
 export const TEMPLATE_A_TOP_BAR_SM_HEIGHT = 48;
 export const TEMPLATE_A_TOP_BAR_MD_HEIGHT = 48;
-export const TEMPLATE_A_SIDE_BAR_LG_WIDTH = 140;
-export const TEMPLATE_A_SIDE_BAR_XL_WIDTH = 140;
+export const TEMPLATE_A_SIDE_BAR_LG_WIDTH = 160;
+export const TEMPLATE_A_SIDE_BAR_XL_WIDTH = 160;
 
 
 export type TemplateAProps = {
