@@ -22,7 +22,7 @@ export const getNotionDatabase = async (config: GetNotionDatabaseConfig) =>{
   }
 }
 
-type GetNotionDatabaseConfig = {
+export type GetNotionDatabaseConfig = {
   databaseId: string;
   filter?: Filter,
   sorts: Sorts,

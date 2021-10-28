@@ -21,7 +21,7 @@ import {
   TitlePropertyValue,
   URLPropertyValue} from "@notionhq/client/build/src/api-types";
 
-import {updateNotionPage} from "./global";
+import {createNotionPage, CreateNotionPageConfig, updateNotionPage} from "./global";
 
 
 
@@ -107,4 +107,11 @@ export enum MovieTag {
   BLOCKED_POSTER = "blocked-poster",
 }
 
-export const updateNotionMoviePage = (pageId:string, properties: MoviePropertyValueMap) => updateNotionPage({pageId, properties})
+export const updateNotionMoviePage = updateNotionPage
+
+export const createNotionMoviePage = (config: CreateNotionPageConfig) => createNotionPage({...config, parent: {
+  type: "database_id",
+  database_id: process.env.NEXT_PUBLIC_NOTION_MOVIE_DB_ID || "" || ""
+}})
+
+// TODO: add getNotionMovieDatabase

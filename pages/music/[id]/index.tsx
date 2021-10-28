@@ -35,7 +35,10 @@ export default function MusicAlbum({
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
-  const updateMutation = useMutation((newMusicAlbumProperties: InputPropertyValueMap) => updateNotionMusicAlbumPage(page?.id || "", newMusicAlbumProperties), {
+  const updateMutation = useMutation((newMusicAlbumProperties: InputPropertyValueMap) => updateNotionMusicAlbumPage({
+    pageId: page?.id || "", 
+    properties: newMusicAlbumProperties,
+  }), {
     onError: (error) => console.log(error),
     onSuccess: (data) => console.log("success!", data)
   })

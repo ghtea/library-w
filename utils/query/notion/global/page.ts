@@ -20,7 +20,7 @@ export const updateNotionPage = async (config: UpdateNotionPageConfig) =>{
   }
 }
 
-type UpdateNotionPageConfig = {
+export type UpdateNotionPageConfig = {
   pageId: string
   properties?: any
   archived?: boolean
@@ -50,7 +50,7 @@ export const createNotionPage = async (config: CreateNotionPageConfig) =>{
   }
 }
 
-type CreateNotionPageConfig = {
+export type CreateNotionPageConfig = {
   parent: Parent
   properties?: any
   children?: any[]
