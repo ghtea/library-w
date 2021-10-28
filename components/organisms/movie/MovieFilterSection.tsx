@@ -4,7 +4,7 @@ import {Box, Button,ChipSize,Flex} from "components/atoms"
 import {ChipButtonInput, ChipButtonInputItem, ChipButtonInputProps} from "components/molecules/ChipButtonInput"
 import {MovieFilterValue} from "pages/movie"
 import {ColorKey} from "theme"
-import {MovieType} from "utils/notion"
+import {MovieType} from "utils/query"
 
 export type MovieFilterInputProps = Omit<Partial<ChipButtonInputProps>, "value" | "onChange"> & {
   value: MovieFilterValue

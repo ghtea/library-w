@@ -10,7 +10,7 @@ import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey,Sx} from "theme"
 import {useAuthorization} from "utils/authorization"
-import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/notion"
+import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/query"
 
 
 export type MusicAlbumProps = {

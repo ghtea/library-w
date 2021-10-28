@@ -3,7 +3,7 @@ import React, {useMemo} from "react"
 import {Box, Flex, Image,Link, Ratio, Text} from "components/atoms"
 import {CardBand} from "components/molecules/CardBand"
 import {ColorKey, Sx} from "theme"
-import {MusicAlbumData, MusicAlbumRating} from "utils/notion/music"
+import {MusicAlbumData, MusicAlbumRating} from "utils/query"
 
 
 export type MusicMusicAlbumCardProps = {

@@ -5,7 +5,7 @@ import {Page} from "@notionhq/client/build/src/api-types"
 import {Flex} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import Head from "next/head"
-import {notion} from "utils/notion"
+import {notion} from "utils/query"
 // import { KnowledgeAlbumPropertyValueMap } from "tools/notion/types"
 
 

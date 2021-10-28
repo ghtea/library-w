@@ -22,6 +22,7 @@ export const CardBand: React.FunctionComponent<CardBandProps> = ({
         fontSize: "0.8rem",
         flexGrow: 0,
         letterSpacing: "3px",
+        fontWeight: "bold",
       }}>
         {title}
       </Text>

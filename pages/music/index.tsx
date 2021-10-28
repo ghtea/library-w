@@ -9,8 +9,8 @@ import {SearchInput} from "components/templates/TemplateA1/SearchInput"
 import Fuse from "fuse.js"
 import Head from "next/head"
 import {useInput} from "utils/dom"
-import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/notion"
 import {useDebouncedEffect} from "utils/optimization"
+import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/query"
 
 
 export type MusicProps = {

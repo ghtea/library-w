@@ -6,7 +6,7 @@ import {ThemeProvider} from "theme-ui";
 import {AuthenticationProvider} from "utils/authentication"
 import {AuthorizationProvider} from "utils/authorization/provider";
 import {ModalProvider} from "utils/modal"
-import {queryClient, QueryClientProvider} from "utils/react-query"
+import {queryClient, QueryClientProvider} from "utils/query"
 import {ResponsiveProvider} from "utils/responsive";
 import {RouterProvider} from "utils/router";
 

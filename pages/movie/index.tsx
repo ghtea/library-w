@@ -8,8 +8,8 @@ import {FilterValue, FilterValueItem} from "components/templates/TemplateA1/Filt
 import Fuse from "fuse.js"
 import Head from "next/head"
 import {useInput} from "utils/dom"
-import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/notion"
 import {useDebouncedEffect} from "utils/optimization"
+import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/query"
 
 export type MovieProps = {
   database: DatabasesQueryResponse | null;
@@ -107,6 +107,7 @@ export default function Movie({
   const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_FILTER_VALUE);
 
   const updateMovieDataList = useCallback(()=>{ 
+    console.log("database?.results: ", database?.results); // TODO: remove
     const existingMovieDataList = database?.results.filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
@@ -120,10 +121,14 @@ export default function Movie({
       ? refinedMovieDataList
       : fuse.search(actualSearchValue).map(item => item.item)
 
+    console.log("searchedMovieDataList: ", searchedMovieDataList); // TODO: remove
+
     const filterSelectedValues = filterValue.filter(item =>item.selected).map(item=>item.value)
     const filteredMovieDataList = searchedMovieDataList.filter(item => {
       return item.essence?.type && filterSelectedValues.includes(item.essence?.type)
     })
+
+    console.log("filteredMovieDataList: ", filteredMovieDataList); // TODO: remove
 
     const sortedMovieDataList = filteredMovieDataList.sort((a, b)=>{
       if (a.essence?.rating && b.essence?.rating){
@@ -178,28 +183,35 @@ export default function Movie({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex sx={{
-        p: 3, 
-        flexDirection: "row", 
-        justifyContent: "center", 
-        flexWrap: "wrap", 
-        alignItems: "flex-start"
-      }}>
-        {movieDataList?.map((item, index)=>(
-          <Box
-            key={`album-${item?.essence?.title || index}`} 
-            sx={{
-              lineHeight: 0, 
-              p: 4,
-              width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
-            }}
-          >
-            <MovieCard
-              data={item}
-            />
-          </Box>
-        )
-        )}
+      {/* TODO: https://codepen.io/fullstackdigital/pen/MBzKXj use flex to make grid */}
+      <Flex
+        sx={{alignItems: "center",}}
+      >
+        <Flex sx={{
+          p: 3, 
+          flexDirection: "row", 
+          justifyContent: "flex-start", 
+          alignItems: "flex-start",
+          flexWrap: "wrap", 
+          width: ["100%", null, null, "auto"]
+          // TODO: ref 로 너비 파악해서 고스트 카드 만들어야 할듯?
+        }}>
+          {movieDataList?.map((item, index)=>(
+            <Box
+              key={`album-${item?.essence?.title || index}`} 
+              sx={{
+                lineHeight: 0, 
+                p: 4,
+                width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
+              }}
+            >
+              <MovieCard
+                data={item}
+              />
+            </Box>
+          )
+          )}
+        </Flex>
       </Flex>
     </TemplateA1>
   )

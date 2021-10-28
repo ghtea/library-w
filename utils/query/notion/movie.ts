@@ -107,4 +107,4 @@ export enum MovieTag {
   BLOCKED_POSTER = "blocked-poster",
 }
 
-export const updateNotionMoviePage = (pageId:string, properties: MoviePropertyValueMap) => updateNotionPage(pageId, properties)
+export const updateNotionMoviePage = (pageId:string, properties: MoviePropertyValueMap) => updateNotionPage({pageId, properties})

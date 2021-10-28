@@ -116,4 +116,4 @@ export const returnReviewDict = (data: MusicAlbumData) => {
   })
 }
 
-export const updateNotionMusicAlbumPage = (pageId:string, properties: InputPropertyValueMap) => updateNotionPage(pageId, properties)
+export const updateNotionMusicAlbumPage = (pageId:string, properties: InputPropertyValueMap) => updateNotionPage({pageId, properties})

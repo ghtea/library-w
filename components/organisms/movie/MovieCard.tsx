@@ -3,7 +3,7 @@ import React, {useMemo} from "react"
 import {Box, Flex, Image, Link, Ratio, Text} from "components/atoms"
 import {CardBand} from "components/molecules/CardBand"
 import {ColorKey, Sx} from "theme"
-import {MovieData, MovieRating} from "utils/notion/movie"
+import {MovieData, MovieRating} from "utils/query"
 
 export type MovieCardProps = {
     data: MovieData
