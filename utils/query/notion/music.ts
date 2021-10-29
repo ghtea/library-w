@@ -22,7 +22,7 @@ import {
   URLPropertyValue} from "@notionhq/client/build/src/api-types";
 import {property} from "lodash";
 
-import {createNotionPage,CreateNotionPageConfig,updateNotionPage} from "./global";
+import {createNotionPage,CreateNotionPageConfig,updateNotionPage} from "./shared";
 
 
 
@@ -115,12 +115,3 @@ export const returnReviewDict = (data: MusicAlbumData) => {
     [MusicAlbumReviewLanguage.JPN]: data.essence?.reviewJpn,
   })
 }
-
-export const updateNotionMusicAlbumPage = updateNotionPage
-
-export const createNotionMusicAlbumPage = (config: CreateNotionPageConfig) => createNotionPage({...config, parent: {
-  type: "database_id",
-  database_id: process.env.NEXT_PUBLIC_NOTION_MUSIC_DB_ID || ""
-}})
-
-// TODO: add getNotionMusicAlbumDatabase

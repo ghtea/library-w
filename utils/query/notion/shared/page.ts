@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import {Database} from "./shared";
+
 export const updateNotionPage = async (config: UpdateNotionPageConfig) =>{
   try {
     const {pageId, properties, archived, icon, cover} = config
@@ -28,14 +30,17 @@ export type UpdateNotionPageConfig = {
   cover?: any
 }
 
-
-
 export const createNotionPage = async (config: CreateNotionPageConfig) =>{
   try {
-    const {parent, properties, children, icon, cover} = config
+    const {database, parent, properties, children, icon, cover} = config
+
+    const computedParent = parent ? parent : 
+      database === "music-album" ? {type: "database_id", database_id: process.env.NEXT_PUBLIC_NOTION_MUSIC_DB_ID || ""} :
+        database === "movie" ? {type: "database_id", database_id: process.env.NEXT_PUBLIC_NOTION_MOVIE_DB_ID || ""} : 
+          {}
 
     const response = await axios.patch("/api/notion/pages/create", {
-      parent: parent,
+      parent: computedParent,
       properties: properties,
       children: children,
       icon: icon,
@@ -51,7 +56,8 @@ export const createNotionPage = async (config: CreateNotionPageConfig) =>{
 }
 
 export type CreateNotionPageConfig = {
-  parent: Parent
+  database?: Database
+  parent?: Parent
   properties?: any
   children?: any[]
   icon?: any

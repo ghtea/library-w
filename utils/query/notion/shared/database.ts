@@ -1,13 +1,21 @@
 import axios from "axios";
 
+import {Database} from "./shared";
+
 // database
 // https://developers.notion.com/reference/post-database-query
 export const getNotionDatabase = async (config: GetNotionDatabaseConfig) =>{
   try {
-    const {databaseId, filter, sorts, startCursor, pageSize} = config
+    const {database, databaseId, filter, sorts, startCursor, pageSize} = config
+
+    const computedDatabaseId = databaseId 
+      ? databaseId  : 
+      database === "movie" ? process.env.NEXT_PUBLIC_NOTION_MOVIE_DB_ID : 
+        database === "music-album" ? process.env.NEXT_PUBLIC_NOTION_MUSIC_DB_ID : 
+          ""
 
     const response = await axios.patch("/api/notion/pages/update", {
-      database_id: databaseId,
+      database_id: computedDatabaseId,
       filter: filter,
       sorts: sorts,
       start_cursor: startCursor,
@@ -23,7 +31,8 @@ export const getNotionDatabase = async (config: GetNotionDatabaseConfig) =>{
 }
 
 export type GetNotionDatabaseConfig = {
-  databaseId: string;
+  database?: Database
+  databaseId?: string;
   filter?: Filter,
   sorts: Sorts,
   startCursor: number,
