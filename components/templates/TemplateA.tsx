@@ -6,8 +6,9 @@ import {MIN_WIDTH} from "theme/breakpoints"
 import {ResponsiveStyleValue} from "theme-ui"
 import {useAdvancedRouter} from "utils/router"
 
-import {SideBar} from "./SideBar"
-import {TopBar} from "./TopBar"
+import {SideBar} from "../organisms/others/SideBar"
+import {TopBar} from "../organisms/others/TopBar"
+import {NavItem} from "./shared"
 
 export const TEMPLATE_A_TOP_BAR_SM_HEIGHT = 48;
 export const TEMPLATE_A_TOP_BAR_MD_HEIGHT = 48;
@@ -17,12 +18,6 @@ export const TEMPLATE_A_SIDE_BAR_XL_WIDTH = 160;
 
 export type TemplateAProps = {
   height?: ResponsiveStyleValue<"auto" | "100%">
-}
-
-export type NavItem = {
-  id: string;
-  svg: string;
-  text: string;
 }
 
 export const nav: NavItem[] = [
@@ -82,7 +77,12 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             borderBottomWidth: "1px", 
           }}
         >
-          <TopBar nav={nav} isOpen={isOpen} setIsOpen={setIsOpen}></TopBar>
+          <TopBar 
+            nav={nav} 
+            isOpen={isOpen} 
+            setIsOpen={setIsOpen} 
+            containerProps={{sx: {height: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, "unset", null]}}}
+          ></TopBar>
         </Box>
       </Responsive>
       
@@ -97,7 +97,9 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             borderRightWidth: "1px", 
           }} 
         >
-          <SideBar nav={nav}></SideBar>
+          <SideBar nav={nav} containerProps={{sx: {
+            width: ["unset", null, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH],
+          }}}></SideBar>
         </Box>
       </Responsive>
       

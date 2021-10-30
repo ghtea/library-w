@@ -1,9 +1,9 @@
 import {Dispatch, SetStateAction,useCallback, useEffect, useMemo, useState} from "react"
 
-import {Box, Flex, Icon, IconSize, Link, Responsive, Text} from "components/atoms"
+import {Box, Flex, FlexProps, Icon, IconSize, Link, Responsive, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {AddModal} from "components/organisms/modal/AddModal"
-import {NavItem, TEMPLATE_A_TOP_BAR_MD_HEIGHT, TEMPLATE_A_TOP_BAR_SM_HEIGHT} from "components/templates/TemplateA"
+import {NavItem} from "components/templates/shared"
 import {signIn} from "next-auth/client"
 import {ColorKey, sizes, zIndex} from "theme"
 import {useAuthentication} from "utils/authentication"
@@ -14,10 +14,11 @@ export type TopBarProps = {
   nav: NavItem[];
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  containerProps?: FlexProps
 }
 
 export const TopBar: React.FunctionComponent<TopBarProps> = ({
-  nav, isOpen, setIsOpen
+  nav, isOpen, setIsOpen, containerProps
 }) => {
   const {user} = useAuthentication()
   const {pathSeries} = useAdvancedRouter()
@@ -55,10 +56,10 @@ export const TopBar: React.FunctionComponent<TopBarProps> = ({
       {/* first main row */}
       <Flex 
         sx={{
-          height: [TEMPLATE_A_TOP_BAR_SM_HEIGHT, TEMPLATE_A_TOP_BAR_MD_HEIGHT, "unset", null],
           flexDirection: "row", 
           justifyContent: "space-between",
           alignItems: "center",
+          ...containerProps?.sx
         }} 
       >
         <Box>

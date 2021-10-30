@@ -1,6 +1,6 @@
-import {ChangeEventHandler, useCallback, useEffect, useState} from "react"
+import React from "react"
 
-import {Box, Button,Flex, Icon, Input, Link, Text} from "components/atoms"
+import {Box, Button,Flex, Icon, Input} from "components/atoms"
 import {ColorKey} from "theme"
 import {useInput} from "utils/dom"
 

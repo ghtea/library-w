@@ -5,8 +5,8 @@ import {TemplateA} from "components/templates/TemplateA"
 import {ColorKey,zIndex} from "theme"
 import {useAdvancedRouter} from "utils/router"
 
-import {FilterInput, FilterInputProps} from "./FilterInput"
-import {SearchInput, SearchInputProps} from "./SearchInput"
+import {FilterInput, FilterInputProps} from "../organisms/others/FilterInput"
+import {SearchInput, SearchInputProps} from "../organisms/others/SearchInput"
 
 
 export type TemplateA1Props = {

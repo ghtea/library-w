@@ -1,9 +1,9 @@
 import {useCallback, useEffect, useState} from "react"
 
-import {Box, Flex, Icon, Link, Text} from "components/atoms"
+import {Box, Flex, FlexProps, Icon, Link, Text} from "components/atoms"
 import {IconButton} from "components/molecules/IconButton"
 import {AddModal} from "components/organisms/modal/AddModal"
-import {NavItem, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH} from "components/templates/TemplateA"
+import {NavItem} from "components/templates/shared"
 import {ColorKey, sizes} from "theme"
 import {useAuthentication} from "utils/authentication"
 import {useModal} from "utils/modal"
@@ -11,10 +11,12 @@ import {useAdvancedRouter} from "utils/router"
 
 export type SideBarProps = {
   nav: NavItem[];
+  containerProps?: FlexProps
 }
 
 export const SideBar: React.FunctionComponent<SideBarProps> = ({
-  nav
+  nav,
+  containerProps
 }) => {
   const {user, loading} = useAuthentication()
   const {pathSeries} = useAdvancedRouter()
@@ -46,10 +48,10 @@ export const SideBar: React.FunctionComponent<SideBarProps> = ({
     <Flex 
       sx={{
         height: "100%",
-        width: ["unset", null, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH],
         flexDirection: "column", 
         justifyContent: "space-between",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        ...containerProps?.sx
       }} 
     >
       <Box>

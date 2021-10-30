@@ -3,9 +3,9 @@ import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "rea
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
 import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
+import {FilterValue, FilterValueItem} from "components/organisms/others/FilterInput"
+import {SearchInput} from "components/organisms/others/SearchInput"
 import {TemplateA1} from "components/templates/TemplateA1"
-import {FilterValue, FilterValueItem} from "components/templates/TemplateA1/FilterInput"
-import {SearchInput} from "components/templates/TemplateA1/SearchInput"
 import Fuse from "fuse.js"
 import Head from "next/head"
 import {useInput} from "utils/dom"
@@ -206,7 +206,8 @@ export default function Music({
         flexDirection: "row", 
         justifyContent: "center", 
         flexWrap: "wrap", 
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        width: ["100%", null, null, "auto"]
       }}>
         {albumDataList?.map((item, index)=>(
           <Box
@@ -214,7 +215,7 @@ export default function Music({
             sx={{
               lineHeight: 0, 
               p: 4,
-              width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "calc(100% / 7)"],
+              width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
             }}
           >
             <MusicAlbumCard
@@ -222,6 +223,7 @@ export default function Music({
             />
           </Box>
         ))}
+        <Box sx={{flexGrow: 1, flexShrink: 1}}></Box>
       </Flex>
     </TemplateA1>
   )

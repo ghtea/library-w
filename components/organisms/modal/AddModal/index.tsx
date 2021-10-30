@@ -3,7 +3,7 @@ import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "rea
 import {Box, Button,ChipSize,Flex, Input,Link, Text} from "components/atoms"
 import {ChipButtonInput, ChipButtonInputItem} from "components/molecules/ChipButtonInput"
 import {IconButton} from "components/molecules/IconButton"
-import {FilterValue} from "components/templates/TemplateA1/FilterInput"
+import {FilterValue} from "components/organisms/others/FilterInput"
 import {LibraryCategory, libraryCategoryText} from "pages"
 import {ColorKey} from "theme";
 import {MIN_WIDTH} from "theme/breakpoints";
