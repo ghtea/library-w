@@ -17,7 +17,6 @@ export const TEMPLATE_A_SIDE_BAR_XL_WIDTH = 160;
 
 
 export type TemplateAProps = {
-  height?: ResponsiveStyleValue<"auto" | "100%">
 }
 
 export const nav: NavItem[] = [
@@ -45,7 +44,7 @@ export const nav: NavItem[] = [
 
 
 export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
-  children, height = "auto"
+  children,
 }) => {
   const {loading} = useAdvancedRouter()
 
@@ -63,7 +62,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
       backgroundColor: 
       ColorKey.bg, 
       color: ColorKey.text, 
-      height: height,
+      height: "100%",
     }}>
 
       {/* top bar in sm, md */}
@@ -105,7 +104,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
       
 
 
-      <Box
+      <Flex
         sx={{
           position: "absolute",
           width: [
@@ -114,7 +113,7 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px)`, 
             `calc(100vw - ${TEMPLATE_A_SIDE_BAR_XL_WIDTH}px)`
           ],
-          height: height,
+          height: "100%",
           top: [`${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px`, `${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px`, 0, null],
           left: [0, null, `${TEMPLATE_A_SIDE_BAR_LG_WIDTH}px`, `${TEMPLATE_A_SIDE_BAR_XL_WIDTH}px`],
         }}
@@ -125,14 +124,14 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
               sx={{
                 justifyContent: "center", 
                 alignItems: "center", 
-                height: [`calc(100vh - ${TEMPLATE_A_TOP_BAR_SM_HEIGHT}px)`, `calc(100vh - ${TEMPLATE_A_TOP_BAR_MD_HEIGHT}px)`, "100vh", null]
+                height: "100%"
               }}> 
               <Spinner size={SpinnerSize.XL}/>
             </Flex>
           )
           : children
         }
-      </Box>
+      </Flex>
 
     </Flex>
   )

@@ -1,6 +1,8 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react"
+import {useQuery} from "react-query"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
+import {AxiosResponse} from "axios"
 import {Box, Flex} from "components/atoms"
 import {Grid} from "components/molecules/Grid"
 import {MovieCard} from "components/organisms/movie/MovieCard"
@@ -11,9 +13,10 @@ import Head from "next/head"
 import {useInput} from "utils/dom"
 import {useDebouncedEffect} from "utils/optimization"
 import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/query"
+import {getNotionDatabase} from "utils/query/notion/shared"
 
 export type MovieProps = {
-  database: DatabasesQueryResponse | null;
+  
 }
 
 const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: MovieTag[]) => {
@@ -100,7 +103,7 @@ export type MovieFilterValue = (Omit<FilterValueItem, "value"> & {
 const CARD_XL_WIDTH = 240
 
 export default function Movie({
-  database,
+  
 }:MovieProps) {
   const searchInput = useInput("")
   const {props: searchInputProps, state: searchInputState} = searchInput
@@ -108,10 +111,10 @@ export default function Movie({
   const [actualSearchValue, setActualSearchValue] = useState("");
   const [movieDataList, setMovieDataList] = useState<MovieData[]>([])
   const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_FILTER_VALUE);
+  const [page, setPage] = useState(0)
 
-  const updateMovieDataList = useCallback(()=>{ 
-    console.log("database?.results: ", database?.results); // TODO: remove
-    const existingMovieDataList = database?.results.filter((item: MovieData) => {
+  const updateMovieDataList = useCallback((response?: AxiosResponse<DatabasesQueryResponse>)=>{ 
+    const existingMovieDataList = (response?.data?.results || []).filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
     })
@@ -124,14 +127,10 @@ export default function Movie({
       ? refinedMovieDataList
       : fuse.search(actualSearchValue).map(item => item.item)
 
-    console.log("searchedMovieDataList: ", searchedMovieDataList); // TODO: remove
-
     const filterSelectedValues = filterValue.filter(item =>item.selected).map(item=>item.value)
     const filteredMovieDataList = searchedMovieDataList.filter(item => {
       return item.essence?.type && filterSelectedValues.includes(item.essence?.type)
     })
-
-    console.log("filteredMovieDataList: ", filteredMovieDataList); // TODO: remove
 
     const sortedMovieDataList = filteredMovieDataList.sort((a, b)=>{
       if (a.essence?.rating && b.essence?.rating){
@@ -143,11 +142,7 @@ export default function Movie({
     });
 
     setMovieDataList(sortedMovieDataList)
-  }, [database?.results, actualSearchValue, filterValue]);
-
-  useEffect(()=>{
-    updateMovieDataList()
-  }, [updateMovieDataList])
+  }, [actualSearchValue, filterValue]);
 
   useDebouncedEffect(()=>{
     setActualSearchValue(searchInputProps.value)
@@ -169,8 +164,30 @@ export default function Movie({
     }
   },[])
 
+  const moviesQuery = useQuery(["movies",page], ()=>getNotionDatabase({
+    database: "movie",
+    startCursor: page,
+    sorts:  [
+      {
+        property: "Rating",
+        direction: "descending",
+      },
+    ],
+  }));
+
+  useEffect(()=>{
+    if (moviesQuery.status === "success" && moviesQuery.data){
+      updateMovieDataList(moviesQuery.data)
+    }
+  },[moviesQuery.status, moviesQuery.data, updateMovieDataList])
+
+  const initialLoading = useMemo(()=>{
+    return (page === 0) && moviesQuery.isLoading 
+  },[moviesQuery, page])
+
   return (
     <TemplateA1
+      loading={initialLoading}
       searchInputProps={{
         input: searchInput
       }}
@@ -212,19 +229,4 @@ export default function Movie({
       </Flex>
     </TemplateA1>
   )
-}
-
-export async function getServerSideProps() {
-   
-  try { 
-    const database = await notion.databases.query({database_id: process.env.NEXT_PUBLIC_NOTION_MOVIE_DB_ID || ""});
-    return {props: { 
-      database,
-    }}
-  }
-  catch {
-    return {props: { 
-      database: null, 
-    }}
-  }
 }

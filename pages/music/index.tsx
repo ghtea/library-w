@@ -1,6 +1,8 @@
 import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "react"
+import {useQuery} from "react-query"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
+import {AxiosResponse} from "axios"
 import {Box, Flex} from "components/atoms"
 import {Grid} from "components/molecules/Grid"
 import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
@@ -12,10 +14,10 @@ import Head from "next/head"
 import {useInput} from "utils/dom"
 import {useDebouncedEffect} from "utils/optimization"
 import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/query"
+import {getNotionDatabase} from "utils/query/notion/shared"
 
 
 export type MusicProps = {
-  database: DatabasesQueryResponse | null;
 }
 
 const getSrc = (key: string | undefined, notionFileUrlPrefix: string, tags: MusicAlbumTag[]) => {
@@ -109,7 +111,6 @@ const FUSE_OPTIONS = {
 const CARD_XL_WIDTH = 240
 
 export default function Music({
-  database,
 }:MusicProps) {
   const searchInput = useInput("")
   const {props: searchInputProps, state: searchInputState} = searchInput
@@ -117,9 +118,10 @@ export default function Music({
   const [actualSearchValue, setActualSearchValue] = useState("");
   const [albumDataList, setAlbumDataList] = useState<MusicAlbumData[]>([])
   const [filterValue, setFilterValue] = useState<MusicAlbumFilterValue>(DEFAULT_FILTER_VALUE);
+  const [page, setPage] = useState(0)
 
-  const updateAlbumDataList = useCallback(()=>{ 
-    const existingAlbumDataList = database?.results.filter((item: MusicAlbumData) => {
+  const updateMusicAlbumDataList = useCallback((response?: AxiosResponse<DatabasesQueryResponse>)=>{ 
+    const existingAlbumDataList = (response?.data?.results || []).filter((item: MusicAlbumData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
     })
@@ -147,12 +149,8 @@ export default function Music({
     });
 
     setAlbumDataList(sortedAlbumDataList)
-  }, [database?.results, actualSearchValue, filterValue]);
+  }, [actualSearchValue, filterValue]);
   
-  useEffect(()=>{
-    updateAlbumDataList()
-  }, [updateAlbumDataList])
-
   useDebouncedEffect(()=>{
     setActualSearchValue(searchInputProps.value)
   }, [searchInputProps.value], 500)
@@ -185,8 +183,30 @@ export default function Music({
     }
   },[])
 
+  const musicAlbumQuery = useQuery(["musicAlbums",page], ()=>getNotionDatabase({
+    database: "music-album",
+    startCursor: page,
+    sorts:  [
+      {
+        property: "Rating",
+        direction: "descending",
+      },
+    ],
+  }));
+
+  useEffect(()=>{
+    if (musicAlbumQuery.status === "success" && musicAlbumQuery.data){
+      updateMusicAlbumDataList(musicAlbumQuery.data)
+    }
+  },[musicAlbumQuery.data, musicAlbumQuery.status, updateMusicAlbumDataList])
+
+  const initialLoading = useMemo(()=>{
+    return (page === 0) && musicAlbumQuery.isLoading 
+  },[musicAlbumQuery, page])
+
   return (
     <TemplateA1
+      loading={initialLoading}
       searchInputProps={{
         input: searchInput
       }}
@@ -227,19 +247,4 @@ export default function Music({
       </Flex>
     </TemplateA1>
   )
-}
-
-export async function getServerSideProps() {
-   
-  try { 
-    const database = await notion.databases.query({database_id: process.env.NEXT_PUBLIC_NOTION_MUSIC_DB_ID || ""});
-    return {props: { 
-      database,
-    }}
-  }
-  catch {
-    return {props: { 
-      database: null, 
-    }}
-  }
 }

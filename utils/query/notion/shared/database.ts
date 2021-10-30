@@ -1,4 +1,5 @@
-import axios from "axios";
+import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints";
+import axios, {AxiosResponse} from "axios";
 
 import {Database} from "./shared";
 
@@ -14,14 +15,15 @@ export const getNotionDatabase = async (config: GetNotionDatabaseConfig) =>{
         database === "music-album" ? process.env.NEXT_PUBLIC_NOTION_MUSIC_DB_ID : 
           ""
 
-    const response = await axios.patch("/api/notion/pages/update", {
+    const response: AxiosResponse<DatabasesQueryResponse> = await axios.post("/api/notion/databases/query", {
       database_id: computedDatabaseId,
       filter: filter,
       sorts: sorts,
-      start_cursor: startCursor,
+      start_cursor: startCursor ? startCursor.toString() : undefined,
       page_size: pageSize,
     });
 
+    console.log("response ssssss: ", response); // TODO: remove
     return response;
   }
   catch(error) {
@@ -34,9 +36,9 @@ export type GetNotionDatabaseConfig = {
   database?: Database
   databaseId?: string;
   filter?: Filter,
-  sorts: Sorts,
-  startCursor: number,
-  pageSize: number,
+  sorts?: Sorts,
+  startCursor?: number,
+  pageSize?: number,
 }
 
 type Filter = (

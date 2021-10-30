@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
-import {Box, Flex, Icon} from "components/atoms"
+import {Box, Flex, Icon,Spinner, SpinnerSize} from "components/atoms"
 import {TemplateA} from "components/templates/TemplateA"
 import {ColorKey,zIndex} from "theme"
 import {useAdvancedRouter} from "utils/router"
@@ -8,16 +8,17 @@ import {useAdvancedRouter} from "utils/router"
 import {FilterInput, FilterInputProps} from "../organisms/others/FilterInput"
 import {SearchInput, SearchInputProps} from "../organisms/others/SearchInput"
 
-
 export type TemplateA1Props = {
+  loading: boolean
   searchInputProps: SearchInputProps,
   filterInputProps: FilterInputProps
 }
 
 export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
-  children,
+  loading,
   searchInputProps,
   filterInputProps,
+  children,
 }) => {
   const {router} = useAdvancedRouter()
 
@@ -48,35 +49,47 @@ export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
 
   return ( 
     <TemplateA>
-      <Flex 
-        ref={handleRefChange}
-        sx={{
-          position: "fixed", 
-          zIndex: zIndex.toolBar,
-        }}>
-        <Flex sx={{
-          backgroundColor: ColorKey["tool-bar.bg"],
-          borderColor: ColorKey["tool-bar.border"],
-          borderWidth: 1,
-          borderBottomStyle: "solid",
-          p: 4,
-        }}>
-          <SearchInput {...searchInputProps}/>
-        </Flex>
+      <Flex sx={{flexShrink: 1, flexGrow: 1}}>
+        <Flex 
+          ref={handleRefChange}
+          sx={{
+            position: "fixed", 
+            zIndex: zIndex.toolBar,
+          }}>
+          <Flex sx={{
+            backgroundColor: ColorKey["tool-bar.bg"],
+            borderColor: ColorKey["tool-bar.border"],
+            borderWidth: 1,
+            borderBottomStyle: "solid",
+            p: 4,
+          }}>
+            <SearchInput {...searchInputProps}/>
+          </Flex>
         
-        <Flex sx={{
-          backgroundColor: ColorKey["tool-bar.bg"],
-          borderColor: ColorKey["tool-bar.border"],
-          borderWidth: 1,
-          borderBottomStyle: "solid",
-          p: 3,
-        }}>
-          <FilterInput {...filterInputProps} />
+          <Flex sx={{
+            backgroundColor: ColorKey["tool-bar.bg"],
+            borderColor: ColorKey["tool-bar.border"],
+            borderWidth: 1,
+            borderBottomStyle: "solid",
+            p: 3,
+          }}>
+            <FilterInput {...filterInputProps} />
+          </Flex>
         </Flex>
-      </Flex>
       
-      <Flex sx={{mt: `${fixedBoxHeight}px`}}>
-        {children}
+        <Flex sx={{
+          mt: `${fixedBoxHeight}px`, 
+          flexShrink: 1, 
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+        >
+          {loading
+            ? <Spinner size={SpinnerSize.XL}/>
+            : children
+          }
+        </Flex>
       </Flex>
     </TemplateA>
   )

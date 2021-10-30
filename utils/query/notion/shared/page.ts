@@ -6,7 +6,7 @@ export const updateNotionPage = async (config: UpdateNotionPageConfig) =>{
   try {
     const {pageId, properties, archived, icon, cover} = config
 
-    const response = await axios.patch("/api/notion/pages/update", {
+    const response = await axios.post("/api/notion/pages/query", {
       page_id: pageId,
       properties: properties,
       archived: archived,
