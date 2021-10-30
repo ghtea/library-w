@@ -2,16 +2,15 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
+import {Grid} from "components/molecules/Grid"
 import {MovieCard} from "components/organisms/movie/MovieCard"
 import {FilterValue, FilterValueItem} from "components/organisms/others/FilterInput"
 import {TemplateA1} from "components/templates/TemplateA1"
 import Fuse from "fuse.js"
-import throttle from "lodash/throttle"
 import Head from "next/head"
 import {useInput} from "utils/dom"
 import {useDebouncedEffect} from "utils/optimization"
 import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/query"
-import {useResponsive} from "utils/responsive"
 
 export type MovieProps = {
   database: DatabasesQueryResponse | null;
@@ -98,7 +97,7 @@ export type MovieFilterValue = (Omit<FilterValueItem, "value"> & {
   value: MovieType
 })[]
 
-const XL_CARD_WIDTH = 240
+const CARD_XL_WIDTH = 240
 
 export default function Movie({
   database,
@@ -109,9 +108,6 @@ export default function Movie({
   const [actualSearchValue, setActualSearchValue] = useState("");
   const [movieDataList, setMovieDataList] = useState<MovieData[]>([])
   const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_FILTER_VALUE);
-  const [collectionXlWidth, setCollectionXlWidth] = useState(0)
-
-  const containerRef = useRef<HTMLDivElement>(null)
 
   const updateMovieDataList = useCallback(()=>{ 
     console.log("database?.results: ", database?.results); // TODO: remove
@@ -173,20 +169,6 @@ export default function Movie({
     }
   },[])
 
-  const handleResize = useCallback(()=>{
-    setCollectionXlWidth(Math.floor((containerRef.current?.offsetWidth || 0) / XL_CARD_WIDTH) * XL_CARD_WIDTH)
-  },[])
-
-  useEffect(()=>{
-    if (!window) return 
-    const throttledResize = throttle(handleResize, 500, {leading: true, trailing: true});
-
-    window.addEventListener("resize", throttledResize)
-    return () => {
-      window.removeEventListener("resize", throttledResize)
-    }
-  },[handleResize])
-
   return (
     <TemplateA1
       searchInputProps={{
@@ -206,37 +188,27 @@ export default function Movie({
 
       {/* TODO: https://codepen.io/fullstackdigital/pen/MBzKXj use flex to make grid */}
       <Flex
-        ref={containerRef}
         sx={{
           alignItems: "center",
           p: 3,
         }}
       >
-        <Flex 
-          sx={{
-            flexDirection: "row", 
-            justifyContent: "flex-start", 
-            alignItems: "flex-start",
-            flexWrap: "wrap", 
-            width: ["100%", null, null, `${collectionXlWidth}px`]
-          }}>
+        <Grid itemXlWidth={CARD_XL_WIDTH}>
           {movieDataList?.map((item, index)=>(
             <Box
               key={`album-${item?.essence?.title || index}`} 
               sx={{
                 lineHeight: 0, 
                 p: 4,
-                width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
+                width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", `${CARD_XL_WIDTH}px`],
               }}
             >
               <MovieCard
                 data={item}
               />
             </Box>
-          )
-          )}
-          <Box sx={{flexGrow: 1, flexShrink: 1}}></Box>
-        </Flex>
+          ))}
+        </Grid>
       </Flex>
     </TemplateA1>
   )

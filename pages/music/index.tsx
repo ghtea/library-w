@@ -2,6 +2,7 @@ import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "rea
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {Box, Flex} from "components/atoms"
+import {Grid} from "components/molecules/Grid"
 import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
 import {FilterValue, FilterValueItem} from "components/organisms/others/FilterInput"
 import {SearchInput} from "components/organisms/others/SearchInput"
@@ -105,7 +106,7 @@ const FUSE_OPTIONS = {
   ]
 }
 
-
+const CARD_XL_WIDTH = 240
 
 export default function Music({
   database,
@@ -201,29 +202,28 @@ export default function Music({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Flex sx={{
-        p: 3, 
-        flexDirection: "row", 
-        justifyContent: "center", 
-        flexWrap: "wrap", 
-        alignItems: "flex-start",
-        width: ["100%", null, null, "auto"]
-      }}>
-        {albumDataList?.map((item, index)=>(
-          <Box
-            key={`album-${item?.essence?.title || index}`} 
-            sx={{
-              lineHeight: 0, 
-              p: 4,
-              width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
-            }}
-          >
-            <MusicAlbumCard
-              data={item}
-            />
-          </Box>
-        ))}
-        <Box sx={{flexGrow: 1, flexShrink: 1}}></Box>
+      <Flex
+        sx={{
+          alignItems: "center",
+          p: 3,
+        }}
+      >
+        <Grid itemXlWidth={CARD_XL_WIDTH}>
+          {albumDataList?.map((item, index)=>(
+            <Box
+              key={`album-${item?.essence?.title || index}`} 
+              sx={{
+                lineHeight: 0, 
+                p: 4,
+                width: ["calc(100% / 2)", "calc(100% / 3)", "calc(100% / 5)", "240px"],
+              }}
+            >
+              <MusicAlbumCard
+                data={item}
+              />
+            </Box>
+          ))}
+        </Grid>
       </Flex>
     </TemplateA1>
   )
