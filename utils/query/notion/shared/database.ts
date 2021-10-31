@@ -19,11 +19,10 @@ export const getNotionDatabase = async (config: GetNotionDatabaseConfig) =>{
       database_id: computedDatabaseId,
       filter: filter,
       sorts: sorts,
-      start_cursor: startCursor ? startCursor.toString() : undefined,
+      start_cursor: startCursor,
       page_size: pageSize,
     });
 
-    console.log("response ssssss: ", response); // TODO: remove
     return response;
   }
   catch(error) {
@@ -37,7 +36,7 @@ export type GetNotionDatabaseConfig = {
   databaseId?: string;
   filter?: Filter,
   sorts?: Sorts,
-  startCursor?: number,
+  startCursor?: string,
   pageSize?: number,
 }
 

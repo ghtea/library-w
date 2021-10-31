@@ -2,6 +2,7 @@ import React, {useMemo} from "react"
 
 import {Box, Flex, Image, Link, Ratio, Text} from "components/atoms"
 import {CardBand} from "components/molecules/CardBand"
+import placeHolderSrc from "public/images/movie-poster.jpeg"
 import {ColorKey, Sx} from "theme"
 import {MovieData, MovieRating} from "utils/query"
 
@@ -48,8 +49,15 @@ export const MovieCard: React.FunctionComponent<MovieCardProps> = ({
       <Link to={`/movie/${data.id}`} sx={{width: "100%"}}>
         <Flex>
           <CardBand title={(rating || "").toUpperCase()} sx={CardBandSx}></CardBand>
-          <Flex sx={{backgroundColor: ColorKey["image.placeholder.bg"]}}>
-            <Image width={"100%"} height={"auto"} alt={`movie poster of ${title}`} src={src} fallbackSrc={"/images/movie-poster.jpeg"}/>
+          <Flex>
+            <Image 
+              width={"100%"} 
+              height={"auto"} 
+              alt={`movie poster of ${title}`} 
+              src={src} 
+              placeholder={<Ratio ratio={0.8} sx={{backgroundColor: ColorKey["image.placeholder.bg"]}} />}
+              fallbackSrc={"/images/movie-poster.jpeg"}
+            />
           </Flex>
         </Flex >
 

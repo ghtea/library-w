@@ -3,14 +3,14 @@ import {useQuery} from "react-query"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {AxiosResponse} from "axios"
-import {Box, Flex} from "components/atoms"
+import {Box, Flex, Spinner,SpinnerSize} from "components/atoms"
 import {Grid} from "components/molecules/Grid"
 import {MovieCard} from "components/organisms/movie/MovieCard"
 import {FilterValue, FilterValueItem} from "components/organisms/others/FilterInput"
 import {TemplateA1} from "components/templates/TemplateA1"
 import Fuse from "fuse.js"
 import Head from "next/head"
-import {useInput} from "utils/dom"
+import {useInput,useIntersectionObserver} from "utils/dom"
 import {useDebouncedEffect} from "utils/optimization"
 import {getMovieRatingOrder, MovieData, MovieRating, MovieTag,MovieType,notion, notionFileUrlPrefix} from "utils/query"
 import {getNotionDatabase} from "utils/query/notion/shared"
@@ -110,10 +110,14 @@ export default function Movie({
 
   const [actualSearchValue, setActualSearchValue] = useState("");
   const [movieDataList, setMovieDataList] = useState<MovieData[]>([])
+  const [showingMovieDataList, setShowingMovieDataList] = useState<MovieData[]>([])
   const [filterValue, setFilterValue] = useState<MovieFilterValue>(DEFAULT_FILTER_VALUE);
-  const [page, setPage] = useState(0)
+  const [nextCursor, setNextCursor] = useState<string>()
+  const [enabled, setEnabled] = useState(true)
+   
+  const {ref: moreTriggerRef, onceVisible: moreTriggerOnceVisible} = useIntersectionObserver({rootMargin: "0px 0px 500px 0px"})
 
-  const updateMovieDataList = useCallback((response?: AxiosResponse<DatabasesQueryResponse>)=>{ 
+  const updateMovieDataList = useCallback((response: AxiosResponse<DatabasesQueryResponse>)=>{ 
     const existingMovieDataList = (response?.data?.results || []).filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
       return title ? true : false
@@ -121,10 +125,14 @@ export default function Movie({
 
     const refinedMovieDataList: MovieData[] = (existingMovieDataList || []).map(refineMovieData)
 
-    const fuse = new Fuse(refinedMovieDataList, FUSE_OPTIONS) 
+    setMovieDataList(prev => [...prev, ...refinedMovieDataList])
+  },[])
+
+  useEffect(()=>{
+    const fuse = new Fuse(movieDataList, FUSE_OPTIONS) 
 
     const searchedMovieDataList = !actualSearchValue 
-      ? refinedMovieDataList
+      ? movieDataList
       : fuse.search(actualSearchValue).map(item => item.item)
 
     const filterSelectedValues = filterValue.filter(item =>item.selected).map(item=>item.value)
@@ -141,8 +149,8 @@ export default function Movie({
       }
     });
 
-    setMovieDataList(sortedMovieDataList)
-  }, [actualSearchValue, filterValue]);
+    setShowingMovieDataList(sortedMovieDataList)
+  }, [actualSearchValue, filterValue, movieDataList]);
 
   useDebouncedEffect(()=>{
     setActualSearchValue(searchInputProps.value)
@@ -164,27 +172,50 @@ export default function Movie({
     }
   },[])
 
-  const moviesQuery = useQuery(["movies",page], ()=>getNotionDatabase({
-    database: "movie",
-    startCursor: page,
-    sorts:  [
-      {
-        property: "Rating",
-        direction: "descending",
-      },
-    ],
-  }));
+  const moviesQuery = useQuery(
+    ["movies", nextCursor], 
+    ()=>getNotionDatabase({
+      database: "movie",
+      startCursor: nextCursor,
+      sorts:  [
+        {
+          property: "Rating",
+          direction: "descending",
+        },
+      ],
+    }),
+    {keepPreviousData : true, enabled,}
+  );
 
+  // after query
   useEffect(()=>{
     if (moviesQuery.status === "success" && moviesQuery.data){
       updateMovieDataList(moviesQuery.data)
+      if (moviesQuery.data.data.has_more && moviesQuery.data.data.next_cursor){
+        setNextCursor(moviesQuery.data.data.next_cursor)
+      }
     }
   },[moviesQuery.status, moviesQuery.data, updateMovieDataList])
 
-  const initialLoading = useMemo(()=>{
-    return (page === 0) && moviesQuery.isLoading 
-  },[moviesQuery, page])
+  useEffect(()=>{
+    if (moreTriggerOnceVisible){
+      if (moviesQuery.data?.data.has_more && !moviesQuery.isLoading){
+        setEnabled(true)
+      } 
+    } else {
+      setEnabled(false)
+    }
+  },[moviesQuery.data?.data.has_more, moviesQuery.isLoading, moreTriggerOnceVisible])
 
+  const initialLoading = useMemo(()=>{
+    return moviesQuery.isLoading
+  },[moviesQuery.isLoading])
+
+  const moreLoading = useMemo(()=>{
+    return (moviesQuery.isFetching && !initialLoading)
+  },[initialLoading, moviesQuery.isFetching])
+  
+  console.log("moviesQuery: ", moviesQuery); // TODO: remove
   return (
     <TemplateA1
       loading={initialLoading}
@@ -203,17 +234,18 @@ export default function Movie({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* TODO: https://codepen.io/fullstackdigital/pen/MBzKXj use flex to make grid */}
       <Flex
         sx={{
           alignItems: "center",
           p: 3,
         }}
+        ref={moreTriggerRef}
       >
         <Grid itemXlWidth={CARD_XL_WIDTH}>
-          {movieDataList?.map((item, index)=>(
+          {showingMovieDataList?.map((item, index)=>(
             <Box
               key={`album-${item?.essence?.title || index}`} 
+              ref={index === showingMovieDataList.length - 1 ? moreTriggerRef : null}
               sx={{
                 lineHeight: 0, 
                 p: 4,
@@ -226,6 +258,11 @@ export default function Movie({
             </Box>
           ))}
         </Grid>
+        {moreLoading && (
+          <Flex sx={{py: 5}}>
+            <Spinner size={SpinnerSize.LG}/>
+          </Flex>
+        )}
       </Flex>
     </TemplateA1>
   )

@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useMemo, useRef} from "react";
+import React, {RefObject, useCallback, useEffect, useMemo, useRef, useState} from "react";
 
 import {DEFAULT_SX} from "components/atoms";
 import {Sx} from "theme";
@@ -19,15 +19,17 @@ export const Ratio = React.forwardRef<HTMLDivElement, RatioProps>((props, ref) =
 
   const {id: responsiveId} = useResponsive()
   
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [container, setContainer] = useState<HTMLDivElement | null>(null) 
 
   const {width, height} = useMemo(()=>{
     return ({
-      width: Math.round(containerRef.current?.getBoundingClientRect().width || 0) || "unset",
-      height: Math.round((containerRef.current?.getBoundingClientRect().width || 0) / ratio) || "unset",
+      width: Math.round(container?.getBoundingClientRect().width || 0) || "unset",
+      height: Math.round((container?.getBoundingClientRect().width || 0) / ratio) || "unset",
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[containerRef, responsiveId, ratio])
+  
+  // because of responsiveId
+  // eslint-disable-next-line react-hooks/exhaustive-deps 
+  },[container, responsiveId, ratio])
 
   const _sx: Sx = useMemo(()=>({
     ...DEFAULT_SX,
@@ -38,6 +40,12 @@ export const Ratio = React.forwardRef<HTMLDivElement, RatioProps>((props, ref) =
     width,
     ...sx,
   }),[height, sx, width])
+
+  const containerRef = useCallback((element)=>{
+    if (element){
+      setContainer(element)
+    }
+  },[])
 
   return (
     <ThemeUiBox ref={containerRef} sx={{width: "100%"}}>

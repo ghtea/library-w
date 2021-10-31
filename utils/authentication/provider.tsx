@@ -35,7 +35,7 @@ export const AuthenticationProvider: FunctionComponent = (props) => {
 
   useEffect(() => {
     if (!loading){
-      console.log("raw session: ", session)
+      // console.log("raw session: ", session)
 
       if (session){
         const newValue: AuthenticationContext = {

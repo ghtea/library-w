@@ -24,11 +24,9 @@ export const TemplateA1: React.FunctionComponent<TemplateA1Props> = ({
 
   const [fixedBoxHeight, setFixedBoxHeight] = useState(0)
   const [fixedBox, setFixedBox] = useState<HTMLDivElement>()
-  const fixedBoxRef = useRef<HTMLDivElement>(null)
 
   const handleRefChange = useCallback((element: HTMLDivElement)=>{
     if (element){
-      console.log("element: ", element); // TODO: remove
       setFixedBox(element)
     }
   },[])
