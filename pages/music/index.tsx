@@ -1,9 +1,9 @@
-import {ChangeEventHandler, useCallback, useEffect, useMemo, useRef, useState} from "react"
+import React, {ChangeEventHandler, useCallback, useEffect, useMemo, useRef, useState} from "react"
 import {useQuery} from "react-query"
 
 import {DatabasesQueryResponse} from "@notionhq/client/build/src/api-endpoints"
 import {AxiosResponse} from "axios"
-import {Box, Flex} from "components/atoms"
+import {Box, Flex, Spinner,SpinnerSize} from "components/atoms"
 import {Grid} from "components/molecules/Grid"
 import {MusicAlbumCard} from "components/organisms/music/MusicAlbumCard"
 import {FilterValue, FilterValueItem} from "components/organisms/others/FilterInput"
@@ -11,7 +11,7 @@ import {SearchInput} from "components/organisms/others/SearchInput"
 import {TemplateA1} from "components/templates/TemplateA1"
 import Fuse from "fuse.js"
 import Head from "next/head"
-import {useInput} from "utils/dom"
+import {useInput, useIntersectionObserver} from "utils/dom"
 import {useDebouncedEffect} from "utils/optimization"
 import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/query"
 import {getNotionDatabase} from "utils/query/notion/shared"
@@ -118,7 +118,10 @@ export default function Music({
   const [actualSearchValue, setActualSearchValue] = useState("");
   const [albumDataList, setAlbumDataList] = useState<MusicAlbumData[]>([])
   const [filterValue, setFilterValue] = useState<MusicAlbumFilterValue>(DEFAULT_FILTER_VALUE);
-  const [page, setPage] = useState(0)
+  const [nextCursor, setNextCursor] = useState<string>()
+  const [enabled, setEnabled] = useState(true)
+  
+  const {ref: moreTriggerRef, onceVisible: moreTriggerOnceVisible} = useIntersectionObserver({rootMargin: "0px 0px 500px 0px"})
 
   const updateMusicAlbumDataList = useCallback((response?: AxiosResponse<DatabasesQueryResponse>)=>{ 
     const existingAlbumDataList = (response?.data?.results || []).filter((item: MusicAlbumData) => {
@@ -183,26 +186,49 @@ export default function Music({
     }
   },[])
 
-  const musicAlbumQuery = useQuery(["musicAlbums",page], ()=>getNotionDatabase({
-    database: "music-album",
-    startCursor: page,
-    sorts:  [
-      {
-        property: "Rating",
-        direction: "descending",
-      },
-    ],
-  }));
+  const musicAlbumQuery = useQuery(
+    ["musicAlbums", nextCursor], 
+    ()=>getNotionDatabase({
+      database: "music-album",
+      startCursor: nextCursor,
+      sorts:  [
+        {
+          property: "Rating",
+          direction: "descending",
+        },
+      ],
+    }),
+    {keepPreviousData : true, enabled,}
+  );
 
+  // after query
   useEffect(()=>{
     if (musicAlbumQuery.status === "success" && musicAlbumQuery.data){
       updateMusicAlbumDataList(musicAlbumQuery.data)
+      if (musicAlbumQuery.data.data.has_more && musicAlbumQuery.data.data.next_cursor){
+        setNextCursor(musicAlbumQuery.data.data.next_cursor)
+      }
     }
-  },[musicAlbumQuery.data, musicAlbumQuery.status, updateMusicAlbumDataList])
+  },[musicAlbumQuery.status, musicAlbumQuery.data, updateMusicAlbumDataList])
+
+  useEffect(()=>{
+    if (moreTriggerOnceVisible){
+      if (musicAlbumQuery.data?.data.has_more && !musicAlbumQuery.isLoading){
+        setEnabled(true)
+      } 
+    } else {
+      setEnabled(false)
+    }
+  },[musicAlbumQuery.data?.data.has_more, musicAlbumQuery.isLoading, moreTriggerOnceVisible])
 
   const initialLoading = useMemo(()=>{
-    return (page === 0) && musicAlbumQuery.isLoading 
-  },[musicAlbumQuery, page])
+    return musicAlbumQuery.isLoading
+  },[musicAlbumQuery.isLoading])
+
+  const moreLoading = useMemo(()=>{
+    return (musicAlbumQuery.isFetching && !initialLoading)
+  },[initialLoading, musicAlbumQuery.isFetching])
+  
 
   return (
     <TemplateA1
@@ -244,6 +270,11 @@ export default function Music({
             </Box>
           ))}
         </Grid>
+        {moreLoading && (
+          <Flex sx={{py: 5}}>
+            <Spinner size={SpinnerSize.LG}/>
+          </Flex>
+        )}
       </Flex>
     </TemplateA1>
   )

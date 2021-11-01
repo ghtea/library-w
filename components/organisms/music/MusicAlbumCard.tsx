@@ -52,7 +52,7 @@ export const MusicAlbumCard: React.FunctionComponent<MusicMusicAlbumCardProps> =
   },[rating])
 
   const artistText = useMemo(()=>{
-    return artistList?.reduce((acc, cur)=> `${acc}, ${cur}`)
+    return artistList?.reduce((acc, cur)=> acc ? `${acc}, ${cur}` : cur, "")
   },[artistList])
 
   return (

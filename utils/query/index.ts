@@ -7,3 +7,4 @@ export {QueryClientProvider} from "react-query"
 export const queryClient = new QueryClient()
 
 export * from "./notion"
+export * from "./shared"

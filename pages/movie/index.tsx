@@ -172,7 +172,7 @@ export default function Movie({
     }
   },[])
 
-  const moviesQuery = useQuery(
+  const movieQuery = useQuery(
     ["movies", nextCursor], 
     ()=>getNotionDatabase({
       database: "movie",
@@ -189,33 +189,32 @@ export default function Movie({
 
   // after query
   useEffect(()=>{
-    if (moviesQuery.status === "success" && moviesQuery.data){
-      updateMovieDataList(moviesQuery.data)
-      if (moviesQuery.data.data.has_more && moviesQuery.data.data.next_cursor){
-        setNextCursor(moviesQuery.data.data.next_cursor)
+    if (movieQuery.status === "success" && movieQuery.data){
+      updateMovieDataList(movieQuery.data)
+      if (movieQuery.data.data.has_more && movieQuery.data.data.next_cursor){
+        setNextCursor(movieQuery.data.data.next_cursor)
       }
     }
-  },[moviesQuery.status, moviesQuery.data, updateMovieDataList])
+  },[movieQuery.status, movieQuery.data, updateMovieDataList])
 
   useEffect(()=>{
     if (moreTriggerOnceVisible){
-      if (moviesQuery.data?.data.has_more && !moviesQuery.isLoading){
+      if (movieQuery.data?.data.has_more && !movieQuery.isLoading){
         setEnabled(true)
       } 
     } else {
       setEnabled(false)
     }
-  },[moviesQuery.data?.data.has_more, moviesQuery.isLoading, moreTriggerOnceVisible])
+  },[movieQuery.data?.data.has_more, movieQuery.isLoading, moreTriggerOnceVisible])
 
   const initialLoading = useMemo(()=>{
-    return moviesQuery.isLoading
-  },[moviesQuery.isLoading])
+    return movieQuery.isLoading
+  },[movieQuery.isLoading])
 
   const moreLoading = useMemo(()=>{
-    return (moviesQuery.isFetching && !initialLoading)
-  },[initialLoading, moviesQuery.isFetching])
+    return (movieQuery.isFetching && !initialLoading)
+  },[initialLoading, movieQuery.isFetching])
   
-  console.log("moviesQuery: ", moviesQuery); // TODO: remove
   return (
     <TemplateA1
       loading={initialLoading}
