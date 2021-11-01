@@ -21,7 +21,7 @@ export default function SignIn({
   },[])
 
   return (
-    <TemplateA height={"100%"}>
+    <TemplateA>
       <Flex sx={{justifyContent: "center", alignItems: "center", height: "100%"}}>
         <Box>
           <Flex>

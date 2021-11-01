@@ -10,7 +10,7 @@ import Image from "next/image"
 import {refineAlbumData} from "pages/music"
 import {ColorKey,Sx} from "theme"
 import {useAuthorization} from "utils/authorization"
-import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionMusicAlbumPage} from "utils/query"
+import {MusicAlbumData, MusicAlbumPropertyValueMap, MusicAlbumReviewLanguage, MusicPage, notion, returnReviewDict, updateNotionPage} from "utils/query"
 
 
 export type MusicAlbumProps = {
@@ -35,7 +35,7 @@ export default function MusicAlbum({
     ()=> albumData ? (albumData.essence || {}) : {},[albumData]
   )
 
-  const updateMutation = useMutation((newMusicAlbumProperties: InputPropertyValueMap) => updateNotionMusicAlbumPage({
+  const updateMutation = useMutation((newMusicAlbumProperties: InputPropertyValueMap) => updateNotionPage({
     pageId: page?.id || "", 
     properties: newMusicAlbumProperties,
   }), {

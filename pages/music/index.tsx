@@ -13,8 +13,7 @@ import Fuse from "fuse.js"
 import Head from "next/head"
 import {useInput, useIntersectionObserver} from "utils/dom"
 import {useDebouncedEffect} from "utils/optimization"
-import {getMusicAlbumRatingOrder, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/query"
-import {getNotionDatabase} from "utils/query/notion/shared"
+import {getMusicAlbumRatingOrder, getNotionDatabase, MusicAlbumData, MusicAlbumRating, MusicAlbumTag,notion, notionFileUrlPrefix} from "utils/query"
 
 
 export type MusicProps = {
@@ -221,18 +220,9 @@ export default function Music({
     }
   },[musicAlbumQuery.data?.data.has_more, musicAlbumQuery.isLoading, moreTriggerOnceVisible])
 
-  const initialLoading = useMemo(()=>{
-    return musicAlbumQuery.isLoading
-  },[musicAlbumQuery.isLoading])
-
-  const moreLoading = useMemo(()=>{
-    return (musicAlbumQuery.isFetching && !initialLoading)
-  },[initialLoading, musicAlbumQuery.isFetching])
-  
-
   return (
     <TemplateA1
-      loading={initialLoading}
+      loading={musicAlbumQuery.isLoading}
       searchInputProps={{
         input: searchInput
       }}
@@ -270,7 +260,7 @@ export default function Music({
             </Box>
           ))}
         </Grid>
-        {moreLoading && (
+        {musicAlbumQuery.isRefetching && (
           <Flex sx={{py: 5}}>
             <Spinner size={SpinnerSize.LG}/>
           </Flex>

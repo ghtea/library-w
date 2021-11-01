@@ -117,6 +117,7 @@ export default function Movie({
    
   const {ref: moreTriggerRef, onceVisible: moreTriggerOnceVisible} = useIntersectionObserver({rootMargin: "0px 0px 500px 0px"})
 
+  // TODO: useMutation
   const updateMovieDataList = useCallback((response: AxiosResponse<DatabasesQueryResponse>)=>{ 
     const existingMovieDataList = (response?.data?.results || []).filter((item: MovieData) => {
       const title = item.properties.Title?.title[0]?.plain_text;
@@ -207,17 +208,9 @@ export default function Movie({
     }
   },[movieQuery.data?.data.has_more, movieQuery.isLoading, moreTriggerOnceVisible])
 
-  const initialLoading = useMemo(()=>{
-    return movieQuery.isLoading
-  },[movieQuery.isLoading])
-
-  const moreLoading = useMemo(()=>{
-    return (movieQuery.isFetching && !initialLoading)
-  },[initialLoading, movieQuery.isFetching])
-  
   return (
     <TemplateA1
-      loading={initialLoading}
+      loading={movieQuery.isLoading}
       searchInputProps={{
         input: searchInput
       }}
@@ -257,7 +250,7 @@ export default function Movie({
             </Box>
           ))}
         </Grid>
-        {moreLoading && (
+        {movieQuery.isRefetching && (
           <Flex sx={{py: 5}}>
             <Spinner size={SpinnerSize.LG}/>
           </Flex>

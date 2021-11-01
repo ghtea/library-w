@@ -1,4 +1,4 @@
-import {PropertyValueMap} from "@notionhq/client/build/src/api-endpoints";
+import {PagesCreateResponse, PropertyValueMap} from "@notionhq/client/build/src/api-endpoints";
 import { 
   CheckboxPropertyValue,
   CreatedByPropertyValue,
@@ -20,6 +20,8 @@ import {
   SelectPropertyValue,
   TitlePropertyValue,
   URLPropertyValue} from "@notionhq/client/build/src/api-types";
+import axios, {AxiosResponse} from "axios";
+import {CrawlType} from "pages/api/crawl/[type]";
 
 import {createNotionPage, CreateNotionPageConfig, getNotionDatabase, GetNotionDatabaseConfig, updateNotionPage} from "./shared";
 
@@ -105,4 +107,22 @@ export const getMovieRatingOrder = (rating: string) => {
 
 export enum MovieTag {
   BLOCKED_POSTER = "blocked-poster",
+}
+
+export const createMoviePageByUrl = async (config: CreateNotionPageByUrlConfig) => {
+  const crawlRes: AxiosResponse<any> = await axios.post(`/api/crawl/${CrawlType.RYM_MOVIE}`, {
+    link: config.link
+  });
+
+  console.log("crawlRes: ", crawlRes); // TODO: remove
+
+  const createRes = await createNotionPage({
+
+  })
+
+  console.log("createRes: ", createRes); // TODO: remove
+}
+
+export type CreateNotionPageByUrlConfig = {
+  link: string
 }

@@ -1,4 +1,5 @@
 import {ChangeEventHandler, useCallback, useEffect, useMemo, useState} from "react"
+import {useMutation} from "react-query"
 
 import {Box, Button,ChipSize,Flex, Input,Link, Text} from "components/atoms"
 import {ChipButtonInput, ChipButtonInputItem} from "components/molecules/ChipButtonInput"
@@ -8,6 +9,7 @@ import {LibraryCategory, libraryCategoryText} from "pages"
 import {ColorKey} from "theme";
 import {MIN_WIDTH} from "theme/breakpoints";
 import {ModalProps, useModal} from "utils/modal";
+import {createMoviePageByUrl} from "utils/query"
 import {useAdvancedRouter} from "utils/router"
 
 export type AddModalProps = ModalProps & {
@@ -30,6 +32,14 @@ export const AddModal: React.FunctionComponent<AddModalProps> = ({
   const [category, setCategory] = useState<LibraryCategory>(LibraryCategory.MUSIC)
   // TODO: decide default category from path
   
+  const mutation = useMutation(({category, link}: {category: LibraryCategory, link: string})=>{
+    if (category === LibraryCategory.MOVIE){
+      return createMoviePageByUrl({link})
+    } else {
+      return createMoviePageByUrl({link})
+    }
+  })
+
   const handleClose = useCallback(()=>{
     removeModal(id)
   },[id, removeModal])
@@ -48,6 +58,10 @@ export const AddModal: React.FunctionComponent<AddModalProps> = ({
     const newCategory = newValue.find(item => item.selected)?.value
     setCategory(newCategory || LibraryCategory.MUSIC)
   },[])
+
+  const onConfirm = useCallback(()=>{
+    mutation.mutate({category: LibraryCategory.MOVIE, link: "https://cinemos.com/film/ghost-in-the-shell/"})
+  },[mutation])
 
   return ( 
     <Flex 
