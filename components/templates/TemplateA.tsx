@@ -30,16 +30,16 @@ export const nav: NavItem[] = [
     svg: "bao-movie.svg",
     text: "Movie"
   },
-  {
-    id: "thought",
-    svg: "bao-speech-bubble-circle.svg",
-    text: "Thought"
-  },
-  {
-    id: "knowledge",
-    svg: "bao-book-open.svg",
-    text: "Knowledge"
-  },
+  // {
+  //   id: "thought",
+  //   svg: "bao-speech-bubble-circle.svg",
+  //   text: "Thought"
+  // },
+  // {
+  //   id: "knowledge",
+  //   svg: "bao-book-open.svg",
+  //   text: "Knowledge"
+  // },
 ]
 
 
@@ -96,9 +96,12 @@ export const TemplateA: React.FunctionComponent<TemplateAProps> = ({
             borderRightWidth: "1px", 
           }} 
         >
-          <SideBar nav={nav} containerProps={{sx: {
-            width: ["unset", null, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH],
-          }}}></SideBar>
+          <SideBar 
+            nav={nav} 
+            containerProps={{sx: {
+              width: ["unset", null, TEMPLATE_A_SIDE_BAR_LG_WIDTH, TEMPLATE_A_SIDE_BAR_XL_WIDTH],
+            }}}>
+          </SideBar>
         </Box>
       </Responsive>
       
